@@ -1,0 +1,31 @@
+@startuml Use Case Snowtricks
+  title Use Case Snowtricks
+
+  skinparam packageStyle rect
+  skinparam shadowing false
+
+  actor Visitor as visitor
+  actor User as user
+
+  rectangle application {
+      (S'inscrire) as registerUser
+      (Commenter un trick) as commentTrick
+      (Modifier un trick) as editTrick
+      (Afficher un trick) as displayTrick
+      (Afficher les commentaires trick) as displayTrickComments
+      (Ajouter un trick) as addTrick
+      (Reset password) as resetPassword
+      (Login) as loginUser
+  }
+
+  visitor --> registerUser
+  visitor --> displayTrick
+
+  user --> loginUser
+  user --> commentTrick
+  user --> addTrick
+  user --> editTrick
+  user --> resetPassword
+
+  displayTrick ..> displayTrickComments : includes
+@enduml
