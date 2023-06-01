@@ -1,8 +1,8 @@
 # Welcome to Snowtricks 👋
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#)
 [![Twitter: tomcdj71](https://img.shields.io/twitter/follow/tomcdj71.svg?style=social)](https://twitter.com/tomcdj71)
-[![Codacy Badge](GRADE_URL)](https://app.codacy.com/gh/tomcdj71/Snowtricks/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-[![Codacy Badge](COVERAGE_URL)](https://app.codacy.com/gh/tomcdj71/Snowtricks/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/edf0ad3a4e2a46648b7b08b5270d86b7)](https://app.codacy.com/gh/tomcdj71/Snowtricks/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/edf0ad3a4e2a46648b7b08b5270d86b7)](https://app.codacy.com/gh/tomcdj71/Snowtricks/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 
 > 6th project of my OpenClassrooms courses
 

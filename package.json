@@ -1,0 +1,27 @@
+{
+  "devDependencies": {
+    "@babel/core": "^7.22.1",
+    "@babel/preset-env": "^7.22.4",
+    "@symfony/webpack-encore": "^4.3.0",
+    "core-js": "^3.30.2",
+    "regenerator-runtime": "^0.13.11",
+    "webpack": "^5.85.0",
+    "webpack-cli": "^5.1.1",
+    "webpack-notifier": "^1.15.0"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress",
+    "lint": "./vendor/bin/phpcbf --standard=.phpcs.xml --ignore=vendor/,bin/,var/,node_modules/ src/ tests/",
+    "analyze": "./vendor/bin/phpstan analyze --configuration=phpstan.neon",
+    "security": "symfony check:security",
+    "precommit": "pnpm run lint && pnpm run analyze && pnpm run security"
+  },
+  "pre-commit": [
+    "precommit"
+  ]
+}
