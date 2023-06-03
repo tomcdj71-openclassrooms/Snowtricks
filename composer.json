@@ -84,7 +84,7 @@
     "post-update-cmd": [
       "@auto-scripts"
     ],
-    "phpstan": "phpstan analyse",
+    "phpstan": "./vendor/bin/phpstan analyze --configuration=phpstan.neon --generate-baseline",
     "phpcs": "./vendor/bin/php-cs-fixer fix --dry-run --allow-risky=yes"
   },
   "conflict": {
