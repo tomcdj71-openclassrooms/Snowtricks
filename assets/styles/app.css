@@ -1,3 +1,25 @@
+@import 'flowbite/dist/flowbite.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.feather-8 {
+    width: 8px;
+    height: 8px;
+}
+
+.feather-16 {
+    width: 16px;
+    height: 16px;
+}
+
+.feather-24 {
+    width: 24px;
+    height: 24px;
+}
+
+.feather-32 {
+    width: 32px;
+    height: 32px;
+}

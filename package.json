@@ -29,6 +29,7 @@
     "precommit"
   ],
   "dependencies": {
+    "feather-icons": "^4.29.0",
     "flowbite": "^1.6.5"
   }
 }
