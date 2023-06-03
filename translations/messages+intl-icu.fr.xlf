@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
     <header>
       <tool tool-id="symfony" tool-name="Symfony"/>
     </header>
@@ -27,7 +27,7 @@
       </trans-unit>
       <trans-unit id="588_9PF" resname="Password">
         <source>Password</source>
-        <target>Password</target>
+        <target>Mot de passe</target>
       </trans-unit>
       <trans-unit id="_TJnqhH" resname="Remember me">
         <source>Remember me</source>
@@ -44,6 +44,70 @@
       <trans-unit id="XiuOllA" resname="Sign up">
         <source>Sign up</source>
         <target>S'inscrire</target>
+      </trans-unit>
+      <trans-unit id="P.xNwvE" resname="yourname@email.com">
+        <source>yourname@email.com</source>
+        <target>votrenom@email.com</target>
+      </trans-unit>
+      <trans-unit id="lY5Mzyl" resname="Please enter a valid email address.">
+        <source>Please enter a valid email address.</source>
+        <target>Veuillez entrer une adresse email valide.</target>
+      </trans-unit>
+      <trans-unit id="IaE5GBl" resname="You should agree to our terms.">
+        <source>You should agree to our terms.</source>
+        <target>Vous devez accepter nos conditions.</target>
+      </trans-unit>
+      <trans-unit id="47ienTP" resname="Username">
+        <source>Username</source>
+        <target>Nom d'utilisateur</target>
+      </trans-unit>
+      <trans-unit id="odrHIY1" resname="JohnDoe_25">
+        <source>JohnDoe_25</source>
+        <target>MartinDupont_25</target>
+      </trans-unit>
+      <trans-unit id="SoSxOXL" resname="Please enter an username.">
+        <source>Please enter an username.</source>
+        <target>Veuillez entrer un nom d'utilisateur.</target>
+      </trans-unit>
+      <trans-unit id="YXZ26gK" resname="Please enter a password">
+        <source>Please enter a password</source>
+        <target>Veuillez entrer un mot de passe</target>
+      </trans-unit>
+      <trans-unit id="5T_q8fP" resname="Your password should be at least">
+        <source>Your password should be at least</source>
+        <target>Votre mot de passe doit être au moins</target>
+      </trans-unit>
+      <trans-unit id="Jdk5.9D" resname="characters">
+        <source>characters</source>
+        <target>caractères</target>
+      </trans-unit>
+      <trans-unit id="wpIhDEQ" resname="Confirm Password">
+        <source>Confirm Password</source>
+        <target>Confirmez le mot de passe</target>
+      </trans-unit>
+      <trans-unit id="TdLhlyP" resname="The password fields must match.">
+        <source>The password fields must match.</source>
+        <target>Les champs du mot de passe doivent correspondre.</target>
+      </trans-unit>
+      <trans-unit id="u3I07BJ" resname="Register">
+        <source>Register</source>
+        <target>Enregistrer</target>
+      </trans-unit>
+      <trans-unit id="hgM.daT" resname="Create an account">
+        <source>Create an account</source>
+        <target>Créer un compte</target>
+      </trans-unit>
+      <trans-unit id="IAvAzcB" resname="I accept the termsLink">
+        <source>I accept the termsLink</source>
+        <target><![CDATA[J'accepte les <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Conditions d'Utilisation</a>]]></target>
+      </trans-unit>
+      <trans-unit id="UvpXm.Q" resname="Already have an account">
+        <source>Already have an account</source>
+        <target>Vous avez déjà un compte</target>
+      </trans-unit>
+      <trans-unit id="vYlwZG0" resname="Login here">
+        <source>Login here</source>
+        <target>Connectez-vous ici</target>
       </trans-unit>
     </body>
   </file>
