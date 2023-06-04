@@ -153,6 +153,10 @@
         <source>Enter your username address and we will send you a link to reset your password.</source>
         <target>Entrez votre adresse de nom d'utilisateur et nous vous enverrons un lien pour réinitialiser votre mot de passe.</target>
       </trans-unit>
+      <trans-unit id="shD9QSW" resname="Your username">
+        <source>Your username</source>
+        <target>Nom d'utilisateur</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
