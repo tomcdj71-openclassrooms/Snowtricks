@@ -14,9 +14,9 @@
 				{% include "_partials/brand.html.twig" %}
 			</div>
 			<div class="hidden lg:flex justify-end space-x-8 lg:order-2">
-				<a href="#" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Home</a>
+				<a href="{{ path('app_home') }}" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Home</a>
 				<a href="#" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Tricks</a>
-				<a href="#" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Sign In</a>
+				<a href="{{ path('app_login') }}" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Sign In</a>
 			</div>
 		</div>
 	</nav>
