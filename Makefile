@@ -43,6 +43,11 @@ PHPQA_RUN = $(DOCKER_RUN) --init --rm -v "$(PWD):/project" -w /project $(PHPQA)
 #---PHPUNIT-#
 PHPUNIT = APP_ENV=test $(SYMFONY) php vendor/bin/phpunit
 #------------#
+
+#---RECTOR---#
+RECTOR = ./vendor/bin/rector
+RECTOR_RUN = $(RECTOR) process src
+#------------#
 #---------------------------------------------#
 
 ## === 🆘  HELP ==================================================
@@ -218,10 +223,13 @@ npm-watch: ## Watch assets.
 ## === 🐛  PHPQA =================================================
 qa-cs-fixer-dry-run: ## Run php-cs-fixer in dry-run mode.
 	$(PHPQA_RUN) php-cs-fixer fix ./src --rules=@Symfony --verbose --dry-run
+	echo "Do you want to run the fix? [y/N] " && read ans && [ $${ans:-N} = y ] && $(MAKE) qa-cs-fixer
+.PHONY: qa-rector-dry-run
+
 .PHONY: qa-cs-fixer-dry-run
 
 qa-cs-fixer: ## Run php-cs-fixer.
-	$(PHPQA_RUN) php-cs-fixer fix ./src --rules=@Symfony --verbose
+	$(PHPQA_RUN) php-cs-fixer fix ./src --rules=@Symfony --verbose --allow-risky=yes
 .PHONY: qa-cs-fixer
 
 qa-phpstan: ## Run phpstan.
@@ -259,6 +267,15 @@ qa-lint-schema: ## Lint Doctrine schema.
 qa-audit: ## Run composer audit.
 	$(COMPOSER) audit
 .PHONY: qa-audit
+
+qa-rector-dry-run: ## Run rector in dry-run mode.
+	$(RECTOR_RUN) process ./src --dry-run
+	echo "Do you want to run the rector? [y/N] " && read ans && [ $${ans:-N} = y ] && $(MAKE) qa-rector
+.PHONY: qa-rector-dry-run
+
+qa-rector: ## Run rector.
+	$(RECTOR_RUN) process ./src
+.PHONY: qa-rector
 #---------------------------------------------#
 
 ## === 🔎  TESTS =================================================
@@ -272,7 +289,7 @@ tests-coverage: ## Run tests with coverage.
 #---------------------------------------------#
 
 ## === ⭐  OTHERS =================================================
-before-commit: qa-cs-fixer qa-phpstan qa-security-checker qa-phpcpd qa-lint-twigs qa-lint-yaml qa-lint-container qa-lint-schema tests ## Run before commit.
+before-commit: qa-cs-fixer-dry-run qa-rector-dry-run qa-phpstan qa-security-checker qa-phpcpd qa-lint-twigs qa-lint-yaml qa-lint-container qa-lint-schema tests ## Run before commit.
 .PHONY: before-commit
 
 first-install: docker-up composer-install npm-install npm-build sf-perm sf-decrypt sf-start sf-open ## First install.
