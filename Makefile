@@ -222,8 +222,8 @@ npm-watch: ## Watch assets.
 
 ## === 🐛  PHPQA =================================================
 qa-cs-fixer-dry-run: ## Run php-cs-fixer in dry-run mode.
-	$(PHPQA_RUN) php-cs-fixer fix ./src --rules=@Symfony --verbose --dry-run
-	echo "Do you want to run the fix? [y/N] " && read ans && [ $${ans:-N} = y ] && $(MAKE) qa-cs-fixer
+	@$(PHPQA_RUN) php-cs-fixer fix ./src --rules=@Symfony --verbose --dry-run
+	@./scripts/confirm-cs.sh
 .PHONY: qa-rector-dry-run
 
 .PHONY: qa-cs-fixer-dry-run
@@ -269,8 +269,8 @@ qa-audit: ## Run composer audit.
 .PHONY: qa-audit
 
 qa-rector-dry-run: ## Run rector in dry-run mode.
-	$(RECTOR_RUN) process ./src --dry-run
-	echo "Do you want to run the rector? [y/N] " && read ans && [ $${ans:-N} = y ] && $(MAKE) qa-rector
+	@$(RECTOR_RUN) process ./src --dry-run
+	@./scripts/confirm-rector.sh
 .PHONY: qa-rector-dry-run
 
 qa-rector: ## Run rector.
