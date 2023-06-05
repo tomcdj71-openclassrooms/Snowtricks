@@ -106,6 +106,10 @@ composer-validate:
 #Executes a deeper validation of the composer.json and composer.lock files.
 composer-validate-deep: 
     {{COMPOSER}} validate --strict --check-lock
+#Check if there are outdate packages
+composer-outdated: 
+    {{COMPOSER}} outdated --direct --strict
+
 
 # NPM
 #Installs the npm packages.
@@ -127,7 +131,7 @@ npm-watch:
 # PHPQA
 #Runs PHP CS Fixer in dry run mode.
 qa-cs-fixer-dry-run: 
-    @if {{VENDOR_BIN}}/php-cs-fixer fix ./src --rules=@Symfony --verbose --dry-run; then \
+    @if {{COMPOSER}} run-script phpcs-dr; then \
         echo "No errors found."; \
     else \
         read -p "Errors found. Do you want to run qa-cs-fixer? (y/N) " decision; \
@@ -137,10 +141,10 @@ qa-cs-fixer-dry-run:
     fi
 #Runs PHP CS Fixer.
 qa-cs-fixer: 
-    {{VENDOR_BIN}}/php-cs-fixer fix ./src --rules=@Symfony --verbose --allow-risky=yes
+    {{COMPOSER}} run-script phpcs
 #Runs PHPStan.
 qa-phpstan: 
-    {{VENDOR_BIN}}/phpstan analyse ./src --level=3 --generate-baseline
+    {{COMPOSER}} run-script phpstan
 #Runs Psalm.
 qa-psalm: 
     {{VENDOR_BIN}}/psalm
@@ -204,7 +208,8 @@ tests-coverage:
 
 # Other commands
 #Runs a series of checks before committing code.
-before-commit: 
+before-commit:
+    just update
     just qa-cs-fixer-dry-run
     just qa-rector-dry-run
     just qa-phpstan
@@ -214,6 +219,11 @@ before-commit:
     just qa-lint-container
     just qa-lint-schema
     just tests
+
+update:
+    just composer-update
+    just composer-outdated
+    just npm-update
 
 #Executes a series of commands to prepare for the first installation.
 first-install: 
