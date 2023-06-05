@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ 'Reset your password'|trans }}
+{% endblock %}
+
+{% block body %}
+	<section class="bg-gray-50 dark:bg-gray-900">
+		<div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+			<div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+				<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+					<div class="flex justify-center items-center">
+						{% include "_partials/brand.html.twig" %}
+					</div>
+					<h1 class="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+						{{ 'Forgot your password?'|trans }}
+					</h1>
+					<p class="font-light text-gray-500 dark:text-gray-400">{{ 'Enter your username address and we will send you a link to reset your password.'|trans }}</p>
+					<form class="mt-4 space-y-4 lg:mt-5 md:space-y-5" method="post">
+						{{ form_start(requestForm) }}
+						{{ form_row(requestForm.username) }}
+						{% for flash_error in app.flashes('reset_password_error') %}
+							<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+						{% endfor %}
+						<button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{{ 'Send password reset email'|trans }}</button>
+						{{ form_end(requestForm) }}
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
