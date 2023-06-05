@@ -8,6 +8,5 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
 import 'flowbite';
-import 'ionicons';
 const feather = require('feather-icons')
 feather.replace();

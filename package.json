@@ -1,4 +1,35 @@
 {
+  "name": "snowtricks",
+  "version": "1.0.0",
+  "description": "6th project of my OpenClassrooms courses ",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress",
+    "lint": "./vendor/bin/phpcbf --standard=.phpcs.xml --ignore=vendor/,bin/,var/,node_modules/ src/ tests/",
+    "fix": "./vendor/bin/rector process ./src",
+    "analyze": "./vendor/bin/phpstan analyze --configuration=phpstan.neon --generate-baseline",
+    "security": "symfony check:security",
+    "precommit": "pnpm run lint && pnpm run analyze && pnpm run security",
+    "pre-commit": "pnpm run analyze && pnpm run precommit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomcdj71/Snowtricks.git"
+  },
+  "keywords": [],
+  "author": "Thomas Chauveau",
+  "bugs": {
+    "url": "https://github.com/tomcdj71/Snowtricks/issues"
+  },
+  "homepage": "https://github.com/tomcdj71/Snowtricks#readme",
+  "dependencies": {
+    "feather-icons": "^4.29.0",
+    "flowbite": "^1.6.5"
+  },
   "devDependencies": {
     "@babel/core": "^7.22.1",
     "@babel/preset-env": "^7.22.4",
@@ -12,24 +43,5 @@
     "webpack": "^5.85.0",
     "webpack-cli": "^5.1.1",
     "webpack-notifier": "^1.15.0"
-  },
-  "license": "UNLICENSED",
-  "private": true,
-  "scripts": {
-    "dev-server": "encore dev-server",
-    "dev": "encore dev",
-    "watch": "encore dev --watch",
-    "build": "encore production --progress",
-    "lint": "./vendor/bin/phpcbf --standard=.phpcs.xml --ignore=vendor/,bin/,var/,node_modules/ src/ tests/",
-    "analyze": "./vendor/bin/phpstan analyze --configuration=phpstan.neon",
-    "security": "symfony check:security",
-    "precommit": "pnpm run lint && pnpm run analyze && pnpm run security"
-  },
-  "pre-commit": [
-    "precommit"
-  ],
-  "dependencies": {
-    "feather-icons": "^4.29.0",
-    "flowbite": "^1.6.5"
   }
 }
