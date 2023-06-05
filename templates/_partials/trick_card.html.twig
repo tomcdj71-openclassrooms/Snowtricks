@@ -5,7 +5,7 @@
 	<div class="flex justify-between items-center">
 		<div class="flex items-center space-x-4">
 			<h2 class="pl-2 mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-				<a href="#">Trick Name</a>
+				<a href="{{ trick.slug|default('') }}">{{ trick.name|default('Not yet') }}</a>
 			</h2>
 			<i data-feather="edit-2" class="feather-24 pb-2"></i>
 			<i data-feather="trash-2" class="feather-24 pb-2"></i>
