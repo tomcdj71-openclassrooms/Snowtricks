@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eeb81e7e9240e26ae8322903eded95e5",
+    "content-hash": "d750a01979494d31e587ea487ffc7a8b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -7193,6 +7193,64 @@
                 "source": "https://github.com/SymfonyCasts/verify-email-bundle/tree/v1.13.0"
             },
             "time": "2023-01-04T12:46:15+00:00"
+        },
+        {
+            "name": "tales-from-a-dev/flowbite-bundle",
+            "version": "v0.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tales-from-a-dev/flowbite-bundle.git",
+                "reference": "dadfd23f436ef754aa8180a9050128170e904057"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tales-from-a-dev/flowbite-bundle/zipball/dadfd23f436ef754aa8180a9050128170e904057",
+                "reference": "dadfd23f436ef754aa8180a9050128170e904057",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/http-kernel": "^6.2",
+                "symfony/twig-bridge": "^6.2"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.15",
+                "phpunit/phpunit": "^10.0",
+                "symfony/form": "^6.2",
+                "symfony/intl": "^6.2",
+                "symfony/security-csrf": "^6.2",
+                "symfony/translation": "^6.2"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "TalesFromADev\\FlowbiteBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Romain Monteil",
+                    "email": "monteil.romain@gmail.com"
+                }
+            ],
+            "description": "A Symfony form theme for Flowbite",
+            "homepage": "https://github.com/tales-from-a-dev/flowbite-bundle",
+            "keywords": [
+                "bundle",
+                "flowbite",
+                "form",
+                "symfony",
+                "theme"
+            ],
+            "support": {
+                "issues": "https://github.com/tales-from-a-dev/flowbite-bundle/issues",
+                "source": "https://github.com/tales-from-a-dev/flowbite-bundle/tree/v0.2.3"
+            },
+            "time": "2023-05-05T08:33:42+00:00"
         },
         {
             "name": "twig/extra-bundle",
