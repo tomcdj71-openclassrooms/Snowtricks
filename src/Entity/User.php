@@ -152,11 +152,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeComment(Comment $comment): self
     {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getAuthor() === $this) {
-                $comment->setAuthor(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->comments->removeElement($comment) && $comment->getAuthor() === $this) {
+            $comment->setAuthor(null);
         }
 
         return $this;
@@ -182,11 +180,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeTrick(Trick $trick): self
     {
-        if ($this->tricks->removeElement($trick)) {
-            // set the owning side to null (unless already changed)
-            if ($trick->getAuthor() === $this) {
-                $trick->setAuthor(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->tricks->removeElement($trick) && $trick->getAuthor() === $this) {
+            $trick->setAuthor(null);
         }
 
         return $this;
@@ -200,12 +196,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatar(?Image $avatar): self
     {
         // unset the owning side of the relation if necessary
-        if ($avatar === null && $this->avatar !== null) {
+        if (!$avatar instanceof \App\Entity\Image && $this->avatar instanceof \App\Entity\Image) {
             $this->avatar->setUser(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($avatar !== null && $avatar->getUser() !== $this) {
+        if ($avatar instanceof \App\Entity\Image && $avatar->getUser() !== $this) {
             $avatar->setUser($this);
         }
 

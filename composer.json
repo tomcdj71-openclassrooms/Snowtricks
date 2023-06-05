@@ -86,7 +86,7 @@
       "@auto-scripts"
     ],
     "phpstan": "./vendor/bin/phpstan analyze --configuration=phpstan.neon --generate-baseline",
-    "phpcs": "./vendor/bin/php-cs-fixer fix ./src --rules=@Symfony --verbose --dry-run --allow-risky=yes"
+    "phpcs": "./vendor/bin/php-cs-fixer fix ./src --rules=@Symfony --verbose --allow-risky=yes"
   },
   "conflict": {
     "symfony/symfony": "*"
