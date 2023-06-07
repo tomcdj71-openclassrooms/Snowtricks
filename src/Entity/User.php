@@ -34,6 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private ?bool $isVerified = false;
 
+    #[ORM\Column(type: 'string', length: 100, nullable: true)]
+    private ?string $resetToken = null;
+
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
@@ -89,6 +92,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
     {
+        if (null === $this->password) {
+            throw new \LogicException('Password should not be accessed before it has been set.');
+        }
+
         return $this->password;
     }
 
@@ -120,7 +127,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVerified(): bool
+    public function getIsVerified(): ?bool
     {
         return $this->isVerified;
     }
@@ -206,6 +213,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
 
         return $this;
     }

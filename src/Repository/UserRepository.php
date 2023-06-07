@@ -24,13 +24,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
-    public function save(User $entity, bool $flush = false): void
+    public function save(User $user): void
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->_em->persist($user);
+        $this->_em->flush();
     }
 
     public function remove(User $entity, bool $flush = false): void
@@ -54,6 +51,30 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
 
         $this->save($user, true);
+    }
+
+    public function findOneByUsername(string $username): ?User
+    {
+        /** @var User|null */
+        $result = $this->createQueryBuilder('u')
+            ->andWhere('u.username = :username')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $result;
+    }
+
+    public function findOneByResetToken(string $resetToken): ?User
+    {
+        /** @var User|null */
+        $result = $this->createQueryBuilder('u')
+            ->andWhere('u.resetToken = :resetToken')
+            ->setParameter('resetToken', $resetToken)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $result;
     }
 
 //    /**
@@ -80,14 +101,4 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 //            ->getOneOrNullResult()
 //        ;
 //    }
-
-    public function findOneByUsername(string $username): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.username = :username')
-            ->setParameter('username', $username)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
 }
