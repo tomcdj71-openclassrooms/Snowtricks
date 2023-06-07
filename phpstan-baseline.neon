@@ -1,6 +1,2 @@
 parameters:
-	ignoreErrors:
-		-
-			message: "#^Method App\\\\Repository\\\\UserRepository\\:\\:save\\(\\) invoked with 2 parameters, 1 required\\.$#"
-			count: 1
-			path: src/Repository/UserRepository.php
+	ignoreErrors: []
