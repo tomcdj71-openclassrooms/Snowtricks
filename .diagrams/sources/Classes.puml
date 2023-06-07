@@ -1,0 +1,42 @@
+@startuml Class
+class User {
+        + id: integer
+        + username: string
+        + email: string
+        + password: string
+    }
+    class Comment {
+        + id: integer
+        + content: text
+        + createdAt: datetime
+    }
+
+    class Trick {
+        + id: integer
+        + title: string
+        + description: datetime
+        + createdAt: datetime
+    }   
+
+    class Group {
+        + id: integer
+        + name: string
+    }
+
+    class Image {
+        + id: integer
+        + path: string
+    }
+
+    class Video {
+        + id: integer
+        + path: string
+    }
+    User "1" -- "0..*" Comment: POSTS
+    User "1" -- "0..*" Trick: CREATES
+    Comment "0..*" -- "1" Trick: BELONGS_TO
+    Trick "1" -- "0..*" Image: HAS
+    Trick "1" -- "0..*" Video: HAS
+    Trick "1" -- "1" Group: BELONGS_TO
+    Group "1" -- "0..*" Trick: CONTAINS
+@enduml

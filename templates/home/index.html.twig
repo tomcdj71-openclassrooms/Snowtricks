@@ -22,9 +22,15 @@
 				<p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">We use an agile approach to test assumptions and connect with the needs of your audience early and often.</p>
 			</div>
 			<div class="grid gap-8 lg:grid-cols-5">
-				{% for i in 1..15 %}
+				{% for trick in tricks %}
 					{% include "_partials/trick_card.html.twig" %}
 				{% endfor %}
+				{% set placeholder_count = 5 - tricks|length %}
+				{% if placeholder_count > 0 %}
+					{% for i in 1..placeholder_count %}
+						{% include "_partials/trick_card.html.twig" %}
+					{% endfor %}
+				{% endif %}
 			</div>
 		</div>
 	</section>

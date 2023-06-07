@@ -1,0 +1,24 @@
+@startuml Edit Trick
+    title Edit Trick
+    skinparam backgroundColor #EEEEEE
+    skinparam shadowing true
+
+    actor User
+    control Server
+    database Database
+    User --> Server : Request edit trick page
+    activate Server  #lightblue
+    Server --> User : Display edit trick page with existing data
+    deactivate Server 
+    User --> Server : Submit updated trick form
+    activate Server #lightblue
+    Server -> Server : Validate form data
+    alt If form data is valid
+        Server --> Database : Update Trick data
+            Database --> Server : Confirm Trick data updated
+            Server --> User : Redirect to updated trick page
+    else
+        Server --> User : Display form validation error
+    end
+    deactivate Server
+@enduml

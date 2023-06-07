@@ -1,0 +1,27 @@
+{% macro alert(type, messages) %}
+	{% for message in messages %}
+		<div class="p-4 mb-4 text-sm rounded-lg dark:bg-gray-800" role="alert">
+			<span class="font-medium">{{ type|capitalize|trans }}!</span>
+			{{ message }}
+		</div>
+	{% endfor %}
+{% endmacro %}
+{% import _self as macros %}
+{{ macros.alert('warning', app.flashes('warning'))|raw }}
+{{ macros.alert('success', app.flashes('success'))|raw }}
+{{ macros.alert('error', app.flashes('error'))|raw }}
+{{ macros.alert('info', app.flashes('info'))|raw }}
+{% macro alert(type, messages) %}
+	{% set colors = {
+					'warning': 'yellow-800 bg-yellow-50 dark:text-yellow-400',
+					'success': 'green-800 bg-green-50 dark:text-green-400',
+					'error': 'red-800 bg-red-50 dark:text-red-400',
+					'info': 'blue-800 bg-blue-50 dark:text-blue-400',
+				} %}
+	{% for message in messages %}
+		<div class="p-4 mb-4 text-sm text-{{ colors[type] }} rounded-lg" role="alert">
+			<span class="font-medium">{{ type|capitalize|trans }}!</span>
+			{{ message }}
+		</div>
+	{% endfor %}
+{% endmacro %}

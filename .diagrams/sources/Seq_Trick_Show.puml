@@ -1,0 +1,22 @@
+@startuml Trick Show
+    title Trick Show
+    skinparam backgroundColor #EEEEEE
+    skinparam shadowing true
+
+    actor User
+    control Server
+    database Database
+    User --> Server : Request trick page
+    activate Server  #lightblue
+    Server --> Database : Retrieve Trick data
+    Database --> Server : Return Trick data
+    Server --> User : Display trick page
+    deactivate Server 
+
+    User --> Server : Request trick comments
+    activate Server #lightblue
+    Server --> Database : Retrieve Trick comments
+    Database --> Server : Return Trick comments
+    Server --> User : Display trick comments
+    deactivate Server 
+@enduml

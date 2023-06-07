@@ -1,0 +1,21 @@
+@startuml Add Comment
+    title Add Comment
+    skinparam backgroundColor #EEEEEE
+    skinparam shadowing true
+
+    actor User
+    control Server
+    database Database
+    ref over User, Server, Database : View a trick (Seq_Trick_Show)
+    
+    User --> Server : Submit the comment form
+    activate Server #lightblue
+    Server -> Server : Validates the form
+    alt If the form is valid
+        Server --> Database : Insert comment
+        Server --> User : Redirect to the "View a trick" page\nand display a success message
+    else
+        Server --> User : Error messages
+    end
+    deactivate Server
+@enduml

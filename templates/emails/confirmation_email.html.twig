@@ -1,0 +1,23 @@
+<h1>{{ 'Hi'|trans }}!
+	{{ 'Please confirm your email address'|trans }}!</h1>
+
+<p>
+	{{ 'Please confirm your email address'|trans }}
+	{{ 'by clicking the following link'|trans }}
+	:
+
+	<br>
+	<a href="{{ url|raw }}">{{ 'Confirm my Email'|trans }}</a>.
+
+</p>
+
+<p>
+	<strong>{{ 'Please note'|trans }}:</strong>
+
+	{{ 'This link will expire in'|trans }}
+	{{ expiresAt|date('F j, Y, g:i a') }}.
+</p>
+
+<p>
+	{{ 'Cheers'|trans }}!
+</p>
