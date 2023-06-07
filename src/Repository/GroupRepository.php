@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Group;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Group>
@@ -16,27 +17,24 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class GroupRepository extends ServiceEntityRepository
 {
+    private EntityManagerInterface $entityManager;
+    
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Group::class);
+        $this->entityManager = $this->getEntityManager();
     }
 
-    public function save(Group $entity, bool $flush = false): void
+    public function save(Group $group): void
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->entityManager->persist($group);
+        $this->entityManager->flush();
     }
 
-    public function remove(Group $entity, bool $flush = false): void
+    public function remove(Group $group): void
     {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->entityManager->remove($group);
+        $this->entityManager->flush();
     }
 
 //    /**

@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Trick;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Trick>
@@ -16,27 +17,24 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TrickRepository extends ServiceEntityRepository
 {
+    private EntityManagerInterface $entityManager;
+    
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Trick::class);
+        $this->entityManager = $this->getEntityManager();
     }
 
-    public function save(Trick $entity, bool $flush = false): void
+    public function save(Trick $trick): void
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->entityManager->persist($trick);
+        $this->entityManager->flush();
     }
 
-    public function remove(Trick $entity, bool $flush = false): void
+    public function remove(Trick $trick): void
     {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->entityManager->remove($trick);
+        $this->entityManager->flush();
     }
 
 //    /**

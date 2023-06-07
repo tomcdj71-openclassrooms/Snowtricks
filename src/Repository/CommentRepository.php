@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Comment>
@@ -16,27 +17,24 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CommentRepository extends ServiceEntityRepository
 {
+    private EntityManagerInterface $entityManager;
+    
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Comment::class);
+        $this->entityManager = $this->getEntityManager();
     }
 
-    public function save(Comment $entity, bool $flush = false): void
+    public function save(Comment $comment): void
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->entityManager->persist($comment);
+        $this->entityManager->flush();
     }
 
-    public function remove(Comment $entity, bool $flush = false): void
+    public function remove(Comment $comment): void
     {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->entityManager->remove($comment);
+        $this->entityManager->flush();
     }
 
 //    /**

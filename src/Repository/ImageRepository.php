@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Image;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Image>
@@ -16,27 +17,24 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ImageRepository extends ServiceEntityRepository
 {
+    private EntityManagerInterface $entityManager;
+    
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Image::class);
+        $this->entityManager = $this->getEntityManager();
     }
 
-    public function save(Image $entity, bool $flush = false): void
+    public function save(Image $image): void
     {
-        $this->getEntityManager()->persist($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->entityManager->persist($image);
+        $this->entityManager->flush();
     }
 
-    public function remove(Image $entity, bool $flush = false): void
+    public function remove(Image $image): void
     {
-        $this->getEntityManager()->remove($entity);
-
-        if ($flush) {
-            $this->getEntityManager()->flush();
-        }
+        $this->entityManager->remove($image);
+        $this->entityManager->flush();
     }
 
 //    /**
