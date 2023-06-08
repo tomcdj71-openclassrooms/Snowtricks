@@ -8,6 +8,8 @@ use Zenstruck\Foundry\LazyValue;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
+use Symfony\Component\String\Slugger\AsciiSlugger;
+use function Symfony\Component\String\u;
 
 /**
  * @extends ModelFactory<Trick>
@@ -64,14 +66,17 @@ final class TrickFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
+        $title = self::faker()->text(255);
+        $slugger = new AsciiSlugger();
+        $slug = u($slugger->slug($title))->lower();
         return [
             'author' => new LazyValue(fn () => UserFactory::random()),
             'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'description' => self::faker()->text(),
-            'featuredImage' => self::faker()->imageUrl(640, 480, true),
+            'featuredImage' => self::faker()->imageUrl(640, 480, rand(1, 200), true, false, 0 , 'jpg'),
             'group' => new LazyValue(fn () => GroupFactory::random()),
-            'slug' => self::faker()->text(255),
-            'title' => self::faker()->text(255),
+            'slug' => $slug,
+            'title' => $title,
         ];
     }
 

@@ -25,12 +25,6 @@
 				{% for trick in tricks %}
 					{% include "_partials/trick_card.html.twig" %}
 				{% endfor %}
-				{% set placeholder_count = 5 - tricks|length %}
-				{% if placeholder_count > 0 %}
-					{% for i in 1..placeholder_count %}
-						{% include "_partials/trick_card.html.twig" %}
-					{% endfor %}
-				{% endif %}
 			</div>
 		</div>
 	</section>
