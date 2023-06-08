@@ -1,2 +1,6 @@
 parameters:
-	ignoreErrors: []
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method Faker\\\\Generator\\:\\:gravatarUrl\\(\\)\\.$#"
+			count: 1
+			path: src/Factory/AvatarFactory.php

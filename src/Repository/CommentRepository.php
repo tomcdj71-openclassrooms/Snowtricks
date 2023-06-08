@@ -3,9 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Comment>
@@ -18,7 +18,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 class CommentRepository extends ServiceEntityRepository
 {
     private EntityManagerInterface $entityManager;
-    
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Comment::class);

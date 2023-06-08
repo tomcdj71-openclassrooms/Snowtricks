@@ -2129,7 +2129,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001495
-      electron-to-chromium: 1.4.424
+      electron-to-chromium: 1.4.425
       node-releases: 2.0.12
       update-browserslist-db: 1.0.11(browserslist@4.21.7)
     dev: true
@@ -2447,7 +2447,7 @@ packages:
       cssnano: 5.1.15(postcss@8.4.24)
       jest-worker: 29.5.0
       postcss: 8.4.24
-      schema-utils: 4.0.1
+      schema-utils: 4.1.0
       serialize-javascript: 6.0.1
       source-map: 0.6.1
       webpack: 5.86.0(webpack-cli@5.1.4)
@@ -2671,8 +2671,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /electron-to-chromium@1.4.424:
-    resolution: {integrity: sha512-KOfOIoEE0b3L0CTDgqS+NpokmcBdxpqLIPtp9PL0v5GAMZmZXa9uoUfWJdEy63MNy6jMvKHkBVUYY5DSuqqpdw==}
+  /electron-to-chromium@1.4.425:
+    resolution: {integrity: sha512-wv1NufHxu11zfDbY4fglYQApMswleE9FL/DSeyOyauVXDZ+Kco96JK/tPfBUaDqfRarYp2WH2hJ/5UnVywp9Jg==}
     dev: true
 
   /emoji-regex@8.0.0:
@@ -3594,7 +3594,7 @@ packages:
     peerDependencies:
       webpack: ^5.0.0
     dependencies:
-      schema-utils: 4.0.1
+      schema-utils: 4.1.0
       webpack: 5.86.0(webpack-cli@5.1.4)
     dev: true
 
@@ -4560,8 +4560,8 @@ packages:
       ajv-keywords: 3.5.2(ajv@6.12.6)
     dev: true
 
-  /schema-utils@3.1.2:
-    resolution: {integrity: sha512-pvjEHOgWc9OWA/f/DE3ohBWTD6EleVLf7iFUkoSwAxttdBhB9QUebQgxER2kWueOvRJXPHNnyrvvh9eZINB8Eg==}
+  /schema-utils@3.2.0:
+    resolution: {integrity: sha512-0zTyLGyDJYd/MBxG1AhJkKa6fpEBds4OQO2ut0w7OYG+ZGhGea09lijvzsqegYSik88zc7cUtIlnnO+/BvD6gQ==}
     engines: {node: '>= 10.13.0'}
     dependencies:
       '@types/json-schema': 7.0.12
@@ -4569,8 +4569,8 @@ packages:
       ajv-keywords: 3.5.2(ajv@6.12.6)
     dev: true
 
-  /schema-utils@4.0.1:
-    resolution: {integrity: sha512-lELhBAAly9NowEsX0yZBlw9ahZG+sK/1RJ21EpzdYHKEs13Vku3LJ+MIPhh4sMs0oCCeufZQEQbMekiA4vuVIQ==}
+  /schema-utils@4.1.0:
+    resolution: {integrity: sha512-Jw+GZVbP5IggB2WAn6UHI02LBwGmsIeYN/lNbSMZyDziQ7jmtAUrqKqDja+W89YHVs+KL/3IkIMltAklqB1vAw==}
     engines: {node: '>= 12.13.0'}
     dependencies:
       '@types/json-schema': 7.0.12
@@ -4942,7 +4942,7 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.18
       jest-worker: 27.5.1
-      schema-utils: 3.1.2
+      schema-utils: 3.2.0
       serialize-javascript: 6.0.1
       terser: 5.17.7
       webpack: 5.86.0(webpack-cli@5.1.4)
@@ -5137,7 +5137,7 @@ packages:
       memfs: 3.5.3
       mime-types: 2.1.35
       range-parser: 1.2.1
-      schema-utils: 4.0.1
+      schema-utils: 4.1.0
       webpack: 5.86.0(webpack-cli@5.1.4)
     dev: true
 
@@ -5177,7 +5177,7 @@ packages:
       open: 8.4.2
       p-retry: 4.6.2
       rimraf: 3.0.2
-      schema-utils: 4.0.1
+      schema-utils: 4.1.0
       selfsigned: 2.1.1
       serve-index: 1.9.1
       sockjs: 0.3.24
@@ -5247,7 +5247,7 @@ packages:
       loader-runner: 4.3.0
       mime-types: 2.1.35
       neo-async: 2.6.2
-      schema-utils: 3.1.2
+      schema-utils: 3.2.0
       tapable: 2.2.1
       terser-webpack-plugin: 5.3.9(webpack@5.86.0)
       watchpack: 2.4.0

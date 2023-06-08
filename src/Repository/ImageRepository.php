@@ -3,9 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Image;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Image>
@@ -18,7 +18,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 class ImageRepository extends ServiceEntityRepository
 {
     private EntityManagerInterface $entityManager;
-    
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Image::class);
