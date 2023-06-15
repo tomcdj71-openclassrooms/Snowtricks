@@ -1,0 +1,81 @@
+<div class="bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-3 dark:border-gray-700 dark:bg-gray-800 w-full">
+	<div class="items-center justify-between px-4 mb-4">
+		<section class="bg-white dark:bg-gray-900">
+			<div class="py-8 mx-auto lg:py-16">
+				{% if app.request.attributes.get('_route') == 'app_trick_edit' %}
+					{% set button_label = 'Edit Trick'|trans %}
+				{% else %}
+					{% set button_label = 'Create Trick'|trans %}
+				{% endif %}
+				<h2 class="mb-4 text-xl text-center font-bold text-gray-900 dark:text-white">{{ button_label|trans }}</h2>
+				<method="post" enctype='multipart/form-data'>
+					{{ form_start(form) }}
+					{{ form_row(form.title )}}
+					{{ form_row(form.description) }}
+					{{ form_row(form.group) }}
+					{% if app.request.attributes.get('_route') == 'app_trick_edit' %}
+						<h2>{{ 'Featured Image'|trans }}</h2>
+						<div>
+							<img src="{{ asset('assets/uploads/tricks/images/mini/300x300-' ~ trick.featuredImage.path ) }}" alt="Image" width="150">
+							<a href="{{ path('delete_image', {id: trick.featuredImage.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ trick.featuredImage.id) }}">{{ 'Supprimer'|trans }}</a>
+						</div>
+					{% endif %}
+					{{ form_row(form.featuredImage) }}
+					<br>
+					<h1 class="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+						{{ 'Gallery'|trans }}
+					</h1>
+					<div id="images-container" class="pb-4">
+						{{ form_label(form.images) }}
+						{% if app.request.attributes.get('_route') == 'app_trick_edit' %}
+							<div class="flex py-4 flex-wrap">
+								{% for image in trick.images %}
+									<div class="image-wrapper">
+										<img src="{{ asset('assets/uploads/tricks/images/mini/300x300-' ~ image.path ) }}" alt="Image" width="150">
+										<a href="{{ path('delete_image', {id: image.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ image.id) }}">{{ 'Supprimer'|trans }}</a>
+									</div>
+								{% endfor %}
+							</div>
+						{% endif %}
+						<div class="flex items-center justify-center w-full">
+							<label for="dropzone-file__prototype" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+								<div class="flex flex-col items-center justify-center pt-5 pb-6">
+									<svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+									</svg>
+									{{ form_widget(form.images) }}
+									<p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+										<span class="font-semibold">{{ 'You can select multiple files'|trans }}</span>
+									</p>
+									<p class="text-xs text-gray-500 dark:text-gray-400">{{ 'SVG, PNG, JPG or
+										GIF allowed'|trans }}</p>
+								</div>
+							</label>
+						</div>
+					</div>
+					<div id="videos-container" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}" class="py-4">
+						{{ form_label(form.videos) }}
+						{% for video in form.videos %}
+							<div class="video">
+								{{ form_widget(video) }}
+							</div>
+						{% endfor %}
+					</div>
+					<button id="add-video" type="button" class="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-green-700 dark:focus:ring-green-300 mr-2 mb-2">
+						<svg class="fill-current w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12 6v12m6-6H6" stroke-linecap="round" stroke-linejoin="round"></path>
+						</svg>
+						{{ 'Add Video'|trans }}
+					</button>
+					<div class="flex flex-col items-center justify-center">
+						<button type="submit" class="mt-4 block bg-primary-500 text-white font-semibold rounded-lg px-4 py-2 transition duration-200 each-in-out hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-dark-900 dark:focus:ring-indigo-500 focus:ring-offset-white dark:hover:bg-primary-700">
+							{{ button_label|trans }}
+						</button>
+					</div>
+					{{ form_row(form._token) }}
+					{{ form_end(form, {'render_rest': false}) }}
+				</form>
+			</div>
+		</section>
+	</div>
+</div>

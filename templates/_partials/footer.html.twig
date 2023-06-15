@@ -1,10 +1,11 @@
-<footer class="p-4 bg-white sm:p-6 dark:bg-gray-800">
-	<div class="mx-auto max-w-screen-xl">
-		<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"/>
-		<div class="sm:flex sm:items-center sm:justify-between">
-			<span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022
-				<a href="{{ path('app_home') }}" class="hover:underline">Snowtricks</a>. All Rights Reserved.
-			</span>
-		</div>
-	</div>
+<footer class="md:flex md:items-center md:justify-between px-4 2xl:px-0 py-6 md:py-10">
+	<hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8"/>
+	<p class="text-sm text-center text-gray-500 mb-4 md:mb-0 px-8">
+		© 2023
+		<a href="{{ path('app_home') }}" class="hover:underline" target="_blank">Snowtricks.com</a>.
+		{{ 'All rights reserved. Made with'|trans }}
+		<span class="text-red-500">♥</span>
+		{{ 'by'|trans }}
+		Thomas Chauveau
+	</p>
 </footer>

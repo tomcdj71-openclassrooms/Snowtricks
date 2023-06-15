@@ -1,19 +1,25 @@
-<article class="bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-	<p class="mb-2 font-light text-gray-500 dark:text-gray-400">
-		<img src="{{ trick.featuredImage }}" alt="trick image">
-	</p>
-	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-		<div class="flex justify-end space-x-4">
-			<i data-feather="edit-2" class="text-green-600 feather-24 pb-2"></i>
-			<i data-feather="trash-2" class="text-red-600 feather-24 pb-2"></i>
+<article>
+	<a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-slate-900 dark:border-gray-800" href="#">
+		<div class="aspect-w-16 aspect-h-9">
+			<img class="w-full object-cover rounded-t-xl" src="{{ trick.featuredImage }}" alt="Image Description">
 		</div>
-		<hr>
-	{% endif %}
-	<div class="flex justify-between items-center">
-		<div class="flex items-center space-x-4">
-			<h2 class="pl-2 mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-				<a href="{{ trick.slug|default('') }}">{{ trick.title|slice(0, 30) ~ '...' }}</a>
-			</h2>
+		<div class="p-4 md:p-5">
+			<p class="mt-2 text-xs uppercase text-gray-600 dark:text-gray-400">
+				{{ trick.group.name }}
+			</p>
+			<a href="{{ path('app_trick_edit', { 'id': trick.id }) }}">
+				{{ 'Edit Trick'|trans }}
+			</a>
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+				<div class="flex justify-end space-x-4">
+					<i data-feather="edit-2" class="text-green-600 feather-24 pb-2"></i>
+					<i data-feather="trash-2" class="text-red-600 feather-24 pb-2"></i>
+				</div>
+				<hr>
+			{% endif %}
+			<h3 class="mt-2 text-lg font-medium text-gray-800 group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-white">
+				<a href="{{ path('app_trick_show', {'slug':trick.slug}) }}">{{ trick.title|slice(0, 30) ~ '...' }}</a>
+			</h3>
 		</div>
-	</div>
+	</a>
 </article>

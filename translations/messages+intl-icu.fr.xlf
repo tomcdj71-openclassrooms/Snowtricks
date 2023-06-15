@@ -261,6 +261,182 @@
         <source>Password must be a string.</source>
         <target>Le mot de passe doit être une chaîne.</target>
       </trans-unit>
+      <trans-unit id="Nbg8t81" resname="Illustration image of the trick">
+        <source>Illustration image of the trick</source>
+        <target>Image d'illustration de la figure</target>
+      </trans-unit>
+      <trans-unit id="ddnebgW" resname="Illustration image">
+        <source>Illustration image</source>
+        <target>Image d'illustration</target>
+      </trans-unit>
+      <trans-unit id="NSz8dJ5" resname="Gallery">
+        <source>Gallery</source>
+        <target>Gallerie</target>
+      </trans-unit>
+      <trans-unit id="RPXj__x" resname="Comment">
+        <source>Comment</source>
+        <target>Commentaire</target>
+      </trans-unit>
+      <trans-unit id="n8cy_PA" resname="Your comment">
+        <source>Your comment</source>
+        <target>Votre commentaire</target>
+      </trans-unit>
+      <trans-unit id="qJoe0sc" resname="Write a comment...">
+        <source>Write a comment...</source>
+        <target>Ecrivez un commentaire...</target>
+      </trans-unit>
+      <trans-unit id="3U49VM_" resname="Post Comment">
+        <source>Post Comment</source>
+        <target>Poster le commentaire</target>
+      </trans-unit>
+      <trans-unit id="fozSBW2" resname="Title">
+        <source>Title</source>
+        <target>Titre</target>
+      </trans-unit>
+      <trans-unit id="9Bxe.IZ" resname="Awesome Title">
+        <source>Awesome Title</source>
+        <target>Titre génial</target>
+      </trans-unit>
+      <trans-unit id="Um4Ah8w" resname="Description">
+        <source>Description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="txuHFDL" resname="Write your article here...">
+        <source>Write your article here...</source>
+        <target>Ecrivez votre article ici...</target>
+      </trans-unit>
+      <trans-unit id="fpLWITT" resname="Featured Image">
+        <source>Featured Image</source>
+        <target>Image Epinglée</target>
+      </trans-unit>
+      <trans-unit id="BSPNDR4" resname="Edit Trick">
+        <source>Edit Trick</source>
+        <target>Editer figure</target>
+      </trans-unit>
+      <trans-unit id="ph9vRPa" resname="Add Trick">
+        <source>Add Trick</source>
+        <target>Ajouter figure</target>
+      </trans-unit>
+      <trans-unit id="WYO.mk2" resname="Edit this trick">
+        <source>Edit this trick</source>
+        <target>Editer cette figure</target>
+      </trans-unit>
+      <trans-unit id="bi6mN7M" resname="No records found">
+        <source>No records found</source>
+        <target>Aucun enregistrement trouvé</target>
+      </trans-unit>
+      <trans-unit id="95dXUKW" resname="Create Trick">
+        <source>Create Trick</source>
+        <target>Créer une figure</target>
+      </trans-unit>
+      <trans-unit id="ha0cx4z" resname="Close Modal">
+        <source>Close Modal</source>
+        <target>Fermer modale</target>
+      </trans-unit>
+      <trans-unit id="dqIbPnL" resname="New Trick">
+        <source>New Trick</source>
+        <target>Nouvelle figure</target>
+      </trans-unit>
+      <trans-unit id="Hb_RulN" resname="Trick updated successfully!">
+        <source>Trick updated successfully!</source>
+        <target>Astuce mise à jour avec succès!</target>
+      </trans-unit>
+      <trans-unit id="CG7_p2Q" resname="Invalid token">
+        <source>Invalid token</source>
+        <target>Jeton invalide</target>
+      </trans-unit>
+      <trans-unit id="HCuH0hP" resname="Error encountered during the deletion of the image">
+        <source>Error encountered during the deletion of the image</source>
+        <target>Erreur rencontrée lors de la suppression de l'image</target>
+      </trans-unit>
+      <trans-unit id="ehOHUNd" resname="Invalid data provided for images.">
+        <source>Invalid data provided for images.</source>
+        <target>Données non valides fournies pour les images.</target>
+      </trans-unit>
+      <trans-unit id="fQbnPF6" resname="Invalid image file.">
+        <source>Invalid image file.</source>
+        <target>Fichier image invalide.</target>
+      </trans-unit>
+      <trans-unit id=".nkvqOD" resname="Invalid title provided.">
+        <source>Invalid title provided.</source>
+        <target>Titre fourni invalide.</target>
+      </trans-unit>
+      <trans-unit id="NMoOdmC" resname="Group">
+        <source>Group</source>
+        <target>Groupe</target>
+      </trans-unit>
+      <trans-unit id="vn4vIBK" resname="Images">
+        <source>Images</source>
+        <target>Images</target>
+      </trans-unit>
+      <trans-unit id="Xl0CFs4" resname="Supprimer">
+        <source>Supprimer</source>
+        <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="0OXgO.9" resname="Add Image">
+        <source>Add Image</source>
+        <target>Ajouter Image</target>
+      </trans-unit>
+      <trans-unit id="1QNxKkk" resname="Add Video">
+        <source>Add Video</source>
+        <target>Ajouter Video</target>
+      </trans-unit>
+      <trans-unit id="sMalM_J" resname="Trick not found">
+        <source>Trick not found</source>
+        <target>Astuce introuvable</target>
+      </trans-unit>
+      <trans-unit id="z63XuX_" resname="The url &quot;{{ value }}&quot; is not a valid url.">
+        <source>The url "{{ value }}" is not a valid url.</source>
+        <target>L'url "{{ value }}" n'est pas une url valide.</target>
+      </trans-unit>
+      <trans-unit id="dUZJAEW" resname="Click to upload or drag and drop images here">
+        <source>Click to upload or drag and drop images here</source>
+        <target>Cliquez pour télécharger ou faites glisser et déposez des images ici</target>
+      </trans-unit>
+      <trans-unit id="hPfqZqM" resname="Or copy and paste this link in your browser">
+        <source>Or copy and paste this link in your browser</source>
+        <target>Ou copiez et collez ce lien dans votre navigateur</target>
+      </trans-unit>
+      <trans-unit id="8vQQ5wC" resname="Figures">
+        <source>Figures</source>
+        <target>Trickss</target>
+      </trans-unit>
+      <trans-unit id="APnFM0V" resname="Ajouter">
+        <source>Ajouter</source>
+        <target>Add</target>
+      </trans-unit>
+      <trans-unit id="YdaVBBA" resname="Connexion">
+        <source>Connexion</source>
+        <target>Connexion</target>
+      </trans-unit>
+      <trans-unit id="Z4He6M7" resname="All rights reserved. Made with">
+        <source>All rights reserved. Made with</source>
+        <target>Tous les droits sont réservés. Fabriqué avec</target>
+      </trans-unit>
+      <trans-unit id="p_LSbo0" resname="by">
+        <source>by</source>
+        <target>par</target>
+      </trans-unit>
+      <trans-unit id="4tClSWj" resname="Delete">
+        <source>Delete</source>
+        <target>Supprimer</target>
+      </trans-unit>
+      <trans-unit id="369F15y" resname="You can select multiple files">
+        <source>You can select multiple files</source>
+        <target>Vous pouvez sélectionner plusieurs fichiers</target>
+      </trans-unit>
+      <trans-unit id="YUdhz4f" resname="SVG, PNG, JPG or&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;GIF allowed">
+        <source>WEBP, PNG, or JPG allowed</source>
+        <target>WEBP, PNG, ou JPG autorisé</target>
+      </trans-unit>
+      <trans-unit id="U0M9PNE" resname="back to list">
+        <source>back to list</source>
+        <target>retour à la liste</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit">
+        <source>edit</source>
+        <target>éditer</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

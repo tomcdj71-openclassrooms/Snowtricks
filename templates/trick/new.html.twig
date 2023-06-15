@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ 'Add Trick'|trans }}
+{% endblock %}
+
+{% block body %}
+	<div class="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
+		{{ include('trick/_form.html.twig', {'button_label': 'Add Trick'}) }}
+	</div>
+{% endblock %}

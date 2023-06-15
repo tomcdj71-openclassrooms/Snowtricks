@@ -1,3 +1,4 @@
+import './bootstrap.js';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -10,3 +11,4 @@ import './styles/app.css';
 import 'flowbite';
 const feather = require('feather-icons')
 feather.replace();
+import './imageUploader.js';
