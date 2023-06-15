@@ -37,6 +37,11 @@ class TrickRepository extends ServiceEntityRepository
         $this->entityManager->flush();
     }
 
+    public function findOneBy(array $criteria, array $orderBy = null): ?Trick
+    {
+        return parent::findOneBy($criteria, $orderBy);
+    }
+
 //    /**
 //     * @return Trick[] Returns an array of Trick objects
 //     */
