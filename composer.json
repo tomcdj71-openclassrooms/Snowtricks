@@ -116,8 +116,7 @@
     "symfony/maker-bundle": "^1.48",
     "symfony/phpunit-bridge": "^6.3",
     "symfony/stopwatch": "6.3.*",
-    "symfony/web-profiler-bundle": "6.3.*",
-    "zenstruck/foundry": "^1.33"
+    "symfony/web-profiler-bundle": "6.3.*"
   },
   "name": "tomcdj71/snowtricks",
   "description": "6th project of my OpenClassrooms courses"
