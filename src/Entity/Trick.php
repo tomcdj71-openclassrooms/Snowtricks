@@ -46,7 +46,7 @@ class Trick
     private Collection $comments;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Image $featuredImage;
 
     public function __construct()
@@ -222,7 +222,7 @@ class Trick
         return $this->featuredImage;
     }
 
-    public function setFeaturedImage(Image $featuredImage): static
+    public function setFeaturedImage(?Image $featuredImage): self
     {
         $this->featuredImage = $featuredImage;
 

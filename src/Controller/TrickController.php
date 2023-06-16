@@ -62,7 +62,7 @@ class TrickController extends AbstractController
             $trick->setCreatedAt(new \DateTimeImmutable());
             $trickRepository->save($trick);
 
-            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('trick/new.html.twig', [
@@ -84,20 +84,42 @@ class TrickController extends AbstractController
     #[Route('/trick/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Trick $trick, TrickRepository $trickRepository): Response
     {
+        $originalTrick = clone $trick; // Keep a copy of the original trick object before changes
+
         $form = $this->createForm(TrickFormType::class, $trick);
         $form->handleRequest($request);
+
         $trick = $trickRepository->find($trick->getId());
         if (!$trick instanceof Trick) {
             throw $this->createNotFoundException($this->translator->trans('Trick not found'));
         }
+
         if ($form->isSubmitted() && $form->isValid()) {
+            // If featuredImage is null, restore it to its original state
+            if (!$trick->getFeaturedImage() instanceof \App\Entity\Image && $originalTrick->getFeaturedImage() instanceof \App\Entity\Image) {
+                $trick->setFeaturedImage($originalTrick->getFeaturedImage());
+            }
+
+            // If new images/videos have been added, merge them with the existing ones
+            if ($trick->getImages() instanceof \Doctrine\Common\Collections\Collection && count($trick->getImages()) > 0) {
+                foreach (array_merge($originalTrick->getImages()->toArray(), $trick->getImages()->toArray()) as $image) {
+                    $trick->addImage($image);
+                }
+            }
+
+            if ($trick->getVideos() instanceof \Doctrine\Common\Collections\Collection && count($trick->getVideos()) > 0) {
+                foreach (array_merge($originalTrick->getVideos()->toArray(), $trick->getVideos()->toArray()) as $video) {
+                    $trick->addVideo($video);
+                }
+            }
+
             $trickRepository->save($trick);
             $this->addFlash(
                 'success',
                 $this->translator->trans('Trick updated successfully!')
             );
 
-            return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
 
         return new Response($this->renderView('trick/edit.html.twig', [
@@ -110,34 +132,39 @@ class TrickController extends AbstractController
     public function delete(Request $request, Trick $trick, TrickRepository $trickRepository): Response
     {
         $token = (string) $request->request->get('_token');
-        if ($this->isCsrfTokenValid('delete'.$trick->getId(), $token)) {
+        if (null !== $token && $this->isCsrfTokenValid('delete'.$trick->getId(), $token)) {
             $trickRepository->remove($trick);
         }
 
-        return $this->redirectToRoute('app_trick_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/trick/delete/image/{id}', name: 'delete_image', methods: ['DELETE'])]
     public function deleteImage(Image $image, Request $request, ImageService $imageService): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
-        $token = null;
-        if (is_array($data)) {
-            $token = $data['_token'] ?? null;
-        }
-        $token = is_string($token) ? $token : null;
-        if (!$this->isCsrfTokenValid('delete'.$image->getId(), $token)) {
-            return new JsonResponse(['error' => $this->translator->trans('Invalid token')], 400);
-        }
-        $name = $image->getPath();
-        if (null !== $name && $imageService->delete($name, 'products', 300, 300)) {
-            $this->em->remove($image);
-            $this->em->flush();
+        $token = (string) $request->request->get('_token', '');
+        if ($this->isCsrfTokenValid('delete'.$image->getId(), $token)) {
+            $name = $image->getPath();
+            if (null !== $name && $imageService->delete($name, 'tricks/images', 300, 300)) {
+                $trick = $image->getTrick();
+                if ($trick instanceof \App\Entity\Trick) {
+                    if ($image === $trick->getFeaturedImage()) {
+                        $trick->setFeaturedImage(null);
+                    }
+                    $this->em->persist($trick);
+                    $this->em->remove($image);
+                    $this->em->flush();
 
-            return new JsonResponse(['success' => true], 200);
+                    return new JsonResponse(['success' => true], 200);
+                }
+
+                return new JsonResponse(['success' => true], 200);
+            }
+
+            return new JsonResponse(['error' => $this->translator->trans('Error encountered during the deletion of the image')], 400);
         }
-        // If a problem occurs during the deletion of the image
-        return new JsonResponse(['error' => $this->translator->trans('Error encountered during the deletion of the image')], 400);
+
+        return new JsonResponse(['error' => 'Invalid token'], 400);
     }
 
     /**
@@ -157,24 +184,27 @@ class TrickController extends AbstractController
         }
         $featuredImage = $form->get('featuredImage')->getData();
         if ($featuredImage instanceof UploadedFile) {
-            $this->addImageToTrick($featuredImage, 'tricks/images', $trick, true);
+            $image = $this->addImageToTrick($featuredImage, 'tricks/images', $trick, true);
+            $trick->setFeaturedImage($image);
         }
     }
 
     /**
      * This method adds an image to a trick.
      */
-    private function addImageToTrick(UploadedFile $image, string $folder, Trick $trick, bool $isFeatured = false): void
+    private function addImageToTrick(UploadedFile $image, string $folder, Trick $trick, bool $isFeatured = false): Image
     {
         $file = $this->imageService->add($image, $folder, 300, 300);
         $img = new Image();
         $img->setPath($file);
         $this->em->persist($img);
         if ($isFeatured) {
-            $trick->setFeaturedImage($img);
+            return $img;
         } else {
             $trick->addImage($img);
         }
+
+        return $img;
     }
 
     /**

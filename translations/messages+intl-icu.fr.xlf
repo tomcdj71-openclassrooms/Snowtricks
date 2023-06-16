@@ -398,15 +398,15 @@
         <target>Ou copiez et collez ce lien dans votre navigateur</target>
       </trans-unit>
       <trans-unit id="8vQQ5wC" resname="Figures">
-        <source>Figures</source>
-        <target>Trickss</target>
+        <source>Tricks</source>
+        <target>Figures</target>
       </trans-unit>
       <trans-unit id="APnFM0V" resname="Ajouter">
-        <source>Ajouter</source>
-        <target>Add</target>
+        <source>Add</source>
+        <target>Ajouter</target>
       </trans-unit>
-      <trans-unit id="YdaVBBA" resname="Connexion">
-        <source>Connexion</source>
+      <trans-unit id="YdaVBBA" resname="Log In">
+        <source>Log In</source>
         <target>Connexion</target>
       </trans-unit>
       <trans-unit id="Z4He6M7" resname="All rights reserved. Made with">
