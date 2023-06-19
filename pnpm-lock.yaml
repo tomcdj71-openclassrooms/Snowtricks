@@ -27,9 +27,6 @@ devDependencies:
   '@symfony/ux-dropzone':
     specifier: file:vendor/symfony/ux-dropzone/assets
     version: file:vendor/symfony/ux-dropzone/assets(@hotwired/stimulus@3.2.1)
-  '@symfony/ux-turbo':
-    specifier: file:vendor/symfony/ux-turbo/assets
-    version: file:vendor/symfony/ux-turbo/assets(@hotwired/stimulus@3.2.1)(@hotwired/turbo@7.3.0)
   '@symfony/webpack-encore':
     specifier: ^4.3.0
     version: 4.3.0(@babel/core@7.22.5)(@babel/preset-env@7.22.5)(@symfony/stimulus-bridge@3.2.2)(postcss-loader@7.3.3)(postcss@8.4.24)(webpack-cli@5.1.4)(webpack-notifier@1.15.0)(webpack@5.87.0)
@@ -2045,7 +2042,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.9
-      caniuse-lite: 1.0.30001503
+      caniuse-lite: 1.0.30001504
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -2173,8 +2170,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001503
-      electron-to-chromium: 1.4.432
+      caniuse-lite: 1.0.30001504
+      electron-to-chromium: 1.4.433
       node-releases: 2.0.12
       update-browserslist-db: 1.0.11(browserslist@4.21.9)
     dev: true
@@ -2219,13 +2216,13 @@ packages:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
     dependencies:
       browserslist: 4.21.9
-      caniuse-lite: 1.0.30001503
+      caniuse-lite: 1.0.30001504
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: true
 
-  /caniuse-lite@1.0.30001503:
-    resolution: {integrity: sha512-Sf9NiF+wZxPfzv8Z3iS0rXM1Do+iOy2Lxvib38glFX+08TCYYYGR5fRJXk4d77C4AYwhUjgYgMsMudbh2TqCKw==}
+  /caniuse-lite@1.0.30001504:
+    resolution: {integrity: sha512-5uo7eoOp2mKbWyfMXnGO9rJWOGU8duvzEiYITW+wivukL7yHH4gX9yuRaobu6El4jPxo6jKZfG+N6fB621GD/Q==}
     dev: true
 
   /chalk@2.4.2:
@@ -2716,8 +2713,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: true
 
-  /electron-to-chromium@1.4.432:
-    resolution: {integrity: sha512-yz3U/khQgAFT2HURJA3/F4fKIyO2r5eK09BQzBZFd6BvBSSaRuzKc2ZNBHtJcO75/EKiRYbVYJZ2RB0P4BuD2g==}
+  /electron-to-chromium@1.4.433:
+    resolution: {integrity: sha512-MGO1k0w1RgrfdbLVwmXcDhHHuxCn2qRgR7dYsJvWFKDttvYPx6FNzCGG0c/fBBvzK2LDh3UV7Tt9awnHnvAAUQ==}
     dev: true
 
   /emoji-regex@8.0.0:
@@ -5373,17 +5370,4 @@ packages:
       '@hotwired/stimulus': ^3.0.0
     dependencies:
       '@hotwired/stimulus': 3.2.1
-    dev: true
-
-  file:vendor/symfony/ux-turbo/assets(@hotwired/stimulus@3.2.1)(@hotwired/turbo@7.3.0):
-    resolution: {directory: vendor/symfony/ux-turbo/assets, type: directory}
-    id: file:vendor/symfony/ux-turbo/assets
-    name: '@symfony/ux-turbo'
-    version: 0.1.0
-    peerDependencies:
-      '@hotwired/stimulus': ^3.0.0
-      '@hotwired/turbo': ^7.0.1
-    dependencies:
-      '@hotwired/stimulus': 3.2.1
-      '@hotwired/turbo': 7.3.0
     dev: true
