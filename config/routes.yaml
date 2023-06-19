@@ -3,3 +3,11 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+delete_image:
+    path: /trick/delete/image/{id}
+    controller: App\Controller\TrickController::deleteImage
+    methods: ['DELETE']
+    requirements:
+        id: \d+
+
