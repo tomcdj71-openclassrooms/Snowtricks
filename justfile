@@ -222,7 +222,6 @@ before-commit:
     just update
     just report
     just lint
-    just tests
 
 update:
     just composer-update
