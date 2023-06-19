@@ -192,6 +192,9 @@ qa-lint-schema:
 #Runs a security audit using the local composer.lock file.
 qa-audit:
     {{COMPOSER}} audit
+#Extracts the translation messages.
+qa-translations-update:
+    {{COMPOSER}} run-script translations-update
 
 # Tests
 #Runs PHPUnit tests.
@@ -225,7 +228,6 @@ update:
     just composer-update
     just composer-outdated
     just npm-update
-    just npm-build
 
 #Executes a series of commands to prepare for the first installation.
 first-install: 
@@ -272,6 +274,7 @@ fix:
     just qa-phpstan
 
 lint:
+    just qa-translations-update
     just qa-lint-twigs
     just qa-lint-yaml
     just qa-lint-container

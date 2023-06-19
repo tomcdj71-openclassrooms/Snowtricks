@@ -1,0 +1,122 @@
+'Log In': Connexion
+'Sign in to your account': 'Connectez-vous à votre compte'
+'You are logged in as': 'Vous êtes connecté en tant que'
+Logout: 'Se déconnecter'
+'Your email': 'Votre e-mail'
+Password: 'Mot de passe'
+'Remember me': 'Souviens-toi de moi'
+'Forgot password?': 'Mot de passe oublié?'
+'Don’t have an account yet?': "Vous n'avez pas encore de compte?"
+'Sign up': "S'inscrire"
+yourname@email.com: votrenom@email.com
+'Please enter a valid email address.': 'Veuillez entrer une adresse email valide.'
+'You should agree to our terms.': 'Vous devez accepter nos conditions.'
+Username: "Nom d'utilisateur"
+JohnDoe_25: MartinDupont_25
+'Please enter an username.': "Veuillez entrer un nom d'utilisateur."
+'Please enter a password': 'Veuillez entrer un mot de passe'
+'Your password should be at least': 'Votre mot de passe doit être au moins'
+characters: caractères
+'Confirm Password': 'Confirmez le mot de passe'
+'The password fields must match.': 'Les champs du mot de passe doivent correspondre.'
+Register: Enregistrer
+'Create an account': 'Créer un compte'
+'I accept the termsLink': 'J''accepte les <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Conditions d''Utilisation</a>'
+'Already have an account': 'Vous avez déjà un compte'
+'Login here': 'Connectez-vous ici'
+'New Password': 'Nouveau mot de passe'
+'Reset your password': 'Réinitialisez votre mot de passe'
+'Reset password': 'Réinitialiser le mot de passe'
+'Forgot your password?': 'Mot de passe oublié?'
+'Send password reset email': 'Envoyer un e-mail de réinitialisation du mot de passe'
+'Password Reset Email Sent': 'E-mail de réinitialisation du mot de passe envoyé'
+'If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password. This link will expire in': "Si un compte correspondant à votre adresse e-mail existe, un e-mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe. Ce lien expirera dans"
+"If you don't receive an email please check your spam folder or": "Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier spam ou"
+'try again': rééssayez
+'Back Home': "Retour à l'accueil"
+'Enter your username address and we will send you a link to reset your password.': "Entrez votre adresse de nom d'utilisateur et nous vous enverrons un lien pour réinitialiser votre mot de passe."
+'Your username': "Nom d'utilisateur"
+'User not found.': 'Utilisateur non trouvé.'
+'An email has been sent with the password reset link.': 'Un e-mail a été envoyé avec le lien de réinitialisation du mot de passe.'
+'Invalid or expired token.': 'Jeton invalide ou expiré.'
+'Invalid token.': 'Jeton invalide.'
+'Password successfully changed.': 'Mot de passe changé avec succès.'
+'The verification link is invalid or has expired. Please register again.': 'Le lien de vérification est invalide ou a expiré. Veuillez vous inscrire à nouveau.'
+'The user does not exist. Please register again.': "L'utilisateur n'existe pas. Veuillez vous inscrire à nouveau."
+'The user is already verified. Please login.': "L'utilisateur est déjà vérifié. Veuillez vous connecter."
+'Your email address has been verified. You can now login.': 'Votre adresse e-mail a été vérifiée. Vous pouvez maintenant vous connecter.'
+Hi: Bonjour
+'To reset your password, please visit the following link': 'Pour réinitialiser votre mot de passe, veuillez visiter le lien suivant'
+'Reset my password': 'Réinitialiser mon mot de passe'
+'Please note': 'Veuillez noter'
+'This link will expire in': 'Ce lien expirera dans'
+Cheers: 'A bientôt'
+'Please confirm your email address': 'Merci de confirmer votre adresse e-mail'
+'by clicking the following link': 'en cliquant sur le lien suivant'
+'Confirm my Email': 'Confirmer mon e-mail'
+Home: Accueil
+Tricks: Figures
+'Sign Out': Déconnexion
+'Sign In': Connexion
+'Reset Password': 'Réinitialiser Mot de passe'
+'This method can be blank - it will be intercepted by the logout key on your firewall.': 'Cette méthode peut être vide - elle sera interceptée par la clé de déconnexion de votre pare-feu.'
+'Username must be a string.': "Le nom d'utilisateur doit être une chaîne."
+'Password must be a string.': 'Le mot de passe doit être une chaîne.'
+'Illustration image of the trick': "Image d'illustration de la figure"
+'Illustration image': "Image d'illustration"
+Gallery: Gallerie
+Comment: Commentaire
+'Your comment': 'Votre commentaire'
+'Write a comment...': 'Ecrivez un commentaire...'
+'Post Comment': 'Poster le commentaire'
+Title: Titre
+'Awesome Title': 'Titre génial'
+Description: Description
+'Write your article here...': 'Ecrivez votre article ici...'
+'Featured Image': 'Image Epinglée'
+'Edit Trick': 'Editer figure'
+'Add Trick': 'Ajouter figure'
+'Edit this trick': 'Editer cette figure'
+'No records found': 'Aucun enregistrement trouvé'
+'Create Trick': 'Créer une figure'
+'Close Modal': 'Fermer modale'
+'New Trick': 'Nouvelle figure'
+'Trick updated successfully!': 'Astuce mise à jour avec succès!'
+'Invalid token': 'Jeton invalide'
+'Error encountered during the deletion of the image': "Erreur rencontrée lors de la suppression de l'image"
+'Invalid data provided for images.': 'Données non valides fournies pour les images.'
+'Invalid image file.': 'Fichier image invalide.'
+'Invalid title provided.': 'Titre fourni invalide.'
+Group: Groupe
+Images: Images
+Supprimer: Supprimer
+'Add Image': 'Ajouter Image'
+'Add Video': 'Ajouter Video'
+'Trick not found': 'Astuce introuvable'
+'The url "{{ value }}" is not a valid url.': 'L''url "{{ value }}" n''est pas une url valide.'
+'Click to upload or drag and drop images here': 'Cliquez pour télécharger ou faites glisser et déposez des images ici'
+'Or copy and paste this link in your browser': 'Ou copiez et collez ce lien dans votre navigateur'
+Figures: Figures
+Ajouter: Ajouter
+'All rights reserved. Made with': 'Tous les droits sont réservés. Fabriqué avec'
+by: par
+Delete: Supprimer
+'You can select multiple files': 'Vous pouvez sélectionner plusieurs fichiers'
+"SVG, PNG, JPG or\n\t\t\t\t\t\t\t\t\t\tGIF allowed": 'WEBP, PNG, ou JPG autorisé'
+'back to list': 'retour à la liste'
+edit: éditer
+'Error encountered during the deletion of the video': 'Erreur rencontrée lors de la suppression de la vidéo'
+'Please upload an image as the featured image.': "Veuillez télécharger une image en tant qu'image Epinglée."
+'Please upload a valid image (jpg or png).': 'Veuillez télécharger une image valide (jpg or png).'
+'The title should be at least ': 'Le titre doit contenir au moins '
+' characters.': ' caractères.'
+'The title should not exceed ': 'Le titre ne doit pas dépasser '
+'The description should be at least ': 'La description doit contenir au moins '
+'The description should not exceed ': 'La description ne doit pas dépasser '
+'Invalid request data': '__Invalid request data'
+Previous: __Previous
+Next: __Next
+Showing: __Showing
+to: __to
+of: __of
+results: __results
