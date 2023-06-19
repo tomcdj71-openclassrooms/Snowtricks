@@ -33,10 +33,19 @@ class TrickController extends AbstractController
     }
 
     #[Route('', name: 'app_home', methods: ['GET', 'POST'])]
-    public function index(TrickRepository $trickRepository): Response
+    public function index(TrickRepository $trickRepository, Request $request): Response
     {
+        $limit = 8;
+        $page = $request->query->getInt('page', 1);
+        $paginator = $trickRepository->findTricksByPage($page, $limit);
+        $tricks = iterator_to_array($paginator->getIterator());
+        $totalTricks = count($paginator);
+
         return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findAll(),
+            'tricks' => $tricks,
+            'total_tricks' => $totalTricks,
+            'current_page' => $page,
+            'limit' => $limit,
         ]);
     }
 

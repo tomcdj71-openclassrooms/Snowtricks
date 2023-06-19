@@ -35,5 +35,51 @@
 			<!-- End Card -->
 		</div>
 		<!-- End Card Blog -->
+		{% set total_pages = (total_tricks + 1) // limit %}
+		<div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+			<div class="flex flex-1 justify-between sm:hidden">
+				{% if current_page > 1 %}
+					<a href="{{ path('app_home', {'page': current_page - 1}) }}" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">{{ 'Previous'|trans }}</a>
+				{% endif %}
+				{% if current_page < total_pages %}
+					<a href="{{ path('app_home', {'page': current_page + 1}) }}" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">{{ 'Next'|trans }}</a>
+				{% endif %}
+			</div>
+			<div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+				<div>
+					<p class="text-sm text-gray-700">
+						{{ 'Showing'|trans }}
+						<span class="font-medium">{{ (current_page - 1) * 2 + 1 }}</span>
+						{{ 'to'|trans }}
+						<span class="font-medium">{{ min(current_page * 2, total_tricks) }}</span>
+						{{ 'of'|trans }}
+						<span class="font-medium">{{ total_tricks }}</span>
+						{{ 'results'|trans }}
+					</p>
+				</div>
+				<div>
+					<nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+						{% if current_page > 1 %}
+							<a href="{{ path('app_home', {'page': current_page - 1}) }}" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+								<span class="sr-only">{{ 'Previous'|trans }}</span>
+							</a>
+						{% endif %}
+						{% for page in 1..total_pages %}
+							{% if page < 3 or page > total_pages - 2 or (page > current_page - 3 and page < current_page + 3) %}
+								<a href="{{ path('app_home', {'page': page}) }}" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold {{ page == current_page ? 'z-10 bg-indigo-600 text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0' }}">{{ page }}</a>
+							{% elseif page == current_page - 3 or page == current_page + 3 %}
+								<span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">...</span>
+							{% endif %}
+						{% endfor %}
+						{% if current_page < total_pages %}
+							<a href="{{ path('app_home', {'page': current_page + 1}) }}" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
+								<span class="sr-only">{{ 'Next' }}</span>
+							</a>
+						{% endif %}
+					</nav>
+				</div>
+			</div>
+		</div>
+
 
 	{% endblock %}
