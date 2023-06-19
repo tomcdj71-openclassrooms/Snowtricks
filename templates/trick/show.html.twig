@@ -65,7 +65,7 @@
 						</div>
 						<button type="submit" class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{{ 'Post Comment'|trans }}</button>
 					</form>
-					{% for comment in trick.comments %}
+					{% for comment in comments %}
 						<article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
 							<footer class="flex justify-between items-center mb-2">
 								<div class="flex items-center">
@@ -78,6 +78,9 @@
 							<p>{{ comment.content }}</p>
 						</article>
 					{% endfor %}
+					{% set total_comments = trick.comments|length %}
+					{% set current_page = app.request.get('page') %}
+					{% include '_partials/_pagination.html.twig' with {'route_name': 'app_trick_show', 'slug': trick.slug, 'total_items': total_comments, 'current_page': current_page, 'limit': limit} %}
 				</section>
 			</article>
 		</div>

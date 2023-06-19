@@ -6,6 +6,7 @@ use App\Entity\Image;
 use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\TrickFormType;
+use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use App\Repository\UserRepository;
 use App\Service\ImageService;
@@ -24,12 +25,14 @@ class TrickController extends AbstractController
     private TranslatorInterface $translator;
     private EntityManagerInterface $entityManager;
     private TrickService $trickService;
+    private CommentRepository $commentRepository;
 
-    public function __construct(TrickService $trickService, TranslatorInterface $translator, EntityManagerInterface $entityManager)
+    public function __construct(TrickService $trickService, TranslatorInterface $translator, EntityManagerInterface $entityManager, CommentRepository $commentRepository)
     {
         $this->trickService = $trickService;
         $this->translator = $translator;
         $this->entityManager = $entityManager;
+        $this->commentRepository = $commentRepository;
     }
 
     #[Route('', name: 'app_home', methods: ['GET', 'POST'])]
@@ -76,10 +79,19 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{slug}', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Trick $trick): Response
+    public function show(Trick $trick, Request $request, CommentRepository $commentRepository): Response
     {
+        $limit = 1;
+        $page = $request->query->getInt('page', 1);
+        $paginator = $commentRepository->findCommentsByPage($page, $limit);
+        $comments = iterator_to_array($paginator->getIterator());
+        $totalComments = count($paginator);
+
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'comments' => $comments,
+            'total_comments' => $totalComments,
+            'limit' => $limit,
         ]);
     }
 

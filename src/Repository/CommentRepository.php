@@ -3,9 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Comment>
@@ -35,6 +36,17 @@ class CommentRepository extends ServiceEntityRepository
     {
         $this->entityManager->remove($comment);
         $this->entityManager->flush();
+    }
+
+    public function findCommentsByPage(int $page = 1, int $pageSize = 10): Paginator
+    {
+        $query = $this->createQueryBuilder('t')
+            ->orderBy('t.id', 'DESC')
+            ->setFirstResult(($page - 1) * $pageSize)
+            ->setMaxResults($pageSize)
+            ->getQuery();
+
+        return new Paginator($query);
     }
 
     //    /**
