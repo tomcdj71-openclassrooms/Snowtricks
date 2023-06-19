@@ -181,9 +181,12 @@ class Trick
 
     public function removeVideo(Video $video): self
     {
-        // set the owning side to null (unless already changed)
-        if ($this->videos->removeElement($video) && $video->getTrick() === $this) {
-            $video->setTrick(null);
+        if ($this->videos->contains($video)) {
+            $this->videos->removeElement($video);
+            // set the owning side to null (unless already changed)
+            if ($video->getTrick() === $this) {
+                $video->setTrick(null);
+            }
         }
 
         return $this;

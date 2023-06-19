@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\Dropzone\Form\DropzoneType;
 
@@ -31,19 +32,49 @@ class TrickFormType extends AbstractType
                 'label' => $this->translator->trans('Title'),
                 'attr' => [
                     'placeholder' => $this->translator->trans('Awesome Title'),
-                ]])
+                ],
+                'constraints' => [
+                    new Assert\Length([
+                        'min' => 5,
+                        'max' => 100,
+                        'minMessage' => $this->translator->trans('The title should be at least ').'{{ limit }}'.$this->translator->trans(' characters.'),
+                        'maxMessage' => $this->translator->trans('The title should not exceed ').'{{ limit }}'.$this->translator->trans(' characters.'),
+                    ]),
+                ],
+            ])
             ->add('description', TextareaType::class, [
                 'label' => $this->translator->trans('Description'),
                 'attr' => [
                     'class' => 'block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500',
                     'rows' => 6,
                     'placeholder' => $this->translator->trans('Write your article here...'),
-                ]]
-            )
+                ],
+                'constraints' => [
+                    new Assert\Length([
+                        'min' => 10,
+                        'max' => 2000,
+                        'minMessage' => $this->translator->trans('The description should be at least ').'{{ limit }}'.$this->translator->trans(' characters.'),
+                        'maxMessage' => $this->translator->trans('The description should not exceed ').'{{ limit }}'.$this->translator->trans(' characters.'),
+                    ]),
+                ],
+            ])
             ->add('featuredImage', FileType::class, [
                 'label' => $this->translator->trans('Featured Image'),
                 'mapped' => false,
-                'required' => true,
+                'required' => false,
+                'constraints' => $options['edit_mode'] ? [] : [
+                    new Assert\NotBlank([
+                        'message' => $this->translator->trans('Please upload an image as the featured image.'),
+                    ]),
+                    new Assert\Image([
+                        'maxSize' => '5M',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                        ],
+                        'mimeTypesMessage' => $this->translator->trans('Please upload a valid image (jpg or png).'),
+                    ]),
+                ],
             ])
             ->add('group', EntityType::class, [
                 'label' => $this->translator->trans('Group'),
@@ -58,6 +89,7 @@ class TrickFormType extends AbstractType
                 ],
                 'multiple' => true,
                 'mapped' => false,
+                'required' => !(bool) $options['edit_mode'],
             ])
             ->add('videos', CollectionType::class, [
                 'label' => 'Videos',
@@ -76,6 +108,7 @@ class TrickFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
+            'edit_mode' => false,
         ]);
     }
 }

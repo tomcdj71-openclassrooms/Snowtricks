@@ -398,16 +398,12 @@
         <target>Ou copiez et collez ce lien dans votre navigateur</target>
       </trans-unit>
       <trans-unit id="8vQQ5wC" resname="Figures">
-        <source>Tricks</source>
+        <source>Figures</source>
         <target>Figures</target>
       </trans-unit>
       <trans-unit id="APnFM0V" resname="Ajouter">
-        <source>Add</source>
+        <source>Ajouter</source>
         <target>Ajouter</target>
-      </trans-unit>
-      <trans-unit id="YdaVBBA" resname="Log In">
-        <source>Log In</source>
-        <target>Connexion</target>
       </trans-unit>
       <trans-unit id="Z4He6M7" resname="All rights reserved. Made with">
         <source>All rights reserved. Made with</source>
@@ -426,7 +422,8 @@
         <target>Vous pouvez sélectionner plusieurs fichiers</target>
       </trans-unit>
       <trans-unit id="YUdhz4f" resname="SVG, PNG, JPG or&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;GIF allowed">
-        <source>WEBP, PNG, or JPG allowed</source>
+        <source>SVG, PNG, JPG or
+										GIF allowed</source>
         <target>WEBP, PNG, ou JPG autorisé</target>
       </trans-unit>
       <trans-unit id="U0M9PNE" resname="back to list">
@@ -436,6 +433,38 @@
       <trans-unit id="JiEhxTc" resname="edit">
         <source>edit</source>
         <target>éditer</target>
+      </trans-unit>
+      <trans-unit id="hrLBTB4" resname="Error encountered during the deletion of the video">
+        <source>Error encountered during the deletion of the video</source>
+        <target>Erreur rencontrée lors de la suppression de la vidéo</target>
+      </trans-unit>
+      <trans-unit id="rBZxAHy" resname="Please upload an image as the featured image.">
+        <source>Please upload an image as the featured image.</source>
+        <target>Veuillez télécharger une image en tant qu'image Epinglée.</target>
+      </trans-unit>
+      <trans-unit id="4JxPXL5" resname="Please upload a valid image (jpg or png).">
+        <source>Please upload a valid image (jpg or png).</source>
+        <target>Veuillez télécharger une image valide (jpg or png).</target>
+      </trans-unit>
+      <trans-unit id="vGPLSqn" resname="The title should be at least ">
+        <source>The title should be at least </source>
+        <target>Le titre doit contenir au moins </target>
+      </trans-unit>
+      <trans-unit id="WCE.0Pk" resname=" characters.">
+        <source> characters.</source>
+        <target> caractères.</target>
+      </trans-unit>
+      <trans-unit id=".WAY1z3" resname="The title should not exceed ">
+        <source>The title should not exceed </source>
+        <target>Le titre ne doit pas dépasser </target>
+      </trans-unit>
+      <trans-unit id="KXlQ.8x" resname="The description should be at least ">
+        <source>The description should be at least </source>
+        <target>La description doit contenir au moins </target>
+      </trans-unit>
+      <trans-unit id="S_Q5qht" resname="The description should not exceed ">
+        <source>The description should not exceed </source>
+        <target>La description ne doit pas dépasser </target>
       </trans-unit>
     </body>
   </file>

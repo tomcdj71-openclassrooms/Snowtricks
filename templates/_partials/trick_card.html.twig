@@ -1,7 +1,7 @@
 <article>
 	<a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-slate-900 dark:border-gray-800" href="#">
 		<div class="aspect-w-16 aspect-h-9">
-			<img class="w-full object-cover rounded-t-xl" src="{{ trick.featuredImage }}" alt="Image Description">
+			<img class="w-full object-cover rounded-t-xl" src="{{ asset('assets/uploads/tricks/images/' ~ trick.featuredImage.path ) }}" alt="Image Description">
 		</div>
 		<div class="p-4 md:p-5">
 			<p class="mt-2 text-xs uppercase text-gray-600 dark:text-gray-400">
