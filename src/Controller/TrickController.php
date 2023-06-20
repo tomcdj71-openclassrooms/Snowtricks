@@ -5,16 +5,19 @@ namespace App\Controller;
 use App\Entity\Image;
 use App\Entity\Trick;
 use App\Entity\Video;
+use App\Entity\Comment;
 use App\Form\TrickFormType;
+use App\Form\CommentFormType;
 use App\Handler\TrickHandler;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TrickController extends AbstractController
 {
@@ -73,19 +76,28 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{slug}', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Trick $trick, Request $request): Response
+    public function show(Trick $trick, Request $request, CommentRepository $commentRepository): Response
     {
         $limit = 1;
         $page = $request->query->getInt('page', 1);
         $paginator = $this->trickHandler->findCommentsByPage($page, $limit);
         $comments = iterator_to_array($paginator->getIterator());
         $totalComments = count($paginator);
+        $comment = new Comment();
+        $form = $this->createForm(CommentFormType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $commentRepository->save($comment);
+            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+        }
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'comments' => $comments,
             'total_comments' => $totalComments,
             'limit' => $limit,
+            'current_page' => $page,
+            'form' => $form->createView(),
         ]);
     }
 

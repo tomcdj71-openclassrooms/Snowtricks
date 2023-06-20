@@ -58,11 +58,10 @@
 							({{ trick.comments|length }})
 						</h2>
 					</div>
-					<form class="mb-6">
-						<div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-							<label for="comment" class="sr-only">{{ 'Your comment'|trans }}</label>
-							<textarea id="comment" rows="6" class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 dark:text-white dark:placeholder-gray-400 dark:bg-gray-800" placeholder="{{ 'Write a comment...'|trans }}" required></textarea>
-						</div>
+					<form action="{{ path('app_trick_show', {'slug': trick.slug}) }}" method="post" class="mb-6">
+						{{ form_start(form) }}
+						{{ form_row(form.content) }}
+						{{ form_end(form) }}
 						<button type="submit" class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{{ 'Post Comment'|trans }}</button>
 					</form>
 					{% for comment in comments %}
