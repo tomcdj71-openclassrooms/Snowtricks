@@ -2,15 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Comment;
 use App\Entity\Image;
-use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\CommentFormType;
 use App\Form\TrickFormType;
 use App\Handler\TrickHandler;
-use App\Repository\CommentRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -52,7 +48,7 @@ class TrickController extends AbstractController
     #[Route('/trick/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
-        $trick = new Trick();
+        $trick = new \App\Entity\Trick();
         $form = $this->createForm(TrickFormType::class, $trick, ['edit_mode' => false]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -75,19 +71,22 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/trick/{slug}', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Trick $trick, Request $request, CommentRepository $commentRepository): Response
+    #[Route('/trick/{slug}', name: 'app_trick_show', methods: ['GET', 'POST'])]
+    public function show(\App\Entity\Trick $trick, Request $request): Response
     {
-        $limit = 1;
+        $limit = 5;
         $page = $request->query->getInt('page', 1);
         $paginator = $this->trickHandler->findCommentsByPage($page, $limit);
         $comments = iterator_to_array($paginator->getIterator());
         $totalComments = count($paginator);
-        $comment = new Comment();
-        $form = $this->createForm(CommentFormType::class);
+        $comment = new \App\Entity\Comment();
+        $comment->setTrick($trick);
+        $comment->setAuthor($this->trickHandler->findRandomUser());
+        $comment->setCreatedAt(new \DateTimeImmutable());
+        $form = $this->createForm(CommentFormType::class, $comment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $commentRepository->save($comment);
+            $this->entityManager->getRepository(\App\Entity\Comment::class)->save($comment);
 
             return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
@@ -103,13 +102,13 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Trick $trick): Response
+    public function edit(Request $request, \App\Entity\Trick $trick): Response
     {
         $originalTrick = clone $trick;
         $form = $this->createForm(TrickFormType::class, $trick, ['edit_mode' => true]);
         $form->handleRequest($request);
 
-        if (!$trick instanceof Trick) {
+        if (!$trick instanceof \App\Entity\Trick) {
             throw $this->createNotFoundException($this->translator->trans('Trick not found'));
         }
         if ($form->isSubmitted() && $form->isValid()) {
@@ -120,7 +119,7 @@ class TrickController extends AbstractController
             }
             $this->trickHandler->mergeImages($trick, $originalTrick);
             $this->trickHandler->mergeVideos($trick, $originalTrick);
-            if ($trick->getVideos() instanceof Collection && count($trick->getVideos()) > 0) {
+            if ($trick->getVideos() instanceof \Doctrine\Common\Collections\Collection && count($trick->getVideos()) > 0) {
                 foreach (array_merge($originalTrick->getVideos()->toArray(), $trick->getVideos()->toArray()) as $video) {
                     $trick->addVideo($video);
                 }
@@ -141,7 +140,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{id}', name: 'app_trick_delete', methods: ['POST'])]
-    public function delete(Request $request, Trick $trick): Response
+    public function delete(Request $request, \App\Entity\Trick $trick): Response
     {
         $token = (string) $request->request->get('_token');
         if (null !== $token && $this->isCsrfTokenValid('delete'.$trick->getId(), $token)) {
@@ -164,7 +163,7 @@ class TrickController extends AbstractController
             $name = $image->getPath();
             if (null !== $name && $this->trickHandler->delete($name, 'tricks/images', 300, 300)) {
                 $trick = $image->getTrick();
-                if ($trick instanceof Trick) {
+                if ($trick instanceof \App\Entity\Trick && $trick->getFeaturedImage() instanceof Image) {
                     if ($image === $trick->getFeaturedImage()) {
                         $trick->setFeaturedImage(null);
                     }
@@ -195,7 +194,7 @@ class TrickController extends AbstractController
         $token = (string) $content['_csrf'];
         if ($this->isCsrfTokenValid('delete'.$videoId, $token)) {
             $trick = $video->getTrick();
-            if ($trick instanceof Trick) {
+            if ($trick instanceof \App\Entity\Trick) {
                 $trick->removeVideo($video);
                 $this->entityManager->persist($trick);
                 $this->entityManager->remove($video);

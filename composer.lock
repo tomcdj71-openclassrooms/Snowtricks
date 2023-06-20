@@ -7231,16 +7231,16 @@
         },
         {
             "name": "tales-from-a-dev/flowbite-bundle",
-            "version": "v0.2.3",
+            "version": "v0.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tales-from-a-dev/flowbite-bundle.git",
-                "reference": "dadfd23f436ef754aa8180a9050128170e904057"
+                "reference": "e9ff0792f1a30ac3a925632f01624287e6c73854"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tales-from-a-dev/flowbite-bundle/zipball/dadfd23f436ef754aa8180a9050128170e904057",
-                "reference": "dadfd23f436ef754aa8180a9050128170e904057",
+                "url": "https://api.github.com/repos/tales-from-a-dev/flowbite-bundle/zipball/e9ff0792f1a30ac3a925632f01624287e6c73854",
+                "reference": "e9ff0792f1a30ac3a925632f01624287e6c73854",
                 "shasum": ""
             },
             "require": {
@@ -7283,9 +7283,9 @@
             ],
             "support": {
                 "issues": "https://github.com/tales-from-a-dev/flowbite-bundle/issues",
-                "source": "https://github.com/tales-from-a-dev/flowbite-bundle/tree/v0.2.3"
+                "source": "https://github.com/tales-from-a-dev/flowbite-bundle/tree/v0.2.4"
             },
-            "time": "2023-05-05T08:33:42+00:00"
+            "time": "2023-06-20T10:49:54+00:00"
         },
         {
             "name": "twig/extra-bundle",
@@ -10040,16 +10040,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.10.19",
+            "version": "1.10.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "af5a296ff02610c1bfb4ddfac9fd4a08657b9046"
+                "reference": "c4c8adb56313fbd59ff5a5f4a496bbed1a6b8803"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/af5a296ff02610c1bfb4ddfac9fd4a08657b9046",
-                "reference": "af5a296ff02610c1bfb4ddfac9fd4a08657b9046",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c4c8adb56313fbd59ff5a5f4a496bbed1a6b8803",
+                "reference": "c4c8adb56313fbd59ff5a5f4a496bbed1a6b8803",
                 "shasum": ""
             },
             "require": {
@@ -10098,7 +10098,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-14T15:26:58+00:00"
+            "time": "2023-06-20T12:07:40+00:00"
         },
         {
             "name": "phpstan/phpstan-doctrine",
