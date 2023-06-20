@@ -27,8 +27,9 @@
 				{{ trick.description|raw }}
 				<aside aria-label="{{ 'Gallery'|trans }}" class="py-8 lg:py-24 bg-gray-50 dark:bg-gray-800">
 					<div class="px-4 mx-auto max-w-screen-xl">
-						<h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white">{{ 'Gallery'|trans }}</h2>
-						<div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+						<h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white text-center">{{ 'Gallery'|trans }}</h2>
+						<h3 class="mb-8 text-xl font-bold text-gray-900 dark:text-white">{{ 'Images'|trans }}</h3>
+						<div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 pb-3">
 							{% for image in trick.images %}
 								<article class="max-w-xs">
 									<a href="#">
@@ -37,12 +38,13 @@
 								</article>
 							{% endfor %}
 						</div>
-						<div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+						<hr>
+						<h3 class="mb-8 text-xl font-bold text-gray-900 dark:text-white mt-4 pt-4">{{ 'Videos'|trans }}</h3>
+						<div class="grid gap-12 sm:grid-cols-1 lg:grid-cols-2">
 							{% for video in trick.videos %}
 								<article class="max-w-xs">
-									<div class="mb-5 rounded-lg">
-										<iframe src="https://www.youtube.com/embed/{{ video.path }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-									</div>
+									<iframe class="mb-5 rounded-lg" src="{{ video.path|video_url }}" width="350" height="200" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+									<a class="flex flex-col items-center justify-center" href="{{ path('delete_video', {id: video.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ video.id) }}">{{ 'Supprimer'|trans }}</a>
 								</article>
 							{% endfor %}
 						</div>
