@@ -113,10 +113,13 @@ edit: éditer
 'The title should not exceed ': 'Le titre ne doit pas dépasser '
 'The description should be at least ': 'La description doit contenir au moins '
 'The description should not exceed ': 'La description ne doit pas dépasser '
-'Invalid request data': '__Invalid request data'
-Previous: __Previous
-Next: __Next
-Showing: __Showing
-to: __to
-of: __of
-results: __results
+'Invalid request data': 'Données de la requête non valides'
+Previous: Précédent
+Next: Suivant
+Showing: Affichage
+to: de
+of: sur
+results: résultats
+'Write your comment here...': 'Ecrivez votre commentaire ici...'
+'The comment should be at least ': 'Le commentaire doit être au moins '
+'The comment should not exceed ': 'Le commentaire ne doit pas dépasser '

@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Image;
 use App\Entity\Trick;
 use App\Entity\Video;
+use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
@@ -18,13 +19,15 @@ class TrickService
     private SluggerInterface $slugger;
     private TranslatorInterface $translator;
     private EntityManagerInterface $em;
+    private TrickRepository $trickRepository;
 
-    public function __construct(ImageServiceInterface $imageService, SluggerInterface $slugger, TranslatorInterface $translator, EntityManagerInterface $em)
+    public function __construct(ImageServiceInterface $imageService, SluggerInterface $slugger, TranslatorInterface $translator, EntityManagerInterface $em, TrickRepository $trickRepository)
     {
         $this->imageService = $imageService;
         $this->slugger = $slugger;
         $this->translator = $translator;
         $this->em = $em;
+        $this->trickRepository = $trickRepository;
     }
 
     /**
@@ -58,7 +61,12 @@ class TrickService
         if (null === $title) {
             throw new \RuntimeException($this->translator->trans('Invalid title provided.'));
         }
-        $slug = $this->slugger->slug($title);
+        $originalSlug = $slug = $this->slugger->slug($title)->lower();
+        $iterator = 1;
+        while ($this->trickRepository->findOneBy(['slug' => $slug])) {
+            $slug = $originalSlug.'-'.$iterator++;
+        }
+
         $trick->setSlug($slug);
     }
 
