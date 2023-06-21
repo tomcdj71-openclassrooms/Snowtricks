@@ -7,6 +7,26 @@ use Twig\TwigFilter;
 
 class VideoProviderExtension extends AbstractExtension
 {
+    /**
+     * @var array<string, callable>
+     */
+    private array $handlers;
+
+    public function __construct()
+    {
+        $this->handlers = [
+            'youtube.com' => function (string $url): string {
+                return $this->youtubeVideoUrl($url);
+            },
+            'vimeo.com' => function (string $url): string {
+                return $this->vimeoVideoUrl($url);
+            },
+            'dailymotion.com' => function (string $url): string {
+                return $this->dailymotionVideoUrl($url);
+            },
+        ];
+    }
+
     public function getFilters(): array
     {
         return [
@@ -18,47 +38,57 @@ class VideoProviderExtension extends AbstractExtension
 
     public function videoUrlFilter(string $url): string
     {
-        // Youtube URL
-        if (false !== strpos($url, 'youtube.com')) {
-            $query = [];
-            $urlComponents = parse_url($url);
-
-            if (false !== $urlComponents && is_array($urlComponents)) {
-                parse_str($urlComponents['query'] ?? '', $query);
-            }
-
-            if (isset($query['v']) && is_string($query['v']) && '' !== $query['v']) {
-                return 'https://www.youtube.com/embed/'.$query['v'];
+        foreach ($this->handlers as $provider => $handler) {
+            if (false !== strpos($url, $provider)) {
+                return $handler($url);
             }
         }
 
-        // Vimeo URL
-        if (false !== strpos($url, 'vimeo.com')) {
-            $urlComponents = parse_url($url);
-            $path = $urlComponents['path'] ?? '';
+        return $url;
+    }
 
-            if ('' !== $path) {
-                $pathComponents = explode('/', trim($path, '/'));
-                $videoId = end($pathComponents);
+    private function youtubeVideoUrl(string $url): string
+    {
+        $query = [];
+        $urlComponents = parse_url($url);
 
-                if (false !== $videoId) {
-                    return 'https://player.vimeo.com/video/'.$videoId;
-                }
+        if (false !== $urlComponents && is_array($urlComponents)) {
+            parse_str($urlComponents['query'] ?? '', $query);
+        }
+
+        if (isset($query['v']) && is_string($query['v']) && '' !== $query['v']) {
+            return 'https://www.youtube.com/embed/'.$query['v'];
+        }
+
+        return $url;
+    }
+
+    private function vimeoVideoUrl(string $url): string
+    {
+        $urlComponents = parse_url($url);
+
+        if (false !== $urlComponents && is_array($urlComponents)) {
+            $path = explode('/', $urlComponents['path'] ?? '');
+            $videoId = end($path);
+
+            if (is_string($videoId) && '' !== $videoId) {
+                return 'https://player.vimeo.com/video/'.$videoId;
             }
         }
 
-        // Dailymotion URL
-        if (false !== strpos($url, 'dailymotion.com')) {
-            $urlComponents = parse_url($url);
-            $path = $urlComponents['path'] ?? '';
+        return $url;
+    }
 
-            if ('' !== $path) {
-                $pathComponents = explode('/', trim($path, '/'));
-                $videoId = end($pathComponents);
+    private function dailymotionVideoUrl(string $url): string
+    {
+        $urlComponents = parse_url($url);
 
-                if (false !== $videoId) {
-                    return 'https://www.dailymotion.com/embed/video/'.$videoId;
-                }
+        if (false !== $urlComponents && is_array($urlComponents)) {
+            $path = explode('/', $urlComponents['path'] ?? '');
+            $videoId = end($path);
+
+            if (is_string($videoId) && '' !== $videoId) {
+                return 'https://www.dailymotion.com/embed/video/'.$videoId;
             }
         }
 
