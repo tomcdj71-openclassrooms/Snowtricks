@@ -6,7 +6,7 @@
 {% block body %}
 	<main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900">
 		<div class="flex justify-between px-4 mx-auto max-w-screen-xl ">
-			<article class="mx-auto w-full max-w-3xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+			<article class="mx-auto w-full max-w-3xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert" data-trick="{{ trick.id }}">
 				<header class="mb-4 lg:mb-6 not-format">
 					<address class="flex items-center mb-6 not-italic">
 						<div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
@@ -67,22 +67,19 @@
 						<button type="submit" class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{{ 'Post Comment'|trans }}</button>
 						{{ form_end(form) }}
 					</form>
-					{% for comment in comments %}
-						<article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
-							<footer class="flex justify-between items-center mb-2">
-								<div class="flex items-center">
-									<p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img class="mr-2 w-6 h-6 rounded-full" src="{{ comment.author.avatar.path }}" alt="Michael Gough">{{ comment.author.username }}</p>
-									<p class="text-sm text-gray-600 dark:text-gray-400">
-										<time pubdate datetime="2022-02-08" title="February 8th, 2022">{{ comment.createdAt|date("m/d/Y", "Europe/Paris") }}</time>
-									</p>
-								</div>
-							</footer>
-							<p>{{ comment.content }}</p>
-						</article>
-					{% endfor %}
-					{% set total_comments = trick.comments|length %}
-					{% set current_page = app.request.get('page') %}
-					{% include '_partials/_pagination.html.twig' with {'route_name': 'app_trick_show', 'slug': trick.slug, 'total_items': total_comments, 'current_page': current_page, 'limit': limit} %}
+					<div id="comments-container">
+						{% for comment in comments %}
+							{% include "_partials/_comment_card.html.twig" %}
+						{% endfor %}
+						<div class="flex justify-center items-center mb-6">
+							<button type="button" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center" id="load-more-comments">
+								<svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+								</svg>
+								{{ 'Load More Comments'|trans }}
+							</button>
+						</div>
+					</div>
 				</section>
 			</article>
 		</div>

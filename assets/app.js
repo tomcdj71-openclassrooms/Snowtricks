@@ -11,3 +11,4 @@ import 'flowbite';
 const feather = require('feather-icons')
 feather.replace();
 import './imageUploader.js';
+import './loadMore.js';

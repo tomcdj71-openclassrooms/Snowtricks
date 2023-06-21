@@ -39,9 +39,9 @@ class TrickHandler
         return $this->imageService->delete($image, $directory, $width, $height);
     }
 
-    public function findCommentsByPage(int $page, int $limit): Paginator
+    public function findCommentsByPage(int $trickId, int $page, int $limit): Paginator
     {
-        return $this->commentRepository->findCommentsByPage($page, $limit);
+        return $this->commentRepository->findCommentsByPage($trickId, $page, $limit);
     }
 
     public function findRandomUser(): ?User

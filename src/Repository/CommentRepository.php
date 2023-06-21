@@ -38,12 +38,14 @@ class CommentRepository extends ServiceEntityRepository
         $this->entityManager->flush();
     }
 
-    public function findCommentsByPage(int $page = 1, int $pageSize = 10): Paginator
+    public function findCommentsByPage(int $trickId, int $page = 1, int $pageSize = 10): Paginator
     {
         $query = $this->createQueryBuilder('t')
             ->orderBy('t.id', 'DESC')
             ->setFirstResult(($page - 1) * $pageSize)
             ->setMaxResults($pageSize)
+            ->setParameter('trick', $trickId)
+            ->where('t.trick = :trick')
             ->getQuery();
 
         return new Paginator($query);

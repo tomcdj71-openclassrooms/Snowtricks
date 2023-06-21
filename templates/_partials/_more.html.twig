@@ -1,0 +1,9 @@
+{% if type == 'trick' %}
+	{% for trick in items %}
+		{% include '_partials/_trick_card.html.twig' %}
+	{% endfor %}
+{% elseif type == 'comment' %}
+	{% for comment in items %}
+		{% include '_partials/_comment_card.html.twig' %}
+	{% endfor %}
+{% endif %}

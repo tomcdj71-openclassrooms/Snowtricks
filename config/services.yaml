@@ -6,6 +6,8 @@
 parameters:
     app.secret: '%env(APP_SECRET)%'
     images_directory: '%kernel.project_dir%/public/assets/uploads/'
+    comments_per_page: '%env(COMMENTS_PER_PAGE)%'
+    tricks_per_page: '%env(TRICKS_PER_PAGE)%'
 
 services:
     # default configuration for services in *this* file

@@ -31,8 +31,12 @@ class TrickController extends AbstractController
     #[Route('', name: 'app_home', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
-        $limit = 8;
         $page = $request->query->getInt('page', 1);
+        $limit = $this->getParameter('tricks_per_page');
+        if (!is_numeric($limit)) {
+            throw new \Exception('Invalid parameter: tricks_per_page');
+        }
+        $limit = (int) $limit;
         $paginator = $this->trickHandler->findTricksByPage($page, $limit);
         $tricks = iterator_to_array($paginator->getIterator());
         $totalTricks = count($paginator);
@@ -74,9 +78,17 @@ class TrickController extends AbstractController
     #[Route('/trick/{slug}', name: 'app_trick_show', methods: ['GET', 'POST'])]
     public function show(\App\Entity\Trick $trick, Request $request): Response
     {
-        $limit = 5;
         $page = $request->query->getInt('page', 1);
-        $paginator = $this->trickHandler->findCommentsByPage($page, $limit);
+        $trickId = $trick->getId();
+        if (null === $trickId) {
+            throw $this->createNotFoundException('The trick does not exist');
+        }
+        $limit = $this->getParameter('comments_per_page');
+        if (!is_numeric($limit)) {
+            throw new \Exception('Invalid parameter: comments_per_page');
+        }
+        $limit = (int) $limit;
+        $paginator = $this->trickHandler->findCommentsByPage($trickId, $page, $limit);
         $comments = iterator_to_array($paginator->getIterator());
         $totalComments = count($paginator);
         $comment = new \App\Entity\Comment();
