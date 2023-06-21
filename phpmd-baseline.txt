@@ -1,0 +1,2 @@
+/home/thomas/Dev/SelfHosted-GitLab/Organizations/Formations/OpenClassrooms/php_sf/Projets/Snowtricks/src/Controller/TrickController.php:18  CouplingBetweenObjects  The class TrickController has a coupling between objects value of 15. Consider to reduce the number of dependencies under 13.
+/home/thomas/Dev/SelfHosted-GitLab/Organizations/Formations/OpenClassrooms/php_sf/Projets/Snowtricks/src/Form/TrickFormType.php:19          CouplingBetweenObjects  The class TrickFormType has a coupling between objects value of 15. Consider to reduce the number of dependencies under 13.

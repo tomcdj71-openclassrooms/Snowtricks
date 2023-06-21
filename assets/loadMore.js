@@ -7,23 +7,23 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => response.text())
             .then(data => {
                 document.getElementById(containerId).innerHTML += data;
-                pageCounter++;
+                pageCounter.page++;
             })
             .catch(error => console.error('Error:', error));
     };
 
     if (loadMoreTricksButton) {
-        let trickPage = 2;
+        let trickPage = { page: 2 };
         loadMoreTricksButton.addEventListener('click', function () {
-            fetchData(`/load_more/tricks/${trickPage}`, 'tricks-container', trickPage);
+            fetchData(`/load_more/tricks/${trickPage.page}`, 'tricks-container', trickPage);
         });
     }
 
     if (loadMoreCommentsButton) {
-        let commentPage = 2;
+        let commentPage = { page: 2 };
         let trick = document.querySelector('[data-trick]').getAttribute('data-trick');
         loadMoreCommentsButton.addEventListener('click', function () {
-            fetchData(`/load_more/comments/${trick}/${commentPage}`, 'comments-container', commentPage);
+            fetchData(`/load_more/comments/${trick}/${commentPage.page}`, 'comments-container', commentPage);
         });
     }
 });

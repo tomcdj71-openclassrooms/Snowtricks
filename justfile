@@ -161,7 +161,7 @@ qa-phpmetrics:
     {{VENDOR_BIN}}/phpmetrics
 #Runs PHPMD.
 qa-phpmd-baseline: 
-    {{VENDOR_BIN}}/phpmd src text phpmd-rules.xml --reportfile phpmd-baseline.txt
+    {{VENDOR_BIN}}/phpmd src text phpmd-rules.xml --reportfile phpmd-baseline.txt || true
 qa-phpmd: 
     {{VENDOR_BIN}}/phpmd src text phpmd-rules.xml
 #Runs Rector in dry run mode.
