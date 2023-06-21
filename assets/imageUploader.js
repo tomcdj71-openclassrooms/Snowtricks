@@ -1,16 +1,15 @@
-// For handling image deletion
-let links = document.querySelectorAll("[data-delete]");
+let links = document.querySelectorAll('[data-delete]');
 for (let link of links) {
-    link.addEventListener("click", function (e) {
+    link.addEventListener('click', function (e) {
         e.preventDefault();
-        if (confirm("Do you want to delete this image?")) {
-            fetch(this.getAttribute("href"), {
-                method: "DELETE",
+        if (confirm('Do you want to delete this image?')) {
+            fetch(this.getAttribute('href'), {
+                method: 'DELETE',
                 headers: {
-                    "X-Requested-With": "XMLHttpRequest",
-                    "Content-Type": "application/json"
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ "_csrf": this.dataset.token })
+                body: JSON.stringify({ '_csrf': this.dataset.token }),
             }).then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -18,13 +17,12 @@ for (let link of links) {
                     } else {
                         alert(data.error);
                     }
-                }).catch(error => console.error('Error:', error))
+                }).catch(error => console.error('Error:', error));
         }
     });
 }
 
-
-window.addEventListener('DOMContentLoaded', (event) => {
+window.addEventListener('DOMContentLoaded', () => {
     let collectionHolder = document.getElementById('videos-container');
     let index = collectionHolder.dataset.index;
     document.getElementById('add-video').addEventListener('click', function () {
