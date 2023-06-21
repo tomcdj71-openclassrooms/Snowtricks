@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 /**
  * Class TokenService
  * This class is used to generate and verify tokens.
@@ -16,6 +18,11 @@ namespace App\Service;
  */
 class TokenService implements TokenServiceInterface
 {
+    public function __construct(private TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function generate(array $header, array $payload, string $secret, int $validity = 3600): string
     {
         if ($validity > 0) {
@@ -80,7 +87,7 @@ class TokenService implements TokenServiceInterface
     {
         $parts = explode('.', $token);
         if (!isset($parts[$index])) {
-            throw new \InvalidArgumentException('Invalid token structure.');
+            throw new \InvalidArgumentException($this->translator->trans('Invalid token structure.'));
         }
 
         return $parts[$index];
@@ -110,11 +117,11 @@ class TokenService implements TokenServiceInterface
     {
         $decodedInput = base64_decode($input);
         if (!is_string($decodedInput)) {
-            throw new \InvalidArgumentException("Could not decode {$type}");
+            throw new \InvalidArgumentException($this->translator->trans('Could not decode '."{$type}"));
         }
         $result = json_decode($decodedInput, true);
         if (!is_array($result)) {
-            throw new \RuntimeException("Failed to decode JSON to array for {$type}");
+            throw new \RuntimeException($this->translator->trans('Failed to decode JSON to array for '."{$type}"));
         }
 
         return $result;

@@ -2,18 +2,21 @@
 
 namespace App\Controller;
 
+use App\Handler\TrickHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/load_more', name: 'load_more_')]
 class AjaxController extends AbstractController
 {
-    private \App\Handler\TrickHandler $trickHandler;
-
-    public function __construct(\App\Handler\TrickHandler $trickHandler)
-    {
+    public function __construct(
+        private TrickHandler $trickHandler,
+        private TranslatorInterface $translator
+    ) {
         $this->trickHandler = $trickHandler;
+        $this->translator = $translator;
     }
 
     #[Route('/tricks/{page}', name: 'load_more_tricks', methods: ['GET'])]
@@ -21,7 +24,7 @@ class AjaxController extends AbstractController
     {
         $limit = $this->getParameter('tricks_per_page');
         if (!is_numeric($limit)) {
-            throw new \Exception('Invalid parameter: comments_per_page');
+            throw new \Exception($this->translator->trans('Invalid parameter: comments_per_page'));
         }
         $limit = (int) $limit;
         $tricks = $this->trickHandler->findTricksByPage($page, $limit);
@@ -34,7 +37,7 @@ class AjaxController extends AbstractController
     {
         $limit = $this->getParameter('comments_per_page');
         if (!is_numeric($limit)) {
-            throw new \Exception('Invalid parameter: comments_per_page');
+            throw new \Exception($this->translator->trans('Invalid parameter: comments_per_page'));
         }
         $limit = (int) $limit;
         $comments = $this->trickHandler->findCommentsByPage($trickId, $page, $limit);

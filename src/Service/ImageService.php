@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class ImageService.
@@ -15,15 +16,15 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class ImageService implements ImageServiceInterface
 {
-    private ParameterBagInterface $params;
     public const IMAGE_DIRECTORY = 'images_directory';
     public const DEFAULT_FILE = 'default.webp';
 
     /**
      * ImageService constructor.
      */
-    public function __construct(ParameterBagInterface $params)
+    public function __construct(private ParameterBagInterface $params, private TranslatorInterface $translator)
     {
+        $this->translator = $translator;
         $this->params = $params;
     }
 
@@ -42,7 +43,7 @@ class ImageService implements ImageServiceInterface
             case 'image/webp':
                 return imagecreatefromwebp($image);
             default:
-                throw new \Exception('Expected image formats: png, jpeg, webp. Got: '.$mime);
+                throw new \Exception($this->translator->trans('Expected image formats: png, jpeg, webp. Got: '.$mime));
         }
     }
 
@@ -54,15 +55,15 @@ class ImageService implements ImageServiceInterface
     public function add(UploadedFile $image, ?string $folder = '', int $width = 250, int $height = 250): string
     {
         $file = md5(uniqid((string) rand(), true)).'.webp';
-        $image_infos = getimagesize($image);
-        if (false === $image_infos) {
-            throw new \Exception('Could not get image size. Please check the image format.');
+        $imageInfos = getimagesize($image);
+        if (false === $imageInfos) {
+            throw new \Exception($this->translator->trans('Could not get image size. Please check the image format.'));
         }
-        $image_source = $this->getImageResource($image, $image_infos['mime']);
+        $image_source = $this->getImageResource($image, $imageInfos['mime']);
         if (false !== $image_source) {
             $image_destination = imagecreatetruecolor($width, $height);
             if (false !== $image_destination) {
-                imagecopyresampled($image_destination, $image_source, 0, 0, 0, 0, $width, $height, $image_infos[0], $image_infos[1]);
+                imagecopyresampled($image_destination, $image_source, 0, 0, 0, 0, $width, $height, $imageInfos[0], $imageInfos[1]);
             }
             $path = $this->getImageDirectory().($folder ?? '');
             if (!file_exists($path)) {
@@ -120,7 +121,7 @@ class ImageService implements ImageServiceInterface
     {
         $directory = $this->params->get(self::IMAGE_DIRECTORY);
         if (!is_string($directory)) {
-            throw new \InvalidArgumentException('Image directory path must be a string.');
+            throw new \InvalidArgumentException($this->translator->trans('Image directory path must be a string.'));
         }
 
         return $directory;

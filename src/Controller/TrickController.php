@@ -17,12 +17,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TrickController extends AbstractController
 {
-    private TranslatorInterface $translator;
-    private EntityManagerInterface $entityManager;
-    private TrickHandler $trickHandler;
-
-    public function __construct(TrickHandler $trickHandler, TranslatorInterface $translator, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private TrickHandler $trickHandler,
+        private TranslatorInterface $translator,
+        private EntityManagerInterface $entityManager
+    ) {
         $this->trickHandler = $trickHandler;
         $this->translator = $translator;
         $this->entityManager = $entityManager;
@@ -34,7 +33,7 @@ class TrickController extends AbstractController
         $page = $request->query->getInt('page', 1);
         $limit = $this->getParameter('tricks_per_page');
         if (!is_numeric($limit)) {
-            throw new \Exception('Invalid parameter: tricks_per_page');
+            throw new \Exception($this->translator->trans('Invalid parameter: tricks_per_page'));
         }
         $limit = (int) $limit;
         $paginator = $this->trickHandler->findTricksByPage($page, $limit);
@@ -81,11 +80,11 @@ class TrickController extends AbstractController
         $page = $request->query->getInt('page', 1);
         $trickId = $trick->getId();
         if (null === $trickId) {
-            throw $this->createNotFoundException('The trick does not exist');
+            throw $this->createNotFoundException($this->translator->trans('The trick does not exist'));
         }
         $limit = $this->getParameter('comments_per_page');
         if (!is_numeric($limit)) {
-            throw new \Exception('Invalid parameter: comments_per_page');
+            throw new \Exception($this->translator->trans('Invalid parameter: comments_per_page'));
         }
         $limit = (int) $limit;
         $paginator = $this->trickHandler->findCommentsByPage($trickId, $page, $limit);

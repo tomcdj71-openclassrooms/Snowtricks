@@ -15,18 +15,17 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TrickService
 {
-    private ImageServiceInterface $imageService;
-    private SluggerInterface $slugger;
-    private TranslatorInterface $translator;
-    private EntityManagerInterface $em;
-    private TrickRepository $trickRepository;
-
-    public function __construct(ImageServiceInterface $imageService, SluggerInterface $slugger, TranslatorInterface $translator, EntityManagerInterface $em, TrickRepository $trickRepository)
-    {
+    public function __construct(
+        private ImageServiceInterface $imageService,
+        private SluggerInterface $slugger,
+        private TranslatorInterface $translator,
+        private EntityManagerInterface $entityManager,
+        private TrickRepository $trickRepository
+    ) {
         $this->imageService = $imageService;
         $this->slugger = $slugger;
         $this->translator = $translator;
-        $this->em = $em;
+        $this->entityManager = $entityManager;
         $this->trickRepository = $trickRepository;
     }
 
@@ -40,7 +39,7 @@ class TrickService
         $file = $this->imageService->add($image, $folder, 300, 300);
         $img = new Image();
         $img->setPath($file);
-        $this->em->persist($img);
+        $this->entityManager->persist($img);
         if ($isFeatured) {
             return $img;
         } else {
