@@ -127,10 +127,10 @@ Videos: Vidéos
 'Load More Tricks': 'Charger plus de figures'
 'Load More Comments': 'Charger plus de commentaires'
 'Invalid parameter: tricks_per_page': 'Paramètre non valide: tricks_per_page'
-'The trick does not exist': 'La figure n'existe pas'
+'The trick does not exist': "La figure n'existe pas"
 'Invalid parameter: comments_per_page': 'Paramètre non valide: comments_per_page'
 'Your account has been created. Please check your email for a verification link.': 'Votre compte a été créé. Veuillez vérifier votre e-mail pour un lien de vérification.'
 'Invalid credentials or CSRF token.': 'Identifiants ou jeton CSRF non valides.'
-'Could not get image size. Please check the image format.': 'Impossible d'obtenir la taille de l'image. Veuillez vérifier le format de l'image.'
-'Image directory path must be a string.': 'Le chemin du répertoire d'images doit être une chaîne.'
+'Could not get image size. Please check the image format.': "Impossible d'obtenir la taille de l'image. Veuillez vérifier le format de l'image."
+'Image directory path must be a string.': "Le chemin du répertoire d'images doit être une chaîne."
 'Invalid token structure.': 'Structure de jeton invalide.'
