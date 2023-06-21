@@ -17,6 +17,7 @@ class SecurityController extends AbstractController
     public function __construct(
         private TranslatorInterface $translator
     ) {
+        $this->translator = $translator;
     }
 
     #[Route(path: '/login', name: 'app_login')]
