@@ -1,25 +1,26 @@
 <article>
-	<a class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-slate-900 dark:border-gray-800" href="#">
+	<div class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-slate-900 dark:border-gray-800">
 		<div class="aspect-w-16 aspect-h-9">
 			<img class="w-full object-cover rounded-t-xl" src="{{ asset('assets/uploads/tricks/images/' ~ trick.featuredImage.path ) }}" alt="Image Description">
 		</div>
 		<div class="p-4 md:p-5">
-			<p class="mt-2 text-xs uppercase text-gray-600 dark:text-gray-400">
-				{{ trick.group.name }}
-			</p>
-			<a href="{{ path('app_trick_edit', { 'id': trick.id }) }}">
-				{{ 'Edit Trick'|trans }}
-			</a>
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 				<div class="flex justify-end space-x-4">
-					<i data-feather="edit-2" class="text-green-600 feather-24 pb-2"></i>
-					<i data-feather="trash-2" class="text-red-600 feather-24 pb-2"></i>
+					<a href="{{ path('app_trick_edit', { 'id': trick.id }) }}">
+						<i data-feather="edit-2" class="text-green-600 feather-24 pb-2"></i>
+					</a>
+					<form class="space-y-4 md:space-y-6" method="post">
+						<a href="{{ path('app_trick_delete', { 'id': trick.id }) }}">
+							<i data-feather="trash-2" class="text-red-600 feather-24 pb-2"></i>
+						</a>
+					</form>
 				</div>
 				<hr>
 			{% endif %}
-			<h3 class="mt-2 text-lg font-medium text-gray-800 group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-white">
-				<a href="{{ path('app_trick_show', {'slug':trick.slug}) }}">{{ trick.title|slice(0, 30) ~ '...' }}</a>
+			<span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400 uppercase">{{ trick.group.name }}</span>
+			<h3 class="mt-2 text-lg font-medium text-gray-800 group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-white pr-2">
+				<a href="{{ path('app_trick_show', {'slug':trick.slug}) }}">{{ trick.title }}</a>
 			</h3>
 		</div>
-	</a>
+	</div>
 </article>
