@@ -18,7 +18,7 @@
 					</address>
 					<h1 class="mb-4 text-3xl text-center font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">{{ trick.title }}</h1>
 				</header>
-				<figure class="relative flex flex-col items-center">
+				<figure class="relative flex flex-col items-center pb-4">
 					<img class="rounded-lg w-1/3" src="{{ asset('assets/uploads/tricks/images/' ~ trick.featuredImage.path ) }}" alt="{{ 'Illustration image of the trick'|trans ~ ' ' ~ trick.title }}">
 					{% if app.user %}
 						<div class="flex absolute top-5 right-5 inline-flex justify-center items-center gap-2 rounded-full border text-center w-55">
@@ -36,37 +36,31 @@
 						<small class="text-xs">{{ 'Illustration image'|trans }}</small>
 					</figcaption>
 				</figure>
-				{% if trick.videos|length >= 1 or trick.images|length >= 1 %}
-					<aside aria-label="{{ 'Gallery'|trans }}" class="bg-white-50 dark:bg-gray-800">
-						<div class="px-4 mx-auto max-w-screen-xl border-2 rounded-md">
-							{% if trick.images|length >= 1 %}
-								<h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white text-center underline">{{ 'Gallery'|trans }}</h2>
-								<h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">{{ 'Images'|trans }}</h3>
-								<div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 pb-3">
-									{% for image in trick.images %}
-										<article class="max-w-xs">
-											<a href="#">
-												<img src="{{ asset('assets/uploads/tricks/images/' ~ image.path ) }}" class="w-1/2 mb-5 rounded-lg" alt="{{ 'Trick Image'|trans }}">
-											</a>
-										</article>
-									{% endfor %}
-								</div>
-								<hr>
-							{% endif %}
-							{% if trick.videos|length >= 1 %}
-								<h3 class="mb-8 text-xl font-bold text-gray-900 dark:text-white mt-4 pt-4">{{ 'Videos'|trans }}</h3>
-								<div class="grid gap-12 sm:grid-cols-1 lg:grid-cols-2">
-									{% for video in trick.videos %}
-										<article class="max-w-xs">
-											<iframe class="mb-5 rounded-lg" src="{{ video.path|video_url }}" width="350" height="200" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-											<a class="flex flex-col items-center justify-center" href="{{ path('delete_video', {id: video.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ video.id) }}">{{ 'Supprimer'|trans }}</a>
-										</article>
-									{% endfor %}
-								</div>
-							{% endif %}
+				<div id="gallery" data-accordion="open" class="sm:hidden">
+					<h2 id="gallery-heading">
+						<button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#gallery-body" aria-expanded="false" aria-controls="gallery-body">
+							<span class="flex items-center">
+								<svg class="w-5 h-5 mr-2 shrink-0" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+									<path d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0118 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-3.75 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75C5.496 8.25 6 7.746 6 7.125v-1.5M4.875 8.25C5.496 8.25 6 8.754 6 9.375v1.5m0-5.25v5.25m0-5.25C6 5.004 6.504 4.5 7.125 4.5h9.75c.621 0 1.125.504 1.125 1.125m1.125 2.625h1.5m-1.5 0A1.125 1.125 0 0118 7.125v-1.5m1.125 2.625c-.621 0-1.125.504-1.125 1.125v1.5m2.625-2.625c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125M18 5.625v5.25M7.125 12h9.75m-9.75 0A1.125 1.125 0 016 10.875M7.125 12C6.504 12 6 12.504 6 13.125m0-2.25C6 11.496 5.496 12 4.875 12M18 10.875c0 .621-.504 1.125-1.125 1.125M18 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m-12 5.25v-5.25m0 5.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125m-12 0v-1.5c0-.621-.504-1.125-1.125-1.125M18 18.375v-5.25m0 5.25v-1.5c0-.621.504-1.125 1.125-1.125M18 13.125v1.5c0 .621.504 1.125 1.125 1.125M18 13.125c0-.621.504-1.125 1.125-1.125M6 13.125v1.5c0 .621-.504 1.125-1.125 1.125M6 13.125C6 12.504 5.496 12 4.875 12m-1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M19.125 12h1.5m0 0c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h1.5m14.25 0h1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+								</svg>
+								<svg class="w-5 h-5 mr-2 shrink-0" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+									<path d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" stroke-linecap="round" stroke-linejoin="round"></path>
+								</svg>
+								{{ 'See Medias'|trans }}</span>
+							<svg data-accordion-icon class="w-6 h-6 rotate-180 shrink-0" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+							</svg>
+						</button>
+					</h2>
+					<div id="gallery-body" class="hidden" aria-labelledby="gallery-heading">
+						<div class="p-5 border border rounded-b-lg border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+							{% include '_partials/_trick_gallery.html.twig' %}
 						</div>
-					</aside>
-				{% endif %}
+					</div>
+				</div>
+				<div class="hidden sm:block">
+					{% include '_partials/_trick_gallery.html.twig' %}
+				</div>
 				<ul class="mt-5 space-y-3 py-4">
 					<li class="w-full">
 						{{ trick.description|raw }}
