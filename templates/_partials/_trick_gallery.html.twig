@@ -7,9 +7,7 @@
 				<div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 pb-3">
 					{% for image in trick.images %}
 						<article class="max-w-xs">
-							<a href="#">
-								<img src="{{ asset('assets/uploads/tricks/images/' ~ image.path ) }}" class="w-1/2 mb-5 rounded-lg" alt="{{ 'Trick Image'|trans }}">
-							</a>
+							<img src="{{ asset('assets/uploads/tricks/images/' ~ image.path ) }}" class="w-1/2 mb-5 rounded-lg" alt="{{ 'Trick Image'|trans }}">
 						</article>
 					{% endfor %}
 				</div>

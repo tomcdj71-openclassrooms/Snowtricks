@@ -16,15 +16,25 @@
 	</div>
 </nav>
 
-<nav class="fixed z-30 w-full bg-white border-t border-gray-200 dark:bg-gray-800 dark:border-gray-700 py-3 px-4 lg:hidden block bottom-0">
+<nav class="fixed z-30 w-full bg-white border-t-2 border-gray-200 dark:bg-gray-800 dark:border-gray-700 py-3 px-4 lg:hidden block bottom-0">
 	<div class="flex justify-between items-center max-w-screen-2xl mx-auto">
-		<a href="{{ path('app_home') }}" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ 'Figures'|trans }}</a>
+		<a href="{{ path('app_trick_new') }}">
+			<i data-feather="home" class="feather-32 p-1"></i>
+		</a>
 		{% if app.user %}
-			<a href="{{ path('app_trick_new') }}" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ 'Ajouter'|trans }}</a>
-			<a href="{{ path('app_logout') }}" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ 'Logout'|trans }}</a>
+			<a href="{{ path('app_trick_new') }}">
+				<i data-feather="file-plus" class="feather-32 p-1"></i>
+			</a>
+			<a href="{{ path('app_logout') }}">
+				<i data-feather="log-out" class="feather-32 p-1"></i>
+			</a>
 		{% else %}
-			<a href="{{ path('app_login') }}" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ 'Log In'|trans }}</a>
-			<a href="{{ path('app_register') }}" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ 'Register'|trans }}</a>
+			<a href="{{ path('app_login') }}">
+				<i data-feather="log-in" class="feather-32 p-1"></i>
+			</a>
+			<a href="{{ path('app_register') }}">
+				<i data-feather="user-plus" class="feather-32 p-1"></i>
+			</a>
 		{% endif %}
 	</div>
 </nav>
