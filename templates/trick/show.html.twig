@@ -4,8 +4,8 @@
 	{{ trick.title }}
 {% endblock %}
 {% block body %}
-	<main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-gray-75 dark:bg-gray-900">
-		<div class="flex justify-between px-4 mx-auto max-w-screen-xl ">
+	<main class="md:pt-8 pb-16 lg:pt-16 lg:pb-24 bg-gray-75 dark:bg-gray-900">
+		<div class="flex justify-between md:px-4 mx-auto max-w-screen-xl ">
 			<article class="px-4 rounded-lg shadow-lg shadow-indigo-500/40 bg-white mx-auto w-full max-w-5xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert" data-trick="{{ trick.id }}">
 				<header class="mb-4 lg:mb-6 not-format">
 					<address class="flex items-center mb-6 not-italic pl-2 pt-4">
@@ -70,7 +70,7 @@
 					<svg class="h-4 w-4" aria-hidden=" true" fill=" none" stroke=" currentColor" stroke-width=" 1.5" viewbox=" 0 0 24 24" xmlns=" http://www.w3.org/2000/svg">
 						<path d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" stroke-linecap="round" stroke-linejoin="round"></path>
 					</svg>
-					{{ 'back to list'|trans }}
+					{{ 'Back to list'|trans }}
 				</a>
 				<section class="not-format">
 					<div class="flex justify-between items-center mb-6">
@@ -100,7 +100,7 @@
 								{{ 'Only logged users can post comments. Please login to enable the form.'|trans }}
 							</div>
 							<div class="flex justify-center items-center mb-6">
-								<a href="{{ path('app_login') }}" class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{{ 'Login'|trans }}</a>
+								<a href="{{ path('app_login') }}" class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">{{ 'Log In'|trans }}</a>
 							</div>
 						</div>
 					{% endif %}

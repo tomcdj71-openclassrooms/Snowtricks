@@ -4,10 +4,10 @@
 			{% if trick.images|length >= 1 %}
 				<h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white text-center underline md:block hidden sm:hidden">{{ 'Gallery'|trans }}</h2>
 				<h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">{{ 'Images'|trans }}</h3>
-				<div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 pb-3">
+				<div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 md:pb-3">
 					{% for image in trick.images %}
 						<article class="max-w-xs">
-							<img src="{{ asset('assets/uploads/tricks/images/' ~ image.path ) }}" class="w-1/2 mb-5 rounded-lg" alt="{{ 'Trick Image'|trans }}">
+							<img src="{{ asset('assets/uploads/tricks/images/' ~ image.path ) }}" class="w-1/2 md:mb-5 rounded-lg" alt="{{ 'Trick Image'|trans }}">
 						</article>
 					{% endfor %}
 				</div>
