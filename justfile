@@ -110,7 +110,6 @@ composer-validate-deep:
 composer-outdated: 
     {{COMPOSER}} outdated --direct --strict
 
-
 # NPM
 #Installs the npm packages.
 npm-install: 
@@ -130,18 +129,21 @@ npm-watch:
 
 # PHPQA
 #Runs PHP CS Fixer in dry run mode.
-qa-cs-fixer-dry-run: 
+qa-cs-fixer-dr: 
     @if {{COMPOSER}} run-script phpcs-dr; then \
         echo "No errors found."; \
     else \
         read -p "Errors found. Do you want to run qa-cs-fixer? (y/N) " decision; \
         if [ "$$decision" = "y" ]; then \
-            just qa-cs-fixer; \
+            {{COMPOSER}} run-script phpcs; \
         fi \
     fi
 #Runs PHP CS Fixer.
 qa-cs-fixer: 
     {{COMPOSER}} run-script phpcs
+#Runs PHPStan report.
+qa-phpstan-baseline: 
+    {{COMPOSER}} run-script phpstan-baseline
 #Runs PHPStan.
 qa-phpstan: 
     {{COMPOSER}} run-script phpstan
@@ -157,18 +159,23 @@ qa-security-checker:
 #Runs PHPMetrics.
 qa-phpmetrics: 
     {{VENDOR_BIN}}/phpmetrics
+#Runs PHPMD.
+qa-phpmd-baseline: 
+    {{VENDOR_BIN}}/phpmd src text phpmd-rules.xml --reportfile phpmd-baseline.txt || true
+qa-phpmd: 
+    {{VENDOR_BIN}}/phpmd src text phpmd-rules.xml
 #Runs Rector in dry run mode.
-qa-rector-dry-run:
+qa-rector-dr:
     @if {{VENDOR_BIN}}/rector process src --dry-run; then \
         echo "No errors found."; \
     else \
         read -p "Errors found. Do you want to run qa-rector-fix? (y/N) " decision; \
-        if [ "$$decision" = "y" ]; then \
-            just qa-rector-fix; \
+        if [ "$$decision" = "y" || "$$decision" = "yes" ]; then \
+            just qa-rector; \
         fi \
     fi
 #Runs Rector.
-qa-rector-fix: 
+qa-rector: 
     {{VENDOR_BIN}}/rector process src
 #Lints Twig templates.
 qa-lint-twigs:
@@ -185,6 +192,9 @@ qa-lint-schema:
 #Runs a security audit using the local composer.lock file.
 qa-audit:
     {{COMPOSER}} audit
+#Extracts the translation messages.
+qa-translations-update:
+    {{COMPOSER}} run-script translations-update
 
 # Tests
 #Runs PHPUnit tests.
@@ -210,15 +220,8 @@ tests-coverage:
 #Runs a series of checks before committing code.
 before-commit:
     just update
-    just qa-cs-fixer-dry-run
-    just qa-rector-dry-run
-    just qa-phpstan
-    just qa-security-checker
-    just qa-lint-twigs
-    just qa-lint-yaml
-    just qa-lint-container
-    just qa-lint-schema
-    just tests
+    just report
+    just lint
 
 update:
     just composer-update
@@ -263,6 +266,25 @@ print-vars:
     echo "${NPM}"
     echo "${VENDOR_BIN}"
     echo "${RECTOR}"
+
+fix:
+    just qa-cs-fixer
+    just qa-rector
+    just qa-phpstan
+
+lint:
+    just qa-translations-update
+    just qa-lint-twigs
+    just qa-lint-yaml
+    just qa-lint-container
+    just qa-lint-schema
+
+report:
+    just qa-security-checker
+    just qa-cs-fixer-dr
+    just qa-phpstan-baseline
+    just qa-rector-dr
+    just qa-phpmd-baseline
 
 #Lists all available just commands.
 help: 

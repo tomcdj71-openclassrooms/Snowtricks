@@ -2,18 +2,19 @@
 
 namespace App\Security;
 
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AppAuthenticator extends AbstractLoginFormAuthenticator
 {
@@ -21,8 +22,9 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, private TranslatorInterface $translator)
     {
+        $this->translator = $translator;
     }
 
     public function authenticate(Request $request): Passport
@@ -31,7 +33,7 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
         $password = $request->request->get('password', '');
         $csrfToken = $request->request->get('_csrf_token');
         if (!is_string($username) || !is_string($password) || (!is_string($csrfToken) && null !== $csrfToken)) {
-            throw new \InvalidArgumentException('Invalid credentials or CSRF token.');
+            throw new \InvalidArgumentException($this->translator->trans('Invalid credentials or CSRF token.'));
         }
         $request->getSession()->set(Security::LAST_USERNAME, $username);
 
@@ -46,7 +48,8 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+        $targetPath = $this->getTargetPath($request->getSession(), $firewallName);
+        if ($targetPath) {
             return new RedirectResponse($targetPath);
         }
 

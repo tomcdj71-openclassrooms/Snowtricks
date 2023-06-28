@@ -16,12 +16,21 @@
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
-	<body>
-		{% include "_partials/navbar.html.twig" %}
-		<div>
-			{% include "_partials/alerts.html.twig" %}
-			{% block body %}{% endblock %}
+	<body class="bg-gray-50 dark:bg-gray-800">
+		<header>
+			{% include "_partials/_navbar.html.twig" %}
+		</header>
+		{% if app.request.pathInfo == '/' %}
+			{% include "_partials/_hero_banner.html.twig" %}
+		{% endif %}
+		<div class="flex md:pt-16 bg-gray-50 dark:bg-gray-900">
+			<div id="main-content" class="relative w-full max-w-screen-2xl mx-auto h-full bg-gray-50 dark:bg-gray-900">
+				<div class="md:px-4 pt-6 2xl:px-0" data-np-autofill-type="other" data-np-watching="1">
+					{% include "_partials/_alerts.html.twig" %}
+					{% block body %}{% endblock %}
+				</div>
+			</div>
 		</div>
-		{% include "_partials/footer.html.twig" %}
+		{% include "_partials/_footer.html.twig" %}
 	</body>
 </html>

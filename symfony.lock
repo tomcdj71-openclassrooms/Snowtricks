@@ -263,6 +263,9 @@
             "templates/base.html.twig"
         ]
     },
+    "symfony/ux-dropzone": {
+        "version": "v2.9.1"
+    },
     "symfony/validator": {
         "version": "6.3",
         "recipe": {
@@ -321,17 +324,5 @@
     },
     "twig/extra-bundle": {
         "version": "v3.6.0"
-    },
-    "zenstruck/foundry": {
-        "version": "1.33",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.10",
-            "ref": "37c2f894cc098ab4c08874b80cccc8e2f8de7976"
-        },
-        "files": [
-            "config/packages/zenstruck_foundry.yaml"
-        ]
     }
 }

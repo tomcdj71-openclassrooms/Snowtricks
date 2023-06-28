@@ -1,0 +1,96 @@
+<div class="bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-3 dark:border-gray-700 dark:bg-gray-800 w-full">
+	<div class="items-center justify-between px-4 mb-4">
+		<section class="bg-white dark:bg-gray-900">
+			<div class="py-8 mx-auto lg:py-16">
+				<div class="my-custom-class-for-errors">
+					{{ form_errors(form) }}
+				</div>
+				{% if app.request.attributes.get('_route') == 'app_trick_edit' %}
+					{% set button_label = 'Edit Trick'|trans %}
+				{% else %}
+					{% set button_label = 'Create Trick'|trans %}
+				{% endif %}
+				<h1 class="mb-4 text-3xl text-center font-bold text-gray-900 dark:text-white">{{ button_label|trans }}</h1>
+				<form method="post" enctype='multipart/form-data'>
+					{{ form_start(form) }}
+					{{ form_row(form.title )}}
+					{{ form_row(form.description) }}
+					{{ form_row(form.group) }}
+					{% if app.request.attributes.get('_route') == 'app_trick_edit' and trick.featuredImage.path is not null %}
+						<hr class="my-6">
+						{{ form_label(form.featuredImage) }}
+						<div>
+							<img src="{{ asset('assets/uploads/tricks/images/mini/' ~ trick.featuredImage.path ) }}" class="h-48 mb-3 object-cover rounded-lg" alt="Image" width="400">
+
+						</div>
+					{% endif %}
+					{{ form_widget(form.featuredImage) }}
+
+					<br>
+					<h2 class="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+						{{ 'Gallery'|trans }}
+					</h2>
+					<div id="images-container" class="pb-4">
+						{{ form_label(form.images) }}
+						{% if app.request.attributes.get('_route') == 'app_trick_edit' %}
+							<div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 md:pb-3 grid grid-cols-[1fr_500px_2fr]">
+								{% for image in trick.images %}
+									<article class="max-w-full">
+										<img src="{{ asset('assets/uploads/tricks/images/mini/' ~ image.path ) }}" class="w-full h-48 object-cover rounded-lg" alt="{{ 'Trick Image'|trans }}">
+										<a class="flex flex-col items-center font-medium justify-center text-red-600 hover:underline hover:text-red-600 mb-5" href=" {{ path('delete_image', {id: image.id} ) }}" data-delete data-token=" {{ csrf_token('delete' ~ image.id) }} ">{{ 'Supprimer'|trans }}</a>
+									</article>
+								{% endfor %}
+							</div>
+						{% endif %}
+						<div class="flex items-center justify-center w-full">
+							<label for="dropzone-file__prototype" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+								<div class="flex flex-col items-center justify-center pt-5 pb-6">
+									<svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+									</svg>
+									{{ form_widget(form.images) }}
+									<p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+										<span class="font-semibold">{{ 'You can select multiple files'|trans }}</span>
+									</p>
+									<p class="text-xs text-gray-500 dark:text-gray-400">{{ 'PNG or JPG allowed'|trans }}</p>
+									<p>({{ 'up to 2MB'|trans }})</p>
+								</div>
+							</label>
+						</div>
+					</div>
+					<div id="videos-container" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}" class="py-4">
+						{{ form_label(form.videos) }}
+						{% if app.request.attributes.get('_route') == 'app_trick_edit' %}
+							<div class="flex flex-wrap">
+								{% for video in trick.videos %}
+									<article class="max-w-xs">
+										<div class="image-wrapper">
+											<div class="rounded-lg">
+												<iframe src="{{ video.path|video_url }}" title="video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+												<a class="flex flex-col items-center font-medium justify-center text-red-600 hover:underline hover:text-red-600 mb-5" href="{{ path('delete_video', {id: video.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ video.id) }}">{{ 'Supprimer'|trans }}</a>
+											</div>
+										</div>
+									</article>
+								{% endfor %}
+							</div>
+						{% endif %}
+					</div>
+					<button id="add-video" type="button" class="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:hover:bg-green-700 dark:focus:ring-green-300 mr-2 mb-2">
+						<svg class="fill-current w-4 h-4" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12 6v12m6-6H6" stroke-linecap="round" stroke-linejoin="round"></path>
+						</svg>
+						{{ 'Add Video'|trans }}
+					</button>
+					<div class="flex flex-col items-center justify-center">
+						<button type="submit" class="mt-4 block bg-primary-500 text-white font-semibold rounded-lg px-4 py-2 transition duration-200 each-in-out hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-dark-900 dark:focus:ring-indigo-500 focus:ring-offset-white dark:hover:bg-primary-700 h-10 px-6 w-75">
+
+							{{ button_label|trans }}
+						</button>
+					</div>
+					{{ form_row(form._token) }}
+					{{ form_end(form, {'render_rest': false}) }}
+				</form>
+			</div>
+		</section>
+	</div>
+</div>
