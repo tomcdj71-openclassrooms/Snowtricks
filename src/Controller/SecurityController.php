@@ -35,12 +35,16 @@ class SecurityController extends AbstractController
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         throw new \LogicException($this->translator->trans('This method can be blank - it will be intercepted by the logout key on your firewall.'));
     }
 
     #[Route('/reset-password', name: 'app_forgot_password_request')]
     public function forgottenPassword(Request $request, SecurityService $securityService): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -62,6 +66,9 @@ class SecurityController extends AbstractController
     #[Route('/reset-password/{token}', name: 'app_reset_password')]
     public function resetPass(string $token, Request $request, SecurityService $securityService): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_home');
+        }
         $form = $this->createForm(ChangePasswordFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

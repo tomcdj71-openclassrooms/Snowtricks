@@ -51,6 +51,7 @@ class TrickController extends AbstractController
     #[Route('/trick/new', name: 'app_trick_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $trick = new \App\Entity\Trick();
         $form = $this->createForm(TrickFormType::class, $trick, ['edit_mode' => false]);
         $form->handleRequest($request);
@@ -115,6 +116,7 @@ class TrickController extends AbstractController
     #[Route('/trick/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, \App\Entity\Trick $trick): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $originalTrick = clone $trick;
         $form = $this->createForm(TrickFormType::class, $trick, ['edit_mode' => true]);
         $form->handleRequest($request);
@@ -153,6 +155,7 @@ class TrickController extends AbstractController
     #[Route('/trick/{id}', name: 'app_trick_delete', methods: ['POST'])]
     public function delete(Request $request, \App\Entity\Trick $trick): Response
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $token = (string) $request->request->get('_token');
         if (null !== $token && $this->isCsrfTokenValid('delete'.$trick->getId(), $token)) {
             $this->trickHandler->remove($trick);
@@ -164,6 +167,7 @@ class TrickController extends AbstractController
     #[Route('/trick/delete/image/{id}', name: 'delete_image', methods: ['DELETE'])]
     public function deleteImage(Image $image, Request $request): JsonResponse
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $imageId = $request->attributes->get('id');
         $content = json_decode($request->getContent(), true);
         if (!is_array($content) || !isset($content['_csrf'])) {
@@ -197,6 +201,7 @@ class TrickController extends AbstractController
     #[Route('/trick/delete/video/{id}', name: 'delete_video', methods: ['DELETE'])]
     public function deleteVideo(Video $video, Request $request): JsonResponse
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $videoId = $request->attributes->get('id');
         $content = json_decode($request->getContent(), true);
         if (!is_array($content) || !isset($content['_csrf'])) {
