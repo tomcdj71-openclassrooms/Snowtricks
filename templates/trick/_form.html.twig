@@ -63,7 +63,7 @@
 									<article class="max-w-xs">
 										<div class="image-wrapper">
 											<div class="mb-5 rounded-lg">
-												<iframe src="{{ video.path|video_url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+												<iframe src="{{ video.path|video_url }}" title="video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 												<a class="flex flex-col items-center justify-center" href="{{ path('delete_video', {id: video.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ video.id) }}">{{ 'Supprimer'|trans }}</a>
 											</div>
 										</div>

@@ -19,7 +19,7 @@ JohnDoe_25: MartinDupont_25
 characters: caractères
 'Confirm Password': 'Confirmez le mot de passe'
 'The password fields must match.': 'Les champs du mot de passe doivent correspondre.'
-Register: Enregistrer
+Register: "S'inscrire"
 'Create an account': 'Créer un compte'
 'I accept the termsLink': 'J''accepte les <a class="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">Conditions d''Utilisation</a>'
 'Already have an account': 'Vous avez déjà un compte'
@@ -145,3 +145,4 @@ Videos: Vidéos
 'Our tricks': 'Nos figures'
 'Discover the best of Snowboarding tricks.': 'Découvrez le meilleur des figures de Snowboard.'
 'Contribute or learn new tricks with our beloving community': 'Contribuez ou apprenez de nouvelles figures avec notre communauté bien-aimée'
+'This section is incomplete. Please, help us by adding new Photos or Videos to this trick.': '__This section is incomplete. Please, help us by adding new Photos or Videos to this trick.'

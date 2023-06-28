@@ -30,3 +30,20 @@
     align-items: center;
     margin: 0 10px 10px 0;
 }
+
+@media (min-width: 768px) {
+    .hero {
+        height: 100vh;
+    }
+}
+
+@media (max-width: 767px) {
+    .hero {
+        height: calc(95vh - 30px);
+    }
+}
+
+.featured-card {
+    height: 12.5rem;
+    width: 19rem;
+}

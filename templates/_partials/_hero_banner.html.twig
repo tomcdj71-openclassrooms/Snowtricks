@@ -1,13 +1,13 @@
-<div class="relative h-screen">
-	<img src="{{ asset('assets/hero-banner.png') }}" class="absolute inset-0 object-cover w-full h-full" alt=""/>
-	<div class="relative bg-opacity-75 bg-deep-purple-accent-700 h-full flex items-center justify-end">
-		<div class="grid grid-cols-8 gap-x-2">
-			<h2 class="max-w-xl mb-4 text-base font-medium text-gray-200 text-lg sm:text-2xl md:text-3xl lg:text-4xl">
+<div class="relative hero">
+	<img src="{{ asset('assets/hero-banner.jpg') }}" class="absolute inset-0 object-cover w-full h-full" alt=""/>
+	<div class="relative bg-opacity-75 bg-deep-purple-accent-700 h-full flex items-center justify-start">
+		<div class="grid grid-cols-2">
+			<h1 class="mb-4 font-medium text-gray-200 text-3xl ml-6">
 				{{ 'Innovate your skills, inspire the community.'|trans }}
-			</h2>
+			</h1>
 		</div>
 	</div>
-	<a href="#tricks-container" id="scroll-button" aria-label="Scroll down" class="z-30 absolute bottom-0 left-1/2 transform -translate-x-1/2 w-10 h-10 flex items-center justify-center text-gray-900 duration-300 border border-gray-700 rounded-full hover:text-teal-accent-700 hover:border-teal-accent-700 hover:shadow hover:scale-110">
+	<a href="#tricks-container" id="scroll-button" aria-label="Scroll down" class="z-30 absolute md:bottom-8 bottom-0 left-1/2 transform -translate-x-1/2 w-10 h-10 flex items-center justify-center text-gray-900 duration-300 border border-gray-700 rounded-full hover:text-teal-accent-700 hover:border-teal-accent-700 hover:shadow hover:scale-110 bg-white bg-opacity-60">
 		<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewbox="0 0 12 12" fill="currentColor">
 			<path d="M10.293,3.293,6,7.586,1.707,3.293A1,1,0,0,0,.293,4.707l5,5a1,1,0,0,0,1.414,0l5-5a1,1,0,1,0-1.414-1.414Z"></path>
 		</svg>
