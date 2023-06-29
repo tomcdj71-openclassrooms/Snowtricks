@@ -23,7 +23,10 @@ for (let link of links) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    let collectionHolder = document.getElementById('videos-container');
+    const collectionHolder = document.getElementById('videos-container');
+    if (!collectionHolder) {
+        return;
+    }
     let index = collectionHolder.dataset.index;
     document.getElementById('add-video').addEventListener('click', function () {
         let prototype = collectionHolder.dataset.prototype;

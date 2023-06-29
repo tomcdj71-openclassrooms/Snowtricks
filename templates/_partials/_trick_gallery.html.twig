@@ -1,13 +1,13 @@
 {% if trick.videos|length >= 1 or trick.images|length >= 1 %}
 	<aside aria-label="{{ 'Gallery'|trans|lower }}" class="bg-white-50 dark:bg-gray-800">
 		<div class="md:px-4 mx-auto max-w-screen-xl md:border-2 rounded-md">
-			<h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white text-center underline md:block hidden sm:hidden">{{ 'Gallery'|trans }}</h2>
+			<h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white text-center underline md:block hidden sm:hidden pt-4">{{ 'Gallery'|trans }}</h2>
 			{% if trick.images|length >= 1 %}
 				<h3 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">{{ 'Images'|trans }}</h3>
-				<div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 md:pb-3 grid grid-cols-[1fr_500px_2fr]">
+				<div class="grid gap-12 sm:grid-cols-1 lg:grid-cols-4 md:pb-3">
 					{% for image in trick.images %}
 						<article class="max-w-full">
-							<img src="{{ asset('assets/uploads/tricks/images/' ~ image.path ) }}" class="w-full h-48 object-cover md:mb-5 rounded-lg" alt="{{ 'Trick Image'|trans }}">
+							<img src="{{ asset('assets/uploads/tricks/images/mini/' ~ image.path ) }}" class="w-full h-48 object-cover rounded-lg" alt="{{ 'Trick Image'|trans }}">
 						</article>
 					{% endfor %}
 				</div>
@@ -17,10 +17,14 @@
 			{% endif %}
 			{% if trick.videos|length >= 1 %}
 				<h3 class="mb-8 text-xl font-bold text-gray-900 dark:text-white mt-4 pt-4">{{ 'Videos'|trans }}</h3>
-				<div class="grid gap-12 sm:grid-cols-1 lg:grid-cols-4">
+				<div class="flex flex-wrap">
 					{% for video in trick.videos %}
-						<article class="max-w-xs justify-between">
-							<iframe class="mb-5 rounded-lg md:px-6" src="{{ video.path|video_url }}" title="Video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+						<article class="max-w-xs">
+							<div class="image-wrapper px-6">
+								<div class="rounded-lg px-6">
+									<iframe src="{{ video.path|video_url }}" class="px-6" title="video player" height="250" width="350" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+								</div>
+							</div>
 						</article>
 					{% endfor %}
 				</div>

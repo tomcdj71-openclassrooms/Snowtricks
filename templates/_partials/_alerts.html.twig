@@ -1,27 +1,65 @@
 {% macro alert(type, messages) %}
-	{% for message in messages %}
-		<div class="p-4 mb-4 text-sm rounded-lg dark:bg-gray-800" role="alert">
-			<span class="font-medium">{{ type|capitalize|trans }}!</span>
-			{{ message }}
+	{% set colors = {
+                    'warning': 'yellow-800 bg-yellow-50 dark:text-yellow-400',
+                    'success': 'green-800 bg-green-50 dark:text-green-400',
+                    'error': 'red-800 bg-red-50 dark:text-red-400',
+                    'info': 'blue-800 bg-blue-50 dark:text-blue-400',
+                } %}
+	{% set icons = {
+                    'warning': 'shield-exclamation',
+                    'success': 'check-badge',
+                    'error': 'exclamation-triangle',
+                    'info': 'information-circle',
+                } %}
+	{% set iconClasses = {
+                    'warning': 'h-6 w-6 text-yellow-400 ml-3',
+                    'success': 'h-6 w-6 text-green-400 ml-3',
+                    'error': 'h-6 w-6 text-red-400 ml-3',
+                    'info': 'h-6 w-6 text-blue-400 ml-3',
+                } %}
+	{% for key, message in messages %}
+		{% set alertId = 'alert-' ~ type ~ '-' ~ key %}
+		<div id="{{alertId}}" class="alert-message z-40 hs-removing:translate-x-5 hs-removing:opacity-0 transition duration-300 bg-{{ colors[type] }} border border-{{ colors[type] }} rounded-md p-4 fixed bottom-4 right-3" role="alert" onload="autoDismissAlert('{{alertId}}', 5000);">
+			<div class="flex">
+				<div class="flex-shrink-0">
+					<span class="sr-only">{{ type|trans }}</span>
+					{{ heroicon(icons[type], iconClasses[type])|raw }}
+				</div>
+				<div class="ml-3">
+					<div class="text-sm text-{{ colors[type] }} font-medium">
+						{{ type|capitalize|trans }}!
+						{{ message }}
+					</div>
+				</div>
+				<div class="pl-3 ml-auto">
+					<div class="-mx-1.5 -my-1.5">
+						<button type="button" class="inline-flex bg-{{ colors[type] }} rounded-md p-1.5 text-{{ colors[type] }}" data-dismiss-target="#{{alertId}}" aria-label="{{ 'Close'|trans }}" onclick="dismissAlert('{{alertId}}')">
+							<span class="sr-only">{{ 'Dismiss'|trans }}</span>
+							{{ heroicon('x-mark', 'h-6 w-6 text-green-600 ml-3')|raw }}
+						</button>
+					</div>
+				</div>
+			</div>
 		</div>
+		<script>
+			function dismissAlert(id) {
+var alert = document.getElementById(id);
+alert.remove();
+}
+
+function autoDismissAlert(id, delay) {
+setTimeout(() => {
+dismissAlert(id);
+}, delay);
+}
+
+autoDismissAlert("{{ alertId }}", 5000);
+		</script>
 	{% endfor %}
 {% endmacro %}
+
 {% import _self as macros %}
 {{ macros.alert('warning', app.flashes('warning'))|raw }}
 {{ macros.alert('success', app.flashes('success'))|raw }}
 {{ macros.alert('error', app.flashes('error'))|raw }}
 {{ macros.alert('info', app.flashes('info'))|raw }}
-{% macro alert(type, messages) %}
-	{% set colors = {
-					'warning': 'yellow-800 bg-yellow-50 dark:text-yellow-400',
-					'success': 'green-800 bg-green-50 dark:text-green-400',
-					'error': 'red-800 bg-red-50 dark:text-red-400',
-					'info': 'blue-800 bg-blue-50 dark:text-blue-400',
-				} %}
-	{% for message in messages %}
-		<div class="p-4 mb-4 text-sm text-{{ colors[type] }} rounded-lg" role="alert">
-			<span class="font-medium">{{ type|capitalize|trans }}!</span>
-			{{ message }}
-		</div>
-	{% endfor %}
-{% endmacro %}

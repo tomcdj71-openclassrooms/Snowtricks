@@ -6,6 +6,7 @@
 {% block body %}
 	<main class="md:pt-8 pb-16 lg:pt-16 lg:pb-24 bg-gray-75 dark:bg-gray-900">
 		<div class="flex justify-between md:px-4 mx-auto max-w-screen-xl">
+			{% include "_partials/_alerts.html.twig" %}
 			<article class="px-4 rounded-lg shadow-lg shadow-indigo-500/40 bg-white mx-auto w-full max-w-6xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert" data-trick="{{ trick.id }}">
 				<header class="mb-4 lg:mb-6 not-format">
 					<address class="flex items-center justify-between mb-6 not-italic pl-2 pt-4">
@@ -26,13 +27,13 @@
 				<figure class="relative flex flex-col items-center pb-4">
 					<img class="rounded-lg w-full" src="{{ asset('assets/uploads/tricks/images/' ~ trick.featuredImage.path ) }}" alt="{{ 'Illustration image of the trick'|trans ~ ' ' ~ trick.title }}">
 					{% if app.user %}
-						<div class="flex absolute top-5 right-5 inline-flex justify-center items-center gap-2 rounded-full border text-center w-55">
+						<div class="flex absolute top-5 right-5 inline-flex justify-center items-center gap-2 rounded-full border text-center w-55 bg-gray-800 bg-opacity-50 p-4">
 							<a href="{{ path('app_trick_edit', { 'id': trick.id }) }}">
-								<i data-feather="edit-2" class="text-green-600 feather-32 p-1"></i>
+								{{ heroicon('pencil', 'h-6 w-6 text-green-600 ml-3')|raw }}
 							</a>
 							<form class="space-y-4 md:space-y-6" method="post">
 								<a href="{{ path('app_trick_delete', { 'id': trick.id }) }}">
-									<i data-feather="trash-2" class="text-red-600 feather-32 p-1"></i>
+									{{ heroicon('trash', 'h-6 w-6 text-red-600 mx-3')|raw }}
 								</a>
 							</form>
 						</div>
@@ -63,7 +64,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="hidden sm:block">
+				<div class="hidden sm:block pt-4">
 					{% include '_partials/_trick_gallery.html.twig' %}
 				</div>
 				<ul class="mt-5 space-y-3 py-4">
@@ -85,7 +86,7 @@
 						</h2>
 					</div>
 					{% if app.user %}
-						<form action="{{ path('app_trick_show', {'slug': trick.slug}) }}" method="post" class="mb-6 border-2 rounded-md">
+						<form action="{{ path('app_trick_show', {'slug': trick.slug}) }}" method="post" class="mb-6 rounded-md">
 							{{ form_start(form) }}
 							{{ form_row(form.content) }}
 							{{ form_widget(form._token) }}
@@ -93,7 +94,7 @@
 							{{ form_end(form) }}
 						</form>
 					{% else %}
-						<div class="mb-6 border-2 rounded-md bg-red-50 dark:text-red-400">
+						<div class="mb-6 rounded-md bg-red-50 dark:text-red-400">
 							<div class="p-4 mb-4 text-sm text-red-800 bg-red-50 dark:text-red-400 rounded-lg" role="alert">
 								<div class="flex items-center">
 									<svg class="h-4 w-4 text-red-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewbox="0 0 16 16">
