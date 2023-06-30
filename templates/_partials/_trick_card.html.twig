@@ -1,7 +1,7 @@
 <article>
 	<div class="group flex flex-col bg-white border shadow-sm rounded-xl hover:shadow-md transition dark:bg-slate-900 dark:border-gray-800">
-		<div class="aspect-w-16 aspect-h-9">
-			<img class="w-full h-full object-cover rounded-t-xl md:featured-card" src="{{ asset('assets/uploads/tricks/images/' ~ trick.featuredImage.path ) }}" alt="Image Description">
+		<div class="w-full h-48 rounded-t-xl overflow-hidden">
+			<img class="w-full h-full object-cover md:featured-card" src="{{ asset('assets/uploads/tricks/images/' ~ trick.featuredImage.path ) }}" alt="Image Description">
 		</div>
 		<div class="p-4 md:p-5">
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
