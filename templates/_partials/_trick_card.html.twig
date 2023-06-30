@@ -11,8 +11,8 @@
 					</a>
 					<form class="inline-flex" method="post" action="{{ path('app_trick_delete', { 'id': trick.id }) }}">
 						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
-						<button type="submit" class="h-6 w-6 text-red-600">
-							{{ heroicon('trash') }}
+						<button type="submit">
+							{{ heroicon('trash', 'h-6 w-6 text-red-600', 'outline') }}
 						</button>
 					</form>
 				</div>

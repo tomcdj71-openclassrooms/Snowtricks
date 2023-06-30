@@ -25,9 +25,9 @@ class HeroiconExtension extends AbstractExtension
      *
      * @throws \RuntimeException
      */
-    public function getHeroicon(string $iconName, string $class = '', array $options = []): string
+    public function getHeroicon(string $iconName, string $class = '', string $iconType = 'solid', array $options = [] ): string
     {
-        $iconPath = __DIR__."/../../assets/heroicons/{$iconName}.svg";
+        $iconPath = __DIR__."/../../node_modules/heroicons/24/{$iconType}/{$iconName}.svg";
         if (!file_exists($iconPath)) {
             throw new \RuntimeException($this->translator->trans("Icon not found: {$iconName}"));
         }

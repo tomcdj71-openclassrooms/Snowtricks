@@ -17,7 +17,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
-    public function __construct(private UserService $userService, private TranslatorInterface $translator, private TokenService $tokenService) {
+    public function __construct(private UserService $userService, private TranslatorInterface $translator, private TokenService $tokenService)
+    {
         $this->translator = $translator;
         $this->userService = $userService;
         $this->tokenService = $tokenService;

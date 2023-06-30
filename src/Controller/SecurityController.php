@@ -14,7 +14,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
-    public function __construct(private TranslatorInterface $translator) {
+    public function __construct(private TranslatorInterface $translator)
+    {
         $this->translator = $translator;
     }
 

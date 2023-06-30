@@ -4,6 +4,9 @@ dependencies:
   flowbite:
     specifier: ^1.6.6
     version: 1.6.6
+  heroicons:
+    specifier: ^2.0.18
+    version: 2.0.18
 
 devDependencies:
   '@babel/core':
@@ -3144,6 +3147,10 @@ packages:
     dependencies:
       function-bind: 1.1.1
     dev: true
+
+  /heroicons@2.0.18:
+    resolution: {integrity: sha512-3iaqznaz5GJ8Mox/eDfKHo7tYKuPiZV4vbg6pB6wjJhBa7ZKQlXT1KuUnsjkEiPy/ezyiqppOX6wUqYguMIq8w==}
+    dev: false
 
   /hpack.js@2.1.6:
     resolution: {integrity: sha512-zJxVehUdMGIKsRaNt7apO2Gqp0BdqW5yaiGHXXmbpvxgBYVZnAql+BJb4RO5ad2MgpbZKn5G6nMnegrH1FcNYQ==}

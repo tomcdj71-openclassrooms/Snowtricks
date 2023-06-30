@@ -12,7 +12,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/delete-media/')]
 class TrickMediaController extends AbstractController
 {
-    public function __construct(private TrickHandler $trickHandler, private TranslatorInterface $translator) {
+    public function __construct(private TrickHandler $trickHandler, private TranslatorInterface $translator)
+    {
         $this->trickHandler = $trickHandler;
         $this->translator = $translator;
     }
