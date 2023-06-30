@@ -1,31 +1,55 @@
-<?php 
+<?php
 
 namespace App\Twig;
 
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class HeroiconExtension extends AbstractExtension
 {
+    public function __construct(private TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('heroicon', [$this, 'getHeroicon']),
+            new TwigFunction('heroicon', [$this, 'getHeroicon'], ['is_safe' => ['html']]),
         ];
     }
 
-    public function getHeroicon(string $iconName,  string $class = ''): string
+    /**
+     * @param array<string, string> $options
+     *
+     * @throws \RuntimeException
+     */
+    public function getHeroicon(string $iconName, string $class = '', array $options = []): string
     {
-        $iconPath = __DIR__ . "/../../assets/heroicons/{$iconName}.svg";
-
+        $iconPath = __DIR__."/../../assets/heroicons/{$iconName}.svg";
         if (!file_exists($iconPath)) {
-            throw new \RuntimeException("Icon not found: {$iconName}");
+            throw new \RuntimeException($this->translator->trans("Icon not found: {$iconName}"));
+        }
+        $svgContent = file_get_contents($iconPath);
+        if (false === $svgContent) {
+            throw new \RuntimeException($this->translator->trans("Unable to read the contents of the icon: {$iconName}"));
+        }
+        $svgAttributes = $this->generateSvgAttributes($class, $options);
+
+        return str_replace('<svg', sprintf('<svg%s', $svgAttributes), $svgContent);
+    }
+
+    /**
+     * @param array<string, string> $options
+     */
+    private function generateSvgAttributes(string $class, array $options): string
+    {
+        $attributes = sprintf(' class="%s"', $class);
+        foreach ($options as $attr => $value) {
+            $attributes .= sprintf(' %s="%s"', $attr, $value);
         }
 
-        $svgContent = file_get_contents($iconPath);
-
-        $svgContent = str_replace('<svg', sprintf('<svg class="%s"', $class), $svgContent);
-
-        return $svgContent;
+        return $attributes;
     }
 }
