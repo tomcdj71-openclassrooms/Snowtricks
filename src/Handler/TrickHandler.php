@@ -9,29 +9,26 @@ use App\Repository\TrickRepository;
 use App\Repository\UserRepository;
 use App\Service\ImageService;
 use App\Service\TrickService;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\Form\FormInterface;
 
 class TrickHandler
 {
-    private TrickService $trickService;
-    private ImageService $imageService;
-    private TrickRepository $trickRepository;
-    private UserRepository $userRepository;
-    private CommentRepository $commentRepository;
-
     public function __construct(
-        TrickService $trickService,
-        ImageService $imageService,
-        TrickRepository $trickRepository,
-        UserRepository $userRepository,
-        CommentRepository $commentRepository
+        private TrickService $trickService,
+        private ImageService $imageService,
+        private TrickRepository $trickRepository,
+        private UserRepository $userRepository,
+        private CommentRepository $commentRepository,
+        private EntityManagerInterface $entityManager
     ) {
         $this->trickService = $trickService;
         $this->imageService = $imageService;
         $this->trickRepository = $trickRepository;
         $this->userRepository = $userRepository;
         $this->commentRepository = $commentRepository;
+        $this->entityManager = $entityManager;
     }
 
     public function delete(string $image, string $directory, int $width, int $height): bool
@@ -87,5 +84,18 @@ class TrickHandler
     public function save(Trick $trick): void
     {
         $this->trickRepository->save($trick);
+    }
+
+    /**
+     * @param array<string, mixed> $criteria
+     */
+    public function findOneBy(array $criteria): ?Trick
+    {
+        return $this->trickRepository->findOneBy($criteria);
+    }
+
+    public function getEntityManager(): EntityManagerInterface
+    {
+        return $this->entityManager;
     }
 }

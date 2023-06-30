@@ -2,14 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Image;
-use App\Entity\Video;
-use App\Form\CommentFormType;
-use App\Form\TrickFormType;
 use App\Handler\TrickHandler;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,14 +11,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TrickController extends AbstractController
 {
-    public function __construct(
-        private TrickHandler $trickHandler,
-        private TranslatorInterface $translator,
-        private EntityManagerInterface $entityManager
-    ) {
+    public function __construct(private TrickHandler $trickHandler, private TranslatorInterface $translator) {
         $this->trickHandler = $trickHandler;
         $this->translator = $translator;
-        $this->entityManager = $entityManager;
     }
 
     #[Route('', name: 'app_home', methods: ['GET', 'POST'])]
@@ -53,16 +42,16 @@ class TrickController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
         $trick = new \App\Entity\Trick();
-        $form = $this->createForm(TrickFormType::class, $trick, ['edit_mode' => false]);
+        $form = $this->createForm(\App\Form\TrickFormType::class, $trick, ['edit_mode' => false]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->trickHandler->handleImages($form, $trick);
             $this->trickHandler->handleSlug($trick);
             $this->trickHandler->handleVideos($form, $trick);
-            // find a random user to set as author
-            // TODO: change this to the current user
-            $user = $this->trickHandler->findRandomUser();
-            $trick->setAuthor($user);
+            $author = $this->getUser();
+            if ($author instanceof \App\Entity\User) {
+                $trick->setAuthor($author);
+            }
             $trick->setCreatedAt(new \DateTimeImmutable());
             $this->trickHandler->save($trick);
 
@@ -76,74 +65,95 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{slug}', name: 'app_trick_show', methods: ['GET', 'POST'])]
-    public function show(\App\Entity\Trick $trick, Request $request): Response
+    public function show(Request $request): Response
     {
-        $page = $request->query->getInt('page', 1);
-        $trickId = $trick->getId();
-        if (null === $trickId) {
-            throw $this->createNotFoundException($this->translator->trans('The trick does not exist'));
-        }
-        $limit = $this->getParameter('comments_per_page');
-        if (!is_numeric($limit)) {
-            throw new \Exception($this->translator->trans('Invalid parameter: comments_per_page'));
-        }
-        $limit = (int) $limit;
-        $paginator = $this->trickHandler->findCommentsByPage($trickId, $page, $limit);
-        $comments = iterator_to_array($paginator->getIterator());
-        $totalComments = count($paginator);
-        $comment = new \App\Entity\Comment();
-        $comment->setTrick($trick);
-        $comment->setAuthor($this->trickHandler->findRandomUser());
-        $comment->setCreatedAt(new \DateTimeImmutable());
-        $form = $this->createForm(CommentFormType::class, $comment);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->getRepository(\App\Entity\Comment::class)->save($comment);
+        $slug = $request->attributes->get('slug');
+        $trick = $this->trickHandler->findOneBy(['slug' => $slug]);
+        if ($trick instanceof \App\Entity\Trick) {
+            $trickId = $trick->getId();
+            $page = $request->query->getInt('page', 1);
+            if (null === $trickId) {
+                throw $this->createNotFoundException($this->translator->trans('The trick does not exist'));
+            }
+            $limit = $this->getParameter('comments_per_page');
+            if (!is_numeric($limit)) {
+                throw new \Exception($this->translator->trans('Invalid parameter: comments_per_page'));
+            }
+            $limit = (int) $limit;
+            $paginator = $this->trickHandler->findCommentsByPage($trickId, $page, $limit);
+            $comments = iterator_to_array($paginator->getIterator());
+            $totalComments = count($paginator);
+            $comment = new \App\Entity\Comment();
+            $comment->setTrick($trick);
+            $comment->setAuthor($this->trickHandler->findRandomUser());
+            $comment->setCreatedAt(new \DateTimeImmutable());
+            $form = $this->createForm(\App\Form\CommentFormType::class, $comment);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->trickHandler->getEntityManager()->getRepository(\App\Entity\Comment::class)->save($comment);
+                $this->trickHandler->getEntityManager()->persist($comment);
+                $this->trickHandler->getEntityManager()->flush();
 
-            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->render('trick/show.html.twig', [
+                'trick' => $trick,
+                'comments' => $comments,
+                'total_comments' => $totalComments,
+                'limit' => $limit,
+                'current_page' => $page,
+                'form' => $form->createView(),
+            ]);
         }
 
-        return $this->render('trick/show.html.twig', [
-            'trick' => $trick,
-            'comments' => $comments,
-            'total_comments' => $totalComments,
-            'limit' => $limit,
-            'current_page' => $page,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/trick/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, \App\Entity\Trick $trick): Response
+    public function edit(Request $request): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
-        $originalTrick = clone $trick;
-        $form = $this->createForm(TrickFormType::class, $trick, ['edit_mode' => true]);
-        $form->handleRequest($request);
+        $id = $request->attributes->get('id');
+        $trick = $this->trickHandler->findOneBy(['id' => $id]);
 
         if (!$trick instanceof \App\Entity\Trick) {
             throw $this->createNotFoundException($this->translator->trans('Trick not found'));
         }
+
+        $originalTrick = clone $trick;
+        $form = $this->createForm(\App\Form\TrickFormType::class, $trick, ['edit_mode' => true]);
+        $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->trickHandler->handleImages($form, $trick);
             $this->trickHandler->handleVideos($form, $trick);
-            if (!$trick->getFeaturedImage() instanceof Image && $originalTrick->getFeaturedImage() instanceof Image) {
-                $trick->setFeaturedImage($originalTrick->getFeaturedImage());
+
+            $featuredImage = $trick->getFeaturedImage();
+            $originalFeaturedImage = $originalTrick->getFeaturedImage();
+
+            if (!$featuredImage instanceof \App\Entity\Image && $originalFeaturedImage instanceof \App\Entity\Image) {
+                $trick->setFeaturedImage($originalFeaturedImage);
             }
+
             $this->trickHandler->mergeImages($trick, $originalTrick);
             $this->trickHandler->mergeVideos($trick, $originalTrick);
-            if ($trick->getVideos() instanceof \Doctrine\Common\Collections\Collection && count($trick->getVideos()) > 0) {
-                foreach (array_merge($originalTrick->getVideos()->toArray(), $trick->getVideos()->toArray()) as $video) {
+
+            $trickVideos = $trick->getVideos();
+            if ($trickVideos instanceof \Doctrine\Common\Collections\Collection && count($trickVideos) > 0) {
+                foreach (array_merge($originalTrick->getVideos()->toArray(), $trickVideos->toArray()) as $video) {
                     $trick->addVideo($video);
                 }
             }
+
+            if ($trick->getTitle() !== $originalTrick->getTitle()) {
+                $this->trickHandler->handleSlug($trick);
+            }
             $this->trickHandler->save($trick);
-            $this->addFlash(
-                'success',
-                $this->translator->trans('Trick updated successfully!')
+            $this->addFlash('success', $this->translator->trans('Trick updated successfully!')
             );
 
-            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return new Response($this->renderView('trick/edit.html.twig', [
@@ -152,76 +162,18 @@ class TrickController extends AbstractController
         ]));
     }
 
-    #[Route('/trick/{id}', name: 'app_trick_delete', methods: ['POST'])]
-    public function delete(Request $request, \App\Entity\Trick $trick): Response
+    #[Route('/trick/delete/{id}', name: 'app_trick_delete', methods: ['POST'])]
+    public function delete(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
-        $token = (string) $request->request->get('_token');
-        if (null !== $token && $this->isCsrfTokenValid('delete'.$trick->getId(), $token)) {
-            $this->trickHandler->remove($trick);
+        $id = $request->attributes->get('id');
+        $trick = $this->trickHandler->findOneBy(['id' => $id]);
+        if ($trick instanceof \App\Entity\Trick) {
+            $token = (string) $request->request->get('_token');
+            if (null !== $token && $this->isCsrfTokenValid('delete'.$trick->getId(), $token)) {
+                $this->trickHandler->remove($trick);
+            }
         }
 
         return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
-    }
-
-    #[Route('/trick/delete/image/{id}', name: 'delete_image', methods: ['DELETE'])]
-    public function deleteImage(Image $image, Request $request): JsonResponse
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
-        $imageId = $request->attributes->get('id');
-        $content = json_decode($request->getContent(), true);
-        if (!is_array($content) || !isset($content['_csrf'])) {
-            return new JsonResponse(['error' => $this->translator->trans('Invalid request data')], 400);
-        }
-        $token = (string) $content['_csrf'];
-        if ($this->isCsrfTokenValid('delete'.$imageId, $token)) {
-            $name = $image->getPath();
-            if (null !== $name && $this->trickHandler->delete($name, 'tricks/images', 300, 300)) {
-                $trick = $image->getTrick();
-                if ($trick instanceof \App\Entity\Trick && $trick->getFeaturedImage() instanceof Image) {
-                    if ($image === $trick->getFeaturedImage()) {
-                        $trick->setFeaturedImage(null);
-                    }
-                    $this->entityManager->persist($trick);
-                    $this->entityManager->remove($image);
-                    $this->entityManager->flush();
-
-                    return new JsonResponse(['success' => true], 200);
-                }
-
-                return new JsonResponse(['success' => true], 200);
-            }
-
-            return new JsonResponse(['error' => $this->translator->trans('Error encountered during the deletion of the image')], 400);
-        }
-
-        return new JsonResponse(['error' => 'Invalid token'], 400);
-    }
-
-    #[Route('/trick/delete/video/{id}', name: 'delete_video', methods: ['DELETE'])]
-    public function deleteVideo(Video $video, Request $request): JsonResponse
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
-        $videoId = $request->attributes->get('id');
-        $content = json_decode($request->getContent(), true);
-        if (!is_array($content) || !isset($content['_csrf'])) {
-            return new JsonResponse(['error' => $this->translator->trans('Invalid request data')], 400);
-        }
-        $token = (string) $content['_csrf'];
-        if ($this->isCsrfTokenValid('delete'.$videoId, $token)) {
-            $trick = $video->getTrick();
-            if ($trick instanceof \App\Entity\Trick) {
-                $trick->removeVideo($video);
-                $this->entityManager->persist($trick);
-                $this->entityManager->remove($video);
-                $this->entityManager->flush();
-
-                return new JsonResponse(['success' => true], 200);
-            }
-
-            return new JsonResponse(['error' => $this->translator->trans('Error encountered during the deletion of the video')], 400);
-        }
-
-        return new JsonResponse(['error' => 'Invalid token'], 400);
     }
 }

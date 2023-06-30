@@ -27,8 +27,14 @@ class UniqueSlugValidator extends ConstraintValidator
         if (!is_string($value)) {
             throw new UnexpectedTypeException($value, 'string');
         }
+
+        // Get the object that is being validated
+        $trick = $this->context->getObject();
+
         $existingTrick = $this->trickRepository->findOneBy(['slug' => $value]);
-        if ($existingTrick instanceof \App\Entity\Trick) {
+
+        // Only raise a violation if a different Trick is using the same slug
+        if ($existingTrick instanceof \App\Entity\Trick && $trick instanceof \App\Entity\Trick && $existingTrick->getId() !== $trick->getId()) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('{{ string }}', $value)
                 ->addViolation();
