@@ -17,11 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
-    public function __construct(
-        private UserService $userService,
-        private TranslatorInterface $translator,
-        private TokenService $tokenService
-    ) {
+    public function __construct(private UserService $userService, private TranslatorInterface $translator, private TokenService $tokenService) {
         $this->translator = $translator;
         $this->userService = $userService;
         $this->tokenService = $tokenService;
@@ -30,7 +26,7 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator): ?Response
     {
-        if ($this->getUser()) {
+        if ($this->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             return $this->redirectToRoute('app_home');
         }
         $user = new User();

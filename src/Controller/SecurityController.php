@@ -14,9 +14,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
-    public function __construct(
-        private TranslatorInterface $translator
-    ) {
+    public function __construct(private TranslatorInterface $translator) {
         $this->translator = $translator;
     }
 
@@ -42,7 +40,7 @@ class SecurityController extends AbstractController
     #[Route('/reset-password', name: 'app_forgot_password_request')]
     public function forgottenPassword(Request $request, SecurityService $securityService): Response
     {
-        if ($this->getUser()) {
+        if ($this->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             return $this->redirectToRoute('app_home');
         }
         $form = $this->createForm(ResetPasswordRequestFormType::class);
@@ -66,7 +64,7 @@ class SecurityController extends AbstractController
     #[Route('/reset-password/{token}', name: 'app_reset_password')]
     public function resetPass(string $token, Request $request, SecurityService $securityService): Response
     {
-        if ($this->getUser()) {
+        if ($this->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             return $this->redirectToRoute('app_home');
         }
         $form = $this->createForm(ChangePasswordFormType::class);
