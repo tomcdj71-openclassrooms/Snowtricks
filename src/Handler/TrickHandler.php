@@ -31,9 +31,9 @@ class TrickHandler
         $this->entityManager = $entityManager;
     }
 
-    public function delete(string $image, string $directory, int $width, int $height): bool
+    public function delete(string $image, string $type): bool
     {
-        return $this->imageService->delete($image, $directory, $width, $height);
+        return $this->imageService->delete($image, $type);
     }
 
     public function findCommentsByPage(int $trickId, int $page, int $limit): Paginator

@@ -87,10 +87,10 @@
 							{{ form_end(form) }}
 						</form>
 					{% else %}
-						<div class="mb-6 rounded-md bg-red-50 dark:text-red-400">
+						<div class="mb-6 rounded-md bg-red-50 dark:text-red-400 pb-2">
 							<div class="p-4 mb-4 text-sm text-red-800 bg-red-50 dark:text-red-400 rounded-lg" role="alert">
 								<div class="flex items-center">
-									{{ heroicon('x-circle', 'h-6 w-6 text-red-400', {'data-accordion-icon': 'true'}) }}
+									{{ heroicon('x-circle', 'h-6 w-6 text-red-400', 'outline') }}
 									<span class="font-medium ml-2 py-2">
 										{{ 'Comment form disabled'|trans }}!</span>
 								</div>

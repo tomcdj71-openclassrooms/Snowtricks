@@ -2,8 +2,11 @@
 
 namespace App\Service;
 
+use App\Entity\Image;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -14,7 +17,9 @@ class UserService
         private EntityManagerInterface $entityManager,
         private TokenService $tokenService,
         private SendMailService $sendMailService,
-        private UrlGeneratorInterface $urlGenerator
+        private UrlGeneratorInterface $urlGenerator,
+        private ImageService $imageService,
+        private ParameterBagInterface $params,
     ) {
     }
 
@@ -23,7 +28,20 @@ class UserService
         // Hash the user's password
         $user->setPassword($this->userPasswordHasher->hashPassword($user, $plainPassword));
 
-        // Persist the user to the database
+        // Set default avatar for the user
+        $projectDir = $this->params->get('kernel.project_dir');
+        if (!is_string($projectDir)) {
+            throw new \RuntimeException('Kernel project directory path should be a string.');
+        }
+        $defaultAvatarPath = $projectDir.'/'.ImageService::IMAGE_DIRECTORY.'/'.ImageService::DEFAULT_FILE;
+        $defaultAvatar = new UploadedFile($defaultAvatarPath, ImageService::DEFAULT_FILE, null, null, true);
+        $type = 'avatars';
+        $width = 250;
+        $height = 250;
+        $avatarFileName = $this->imageService->addUserAvatar($defaultAvatar, $type, $width, $height);
+        $image = new Image();
+        $image->setPath(ImageService::USER_AVATARS_DIRECTORY.'/'.$avatarFileName);
+        $user->setAvatar($image);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 

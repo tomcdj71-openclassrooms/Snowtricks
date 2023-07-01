@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route('/delete-media/')]
+#[Route('/delete-media', name: 'media_')]
 class TrickMediaController extends AbstractController
 {
     public function __construct(private TrickHandler $trickHandler, private TranslatorInterface $translator)
@@ -25,6 +25,7 @@ class TrickMediaController extends AbstractController
         $imageId = $request->attributes->get('id');
         $imageRepo = $this->trickHandler->getEntityManager()->getRepository(\App\Entity\Image::class);
         $image = $imageRepo->findOneBy(['id' => $imageId]);
+        dump($image);
 
         if (!$image instanceof \App\Entity\Image) {
             return new JsonResponse(['error' => $this->translator->trans('Image not found')], 404);
@@ -37,14 +38,14 @@ class TrickMediaController extends AbstractController
         $token = (string) $content['_csrf'];
         if ($this->isCsrfTokenValid('delete'.$imageId, $token)) {
             $name = $image->getPath();
-            if (null !== $name && $this->trickHandler->delete($name, 'tricks/images', 300, 300)) {
+            if (null !== $name && $this->trickHandler->delete($name, 'tricks')) {
                 $trick = $image->getTrick();
                 if ($trick instanceof \App\Entity\Trick && $trick->getFeaturedImage() instanceof \App\Entity\Image) {
                     if ($image === $trick->getFeaturedImage()) {
                         $trick->setFeaturedImage(null);
                     }
-                    $this->trickHandler->save($trick);
                     $imageRepo->remove($image);
+                    $this->trickHandler->save($trick);
 
                     return new JsonResponse(['success' => true], 200);
                 }
