@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!
+{% endblock %}
+
+{% block body %}
+	<div class="max-w-7xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0">
+		<div id="profile" class="w-full lg:w-2/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white opacity-75 mx-6 lg:mx-0">
+			<div
+				class="p-4 md:p-4 text-center lg:text-left">
+				<!-- mobile avatar -->
+				{% if user.avatar %}
+					<div class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-48 bg-cover bg-center" style="background-image: url('{{ asset('assets/uploads/users/avatars/' ~ user.avatar ) }}')"></div>
+				{% endif %}
+				<h1 class="text-3xl font-bold pt-8 lg:pt-0 flex items-center">
+					{{ user.username }}
+					{% if user.isVerified %}
+						<div class="mb-4">
+							{{ heroicon('shield-check', 'h-6 w-6 text-green-600') }}
+						</div>
+					{% endif %}
+				</h1>
+				{% if user.isVerified %}
+					<div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-50">
+						<span class="text-sm text-gray-600">{{ 'Account verified'|trans }}</span>
+					</div>
+					<div class="pt-12 pb-8">
+						<form action="{{ path('app_user') }}" method="post" class="mb-6 rounded-md" enctype="multipart/form-data">
+							{{ form_start(form) }}
+							{{ form_widget(form) }}
+							<div class="flex justify-center">
+								<button type="submit" class="mt-4 block bg-primary-500 text-white font-semibold rounded-lg px-4 py-2 transition duration-200 each-in-out hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-dark-900 dark:focus:ring-indigo-500 focus:ring-offset-white dark:hover:bg-primary-700 h-10 px-6 w-75">
+									{{ 'Save'|trans }}
+								</button>
+							</div>
+							{{ form_end(form) }}
+						</form>
+					</div>
+				{% else %}
+					<div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-50 mb-4"></div>
+					<span class="text-gray-600 mt-4">{{ 'Check your inbox to validate your account.'|trans }}</span>
+				{% endif %}
+			</div>
+		</div>
+		<!-- desktop avatar -->
+		{% if user.avatar %}
+			<div class="w-full lg:w-3/5">
+				<img src="{{ asset('assets/uploads/users/avatars/' ~ user.avatar ) }}" class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block">
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

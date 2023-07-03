@@ -93,7 +93,7 @@ class TrickFormType extends AbstractType
             ])
             ->add('videos', CollectionType::class, [
                 'label' => 'Videos',
-                'entry_type' => VideoType::class,
+                'entry_type' => VideoFormType::class,
                 'entry_options' => [
                     'label' => false,
                 ],

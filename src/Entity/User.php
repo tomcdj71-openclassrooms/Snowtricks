@@ -205,15 +205,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatar(?Image $avatar): self
     {
         // unset the owning side of the relation if necessary
-        if (!$avatar instanceof \App\Entity\Image && $this->avatar instanceof \App\Entity\Image) {
-            $this->avatar->setUser(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($avatar instanceof \App\Entity\Image && $avatar->getUser() !== $this) {
-            $avatar->setUser($this);
-        }
-
         $this->avatar = $avatar;
 
         return $this;

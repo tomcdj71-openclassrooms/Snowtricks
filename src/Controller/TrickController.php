@@ -86,7 +86,7 @@ class TrickController extends AbstractController
             $totalComments = count($paginator);
             $comment = new \App\Entity\Comment();
             $comment->setTrick($trick);
-            $comment->setAuthor($this->trickHandler->findRandomUser());
+            $comment->setAuthor($this->getUser());
             $comment->setCreatedAt(new \DateTimeImmutable());
             $form = $this->createForm(\App\Form\CommentFormType::class, $comment);
             $form->handleRequest($request);
