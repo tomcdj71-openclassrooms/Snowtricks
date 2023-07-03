@@ -28,26 +28,27 @@ class UserFixtures extends Fixture
         $filesystem = new Filesystem();
         $finder = new Finder();
         $finder->files()->in(__DIR__.'/../../public/assets/default');
-        foreach ($finder as $file) {
-            $relativePath = str_replace('\\', '/', $file->getRelativePathname());
-            $randomUUID = $this->faker->uuid();
-            $relativePath = str_replace('default-avatar.png', $randomUUID.'.png', $relativePath);
-            $filesystem->copy($file->getRealPath(), __DIR__.'/../../public/assets/uploads/users/avatars/'.$relativePath);
-        }
         for ($i = 0; $i < 25; ++$i) {
-            $image = new Image();
-            $image->setPath($relativePath);
-            $user = new User();
-            $user->setUsername($this->faker->userName());
-            $user->setEmail($this->faker->email());
-            $user->setPassword($this->passwordHasher->hashPassword($user, 'password'));
-            $user->setAvatar($image);
-            $user->setIsVerified(true);
-
-            $manager->persist($user);
-            $manager->persist($image);
-            $this->addReference('user-'.$i, $user);
-        }
+            foreach ($finder as $file) {
+                $relativePath = str_replace('\\', '/', $file->getRelativePathname());
+                $randomUUID = $this->faker->uuid();
+                $relativePath = str_replace('default-avatar.png', $randomUUID.'.png', $relativePath);
+                $filesystem->copy($file->getRealPath(), __DIR__.'/../../public/assets/uploads/users/avatars/'.$relativePath);
+                $image = new Image();
+                $image->setPath($relativePath);
+                $user = new User();
+                $user->setUsername($this->faker->userName());
+                $user->setEmail($this->faker->email());
+                $user->setPassword($this->passwordHasher->hashPassword($user, 'password'));
+                $user->setAvatar($image);
+                $image->setUser($user);
+                $user->setIsVerified(true);
+    
+                $manager->persist($user);
+                $manager->persist($image);
+                $this->addReference('user-'.$i, $user);
+            }
+            }
 
         $manager->flush();
     }
