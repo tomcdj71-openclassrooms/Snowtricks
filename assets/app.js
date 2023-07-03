@@ -11,3 +11,4 @@ import 'flowbite';
 import './imageUploader.js';
 import './loadMore.js';
 import './transitions.js';
+import './navbar.js';
