@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use App\Validator\Constraints\AlphanumericUsername;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -11,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
@@ -22,16 +23,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[AlphanumericUsername]
+    #[Assert\NoSuspiciousCharacters]
+    #[Assert\NotBlank]
     #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     private ?string $username;
 
     /**
      * @var string The hashed password
      */
+    #[Assert\PasswordStrength([
+        'minScore' => PasswordStrength::STRENGTH_MEDIUM,
+        'message' => 'The password is too weak. Please use a stronger password.',
+    ])]
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $password;
 
+    #[Assert\Email]
+    #[Assert\NotBlank]
     #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
     private ?string $email;
 

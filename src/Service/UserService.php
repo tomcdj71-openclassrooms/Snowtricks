@@ -40,7 +40,8 @@ class UserService
         $height = 250;
         $avatarFileName = $this->imageService->addUserAvatar($defaultAvatar, $type, $width, $height);
         $image = new Image();
-        $image->setPath(ImageService::USER_AVATARS_DIRECTORY.'/'.$avatarFileName);
+        $image->setPath($avatarFileName);
+        $image->setUser($user);
         $user->setAvatar($image);
         $this->entityManager->persist($user);
         $this->entityManager->flush();

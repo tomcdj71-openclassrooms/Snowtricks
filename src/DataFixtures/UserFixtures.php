@@ -43,12 +43,12 @@ class UserFixtures extends Fixture
                 $user->setAvatar($image);
                 $image->setUser($user);
                 $user->setIsVerified(true);
-    
+
                 $manager->persist($user);
                 $manager->persist($image);
                 $this->addReference('user-'.$i, $user);
             }
-            }
+        }
 
         $manager->flush();
     }

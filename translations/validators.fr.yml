@@ -142,3 +142,4 @@ Error: Erreur
 'There is already an account with this email': 'Il existe déjà un compte avec cet email'
 username.alphanumeric: 'Le pseudonyme "{{ string }}" contient des caractères illégaux: il ne peut contenir que des caractères alphanumériques.'
 slug.unique: 'Ce slug "{{ string }}" est déjà utilisé.'
+'The password is too weak. Please use a stronger password.': 'Le mot de passe est trop faible. Veuillez utiliser un mot de passe plus fort.'
