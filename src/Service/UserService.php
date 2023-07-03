@@ -33,7 +33,7 @@ class UserService
         if (!is_string($projectDir)) {
             throw new \RuntimeException('Kernel project directory path should be a string.');
         }
-        $defaultAvatarPath = $projectDir.'/'.ImageService::IMAGE_DIRECTORY.'/'.ImageService::DEFAULT_FILE;
+        $defaultAvatarPath = $projectDir.'/public/'.ImageService::IMAGE_DIRECTORY.'/'.ImageService::DEFAULT_FILE;
         $defaultAvatar = new UploadedFile($defaultAvatarPath, ImageService::DEFAULT_FILE, null, null, true);
         $type = 'avatars';
         $width = 250;

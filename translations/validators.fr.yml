@@ -140,3 +140,5 @@ Error: Erreur
 'The url "{{ value }}" is not a valid url.': 'Le lien "{{ value }}" est incorrect.'
 'There is already an account with this username': 'Il existe déjà un compte avec ce pseudo'
 'There is already an account with this email': 'Il existe déjà un compte avec cet email'
+username.alphanumeric: 'Le pseudonyme "{{ string }}" contient des caractères illégaux: il ne peut contenir que des caractères alphanumériques.'
+slug.unique: 'Ce slug "{{ string }}" est déjà utilisé.'

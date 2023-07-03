@@ -26,7 +26,7 @@ class Trick
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[UniqueSlug]
+    #[UniqueSlug()]
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $slug = null;
 

@@ -2,14 +2,13 @@
 
 namespace App\Validator\Constraints;
 
-use Attribute;
 use Symfony\Component\Validator\Constraint;
 
 /**
  * @Annotation
  */
 #[\Attribute]
-class UniqueSlug extends Constraint
+class AlphanumericUsername extends Constraint
 {
-    public string $message = 'slug.unique';
+    public string $message = 'username.alphanumeric';
 }
