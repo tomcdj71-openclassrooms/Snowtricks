@@ -29,12 +29,14 @@ class TrickController extends AbstractController
         $paginator = $this->trickHandler->findTricksByPage($page, $limit);
         $tricks = iterator_to_array($paginator->getIterator());
         $totalTricks = count($paginator);
+        $hasMoreTricks = $totalTricks > ($page * $limit);
 
         return $this->render('trick/index.html.twig', [
             'tricks' => $tricks,
             'total_tricks' => $totalTricks,
             'current_page' => $page,
             'limit' => $limit,
+            'has_more_tricks' => $hasMoreTricks,
         ]);
     }
 

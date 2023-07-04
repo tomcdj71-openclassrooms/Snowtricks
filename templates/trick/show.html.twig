@@ -101,7 +101,7 @@
 							</div>
 						</div>
 					{% endif %}
-					<div id="comments-container">
+					<div id="comments-container" data-limit="{{ limit }}" data-total-comments="{{ trick.comments|length }}">
 						{% for comment in comments %}
 							{% include "_partials/_comment_card.html.twig" %}
 						{% endfor %}
