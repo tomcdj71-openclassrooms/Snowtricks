@@ -12,3 +12,4 @@ import './imageUploader.js';
 import './loadMore.js';
 import './transitions.js';
 import './gallery.js';
+import './navbar.js';

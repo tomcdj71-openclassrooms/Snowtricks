@@ -1,13 +1,15 @@
-function toggleDropdown(dropdownButtonId, dropdownMenuId) {
-    document.getElementById(dropdownButtonId).addEventListener('click', function () {
-        var dropdownMenu = document.getElementById(dropdownMenuId);
-        if (dropdownMenu.classList.contains('hidden')) {
-            dropdownMenu.classList.remove('hidden');
-        } else {
-            dropdownMenu.classList.add('hidden');
-        }
-    });
-}
+const toggleDropdown = (dropdownButtonId, dropdownMenuId) => {
+    const dropdownButton = document.getElementById(dropdownButtonId);
+    const dropdownMenu = document.getElementById(dropdownMenuId);
 
-toggleDropdown('dropdownButton', 'dropdownMenu');
-toggleDropdown('dropdownButtonMobile', 'dropdownMenuMobile');
+    if (dropdownButton && dropdownMenu) {
+        dropdownButton.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('hidden');
+        });
+    }
+};
+
+['dropdownButton', 'dropdownButtonMobile'].forEach((dropdownButtonId) => {
+    const dropdownMenuId = `${dropdownButtonId.replace('Button', 'Menu')}`;
+    toggleDropdown(dropdownButtonId, dropdownMenuId);
+});
