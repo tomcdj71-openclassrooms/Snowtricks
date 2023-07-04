@@ -11,7 +11,6 @@
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
-
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
@@ -24,12 +23,14 @@
 		{% if app.request.pathInfo == '/' %}
 			{% include "_partials/_hero_banner.html.twig" %}
 		{% endif %}
+
 		<div class="flex md:pt-16 bg-gray-50 dark:bg-gray-900" {% if app.request.pathInfo == '/user' %} style="background-image:url({{ asset('assets/hero-banner.jpg') }});" {% endif %}>
 			<div id="main-content" class="relative w-full max-w-screen-2xl mx-auto h-full {% if not app.request.pathInfo == '/user' %} bg-gray-50 dark:bg-gray-900 {% endif %}">
 				<div class="md:px-4 pt-6 2xl:px-0" data-np-autofill-type="other" data-np-watching="1"> {% block body %}{% endblock %}
 					</div>
 				</div>
 			</div>
+			{% include '_partials/_modal_gallery.html.twig' %}
 			{% include "_partials/_footer.html.twig" %}
 		</body>
 	</html>
