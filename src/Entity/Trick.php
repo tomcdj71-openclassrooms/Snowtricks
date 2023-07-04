@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 class Trick
@@ -17,9 +18,13 @@ class Trick
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Type('string')]
+    #[ORM\Column(type: Types::STRING, length: 70)]
     private ?string $title = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Type('text')]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
@@ -27,13 +32,16 @@ class Trick
     private ?\DateTimeImmutable $createdAt = null;
 
     #[UniqueSlug()]
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\Type('string')]
+    #[ORM\Column(type: Types::STRING, length: 75, unique: true)]
     private ?string $slug = null;
 
+    #[Assert\Type(Group::class)]
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Group $group;
 
+    #[Assert\Type(User::class)]
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $author;
@@ -47,6 +55,7 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class, cascade: ['persist', 'remove'])]
     private Collection $comments;
 
+    #[Assert\Type(Image::class)]
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: true)]
     private ?Image $featuredImage;

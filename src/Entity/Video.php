@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\VideoRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VideoRepository::class)]
 class Video
@@ -14,9 +15,11 @@ class Video
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\Type('string')]
+    #[ORM\Column(type: Types::STRING, length: 80)]
     private ?string $path;
 
+    #[Assert\Type(Trick::class)]
     #[ORM\ManyToOne(inversedBy: 'videos')]
     private ?Trick $trick;
 

@@ -25,7 +25,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Assert\NoSuspiciousCharacters]
     #[Assert\NotBlank]
-    #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
+    #[Assert\Length(
+        min: 4,
+        max: 50,
+        minMessage: 'Your username should be at least {{ limit }} characters',
+        maxMessage: 'Your username should not be longer than {{ limit }} characters'
+    )]
+    #[ORM\Column(type: Types::STRING, length: 50, unique: true)]
     private ?string $username;
 
     /**
@@ -35,17 +41,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'minScore' => PasswordStrength::STRENGTH_MEDIUM,
         'message' => 'The password is too weak. Please use a stronger password.',
     ])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\NotBlank]
+    #[ORM\Column(type: Types::STRING, length: 80)]
     private ?string $password;
 
     #[Assert\Email]
     #[Assert\NotBlank]
-    #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
+    #[Assert\Email]
+    #[Assert\Length(
+        max: 180,
+        maxMessage: 'Your email should not be longer than {{ limit }} characters'
+    )]
+    #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     private ?string $email;
 
+    #[Assert\Type('bool')]
     #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $isVerified = false;
 
+    #[Assert\Type('string')]
     #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
     private ?string $resetToken = null;
 
@@ -55,6 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Trick::class, orphanRemoval: true)]
     private Collection $tricks;
 
+    #[Assert\Type(Image::class)]
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Image $avatar;
 
