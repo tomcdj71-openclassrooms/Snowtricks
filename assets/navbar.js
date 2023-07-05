@@ -1,11 +1,13 @@
+const dropdownClickHandler = (dropdownMenu) => {
+    dropdownMenu.classList.toggle('hidden');
+};
+
 const toggleDropdown = (dropdownButtonId, dropdownMenuId) => {
     const dropdownButton = document.getElementById(dropdownButtonId);
     const dropdownMenu = document.getElementById(dropdownMenuId);
 
     if (dropdownButton && dropdownMenu) {
-        dropdownButton.addEventListener('click', () => {
-            dropdownMenu.classList.toggle('hidden');
-        });
+        dropdownButton.addEventListener('click', () => dropdownClickHandler(dropdownMenu));
     }
 };
 

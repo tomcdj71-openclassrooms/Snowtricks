@@ -1,52 +1,56 @@
-const images = Array.from(document.querySelectorAll('[data-image]'));
-let currentImageIndex = 0;
+(function () {
+    const images = Array.from(document.querySelectorAll('[data-image]'));
+    let currentImageIndex = 0;
 
-function updateModalImage(src) {
-    const modalImage = document.querySelector('#modal-image');
-    modalImage.setAttribute('src', src);
-}
-
-function handleImageClick(index) {
-    return function () {
-        const imageSrc = this.getAttribute('data-image');
-        updateModalImage(imageSrc);
-        currentImageIndex = index;
+    function updateModalImage(src) {
+        const modalImage = document.querySelector('#modal-image');
+        modalImage.setAttribute('src', src);
     }
-}
 
-function initGallery() {
-    images.forEach((image, index) => {
-        image.addEventListener('click', handleImageClick(index));
-    });
+    function handleImageClick(index) {
+        return function () {
+            const imageSrc = this.getAttribute('data-image');
+            updateModalImage(imageSrc);
+            currentImageIndex = index;
+        }
+    }
 
-    document.getElementById('prev-image').addEventListener('click', () => {
-        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-        updateModalImage(images[currentImageIndex].getAttribute('data-image'));
-    });
+    function handleNavClick(offset) {
+        return function () {
+            currentImageIndex = (currentImageIndex + offset + images.length) % images.length;
+            updateModalImage(images[currentImageIndex].getAttribute('data-image'));
+        }
+    }
 
-    document.getElementById('next-image').addEventListener('click', () => {
-        currentImageIndex = (currentImageIndex + 1) % images.length;
-        updateModalImage(images[currentImageIndex].getAttribute('data-image'));
-    });
-}
+    function handleAccordionClick(button, accordionBody) {
+        const isOpen = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', !isOpen);
 
-function initAccordion() {
-    document.querySelectorAll("[data-accordion-target]").forEach(button => {
-        button.addEventListener('click', () => {
+        if (isOpen) {
+            accordionBody.classList.add('hidden');
+        } else {
+            accordionBody.classList.remove('hidden');
+        }
+    }
+
+    function initGallery() {
+        images.forEach((image, index) => {
+            image.addEventListener('click', handleImageClick(index));
+        });
+
+        document.getElementById('prev-image').addEventListener('click', handleNavClick(-1));
+        document.getElementById('next-image').addEventListener('click', handleNavClick(1));
+    }
+
+    function initAccordion() {
+        document.querySelectorAll("[data-accordion-target]").forEach(button => {
             const accordionId = button.getAttribute('data-accordion-target');
             const accordionBody = document.querySelector(accordionId);
 
-            const isOpen = button.getAttribute('aria-expanded') === 'true';
-            button.setAttribute('aria-expanded', !isOpen);
-
-            if (isOpen) {
-                accordionBody.classList.add('hidden');
-            } else {
-                accordionBody.classList.remove('hidden');
-            }
+            button.addEventListener('click', () => handleAccordionClick(button, accordionBody));
         });
-    });
-}
+    }
 
-initGallery();
-initAccordion();
+    initGallery();
+    initAccordion();
+})();
