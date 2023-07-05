@@ -24,7 +24,7 @@ class Image
     private ?Trick $trick = null;
 
     #[Assert\Type(User::class)]
-    #[ORM\OneToOne(inversedBy: 'avatar', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'avatar')]
     private ?User $user = null;
 
     public function getId(): ?int

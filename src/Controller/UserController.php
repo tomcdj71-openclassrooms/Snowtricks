@@ -35,12 +35,12 @@ class UserController extends AbstractController
                 if ($oldAvatar instanceof \App\Entity\Image) {
                     $oldAvatarPath = $oldAvatar->getPath();
                     if ($oldAvatarPath && ImageService::DEFAULT_FILE !== $oldAvatarPath) {
+                        $this->imageService->deleteUserAvatar($oldAvatarPath);
                         $this->entityManager->remove($oldAvatar);
-                        $this->entityManager->flush();  // <--- Add flush here
-                        $this->imageService->deleteUserAvatar($oldAvatarPath, 'avatars');
+                        $this->entityManager->flush();
                     }
                 }
-                $fileName = $this->imageService->addUserAvatar($file, 'avatars', 800, 800);
+                $fileName = $this->imageService->addUserAvatar($file, 800, 800);
                 $image = new Image();
                 $image->setPath($fileName);
                 $image->setUser($user);

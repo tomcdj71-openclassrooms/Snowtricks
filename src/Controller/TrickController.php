@@ -136,10 +136,10 @@ class TrickController extends AbstractController
             $this->trickHandler->handleVideos($form, $trick);
 
             $featuredImage = $trick->getFeaturedImage();
-            $originalFeaturedImage = $originalTrick->getFeaturedImage();
+            $clonedFeaturedImage = $originalTrick->getFeaturedImage();
 
-            if (!$featuredImage instanceof \App\Entity\Image && $originalFeaturedImage instanceof \App\Entity\Image) {
-                $trick->setFeaturedImage($originalFeaturedImage);
+            if (!$featuredImage instanceof \App\Entity\Image && $clonedFeaturedImage instanceof \App\Entity\Image) {
+                $trick->setFeaturedImage($clonedFeaturedImage);
             }
 
             $this->trickHandler->mergeImages($trick, $originalTrick);

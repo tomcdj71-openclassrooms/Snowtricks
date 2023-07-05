@@ -38,7 +38,7 @@ class UserService
         $type = 'avatars';
         $width = 250;
         $height = 250;
-        $avatarFileName = $this->imageService->addUserAvatar($defaultAvatar, $type, $width, $height);
+        $avatarFileName = $this->imageService->addUserAvatar($defaultAvatar, $width, $height);
         $image = new Image();
         $image->setPath($avatarFileName);
         $image->setUser($user);

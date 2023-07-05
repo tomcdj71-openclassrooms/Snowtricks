@@ -173,3 +173,4 @@ error: erreur
 Save: Enregister
 'Check your inbox to validate your account.': 'Vérifiez votre boîte de réception pour valider votre compte.'
 Profile: Profil
+'Failed to create an image resource.': "Échec de la création d'une ressource d'image."

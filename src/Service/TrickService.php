@@ -42,15 +42,14 @@ class TrickService
             throw new \Exception('Failed to get image size.');
         }
         [$width, $height] = $imageInfo;
-        $file = $this->imageService->addTrickImage($image, 'tricks', $width, $height, '');
+        $file = $this->imageService->addTrickImage($image, $width, $height);
         $img = new Image();
         $img->setPath($file);
         $this->entityManager->persist($img);
         if ($isFeatured) {
             return $img;
-        } else {
-            $trick->addImage($img);
         }
+        $trick->addImage($img);
 
         return $img;
     }
