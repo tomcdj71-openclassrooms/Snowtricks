@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
@@ -21,21 +23,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
+    #[Assert\NoSuspiciousCharacters]
+    #[Assert\NotBlank]
+    #[Assert\Length(
+        min: 4,
+        max: 50,
+        minMessage: 'Your username should be at least {{ limit }} characters',
+        maxMessage: 'Your username should not be longer than {{ limit }} characters'
+    )]
+    #[ORM\Column(type: Types::STRING, length: 50, unique: true)]
     private ?string $username;
 
     /**
      * @var string The hashed password
      */
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\PasswordStrength([
+        'minScore' => PasswordStrength::STRENGTH_MEDIUM,
+        'message' => 'The password is too weak. Please use a stronger password.',
+    ])]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $password;
 
-    #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
+    #[Assert\Email]
+    #[Assert\NotBlank]
+    #[Assert\Email]
+    #[Assert\Length(
+        max: 180,
+        maxMessage: 'Your email should not be longer than {{ limit }} characters'
+    )]
+    #[ORM\Column(type: Types::STRING, length: 180, unique: true)]
     private ?string $email;
 
+    #[Assert\Type('bool')]
     #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $isVerified = false;
 
+    #[Assert\Type('string')]
     #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
     private ?string $resetToken = null;
 
@@ -45,7 +68,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Trick::class, orphanRemoval: true)]
     private Collection $tricks;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[Assert\Type(Image::class)]
+    #[ORM\OneToOne(mappedBy: 'user', targetEntity: Image::class)]
     private ?Image $avatar;
 
     public function __construct()
@@ -205,15 +229,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAvatar(?Image $avatar): self
     {
         // unset the owning side of the relation if necessary
-        if (!$avatar instanceof \App\Entity\Image && $this->avatar instanceof \App\Entity\Image) {
-            $this->avatar->setUser(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($avatar instanceof \App\Entity\Image && $avatar->getUser() !== $this) {
-            $avatar->setUser($this);
-        }
-
         $this->avatar = $avatar;
 
         return $this;

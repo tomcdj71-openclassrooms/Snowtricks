@@ -148,5 +148,29 @@ Videos: Vidéos
 'This section is incomplete. Please, help us by adding new Photos or Videos to this trick.': "Cette section est incomplète. S'il vous plaît, aidez-nous en ajoutant de nouvelles photos ou vidéos à cette figure."
 Close: Fermer
 Dismiss: Rejeter
-'Image not found': '__Image not found'
-'Video not found': '__Video not found'
+'Image not found': 'Image non trouvée'
+'Video not found': 'Vidéo non trouvée'
+Info: Information
+info: information
+Success: Succès
+success: succès
+Warning: Attention
+warning: attention
+Error: Erreur
+error: erreur
+'Failed to create an image resource from file.': "Échec de la création d'une ressource d'image à partir du fichier."
+'Failed to create a true color image.': "Échec de la création d'une image TrueColor."
+'Failed to create a mini true color image.': "Échec de la création d'une miniature TrueColor."
+'Failed to convert palette to true color.': 'Impossible de convertir la palette en TrueColor.'
+'Failed to output a WebP image.': "Échec de la sortie d'une image WebP."
+'Failed to convert source image palette to true color.': "Échec de la conversion de la palette de l'image source en TrueColor."
+'Failed to output a source WebP image.': "Échec de la sortie d'une image WebP source."
+'Do you want to delete this image?': 'Voulez-vous supprimer cette image?'
+'Do you want to delete this video?': 'Voulez-vous supprimer cette vidéo?'
+'Change Avatar': "Changer d'avatar"
+'No image was sent.': "Aucune image n'a été envoyée."
+'Account verified': 'Compte vérifié'
+Save: Enregister
+'Check your inbox to validate your account.': 'Vérifiez votre boîte de réception pour valider votre compte.'
+Profile: Profil
+'Failed to create an image resource.': "Échec de la création d'une ressource d'image."

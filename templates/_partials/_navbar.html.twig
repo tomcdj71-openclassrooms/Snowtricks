@@ -7,7 +7,19 @@
 			<a href="{{ path('app_home') }}" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ 'Figures'|trans }}</a>
 			{% if app.user %}
 				<a href="{{ path('app_trick_new') }}" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ 'Ajouter'|trans }}</a>
-				<a href="{{ path('app_logout') }}" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ 'Logout'|trans }}</a>
+				<div class="relative inline-block text-left pl-3">
+					<div>
+						<button id="dropdownButton" class="rounded-full w-10 h-10 bg-gray-200 text-gray-900 focus:outline-none inline-flex items-center">
+							<img class="rounded-full" src="{{ asset('assets/uploads/users/avatars/' ~ app.user.avatar.path ) }}" alt="{{ app.user.username }}'s avatar">
+						</button>
+					</div>
+					<div id="dropdownMenu" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+						<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+							<a href="{{ path('app_user') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white" role="menuitem">{{ 'Profile'|trans }}</a>
+							<a href="{{ path('app_logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white" role="menuitem">{{ 'Logout'|trans }}</a>
+						</div>
+					</div>
+				</div>
 			{% else %}
 				<a href="{{ path('app_login') }}" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ 'Log In'|trans }}</a>
 				<a href="{{ path('app_register') }}" class="py-2 px-4 text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">{{ 'Register'|trans }}</a>
@@ -16,24 +28,35 @@
 	</div>
 </nav>
 
+
 <nav class="fixed z-30 w-full bg-white border-t-2 border-gray-200 dark:bg-gray-800 dark:border-gray-700 py-3 px-4 lg:hidden block bottom-0">
 	<div class="flex justify-between items-center max-w-screen-2xl mx-auto">
 		<a href="{{ path('app_home') }}">
-			{{ heroicon('home', 'w-8 h-8') }}
+			{{ heroicon('home', 'w-8 h-8', 'outline') }}
 		</a>
 		{% if app.user %}
 			<a href="{{ path('app_trick_new') }}">
-				{{ heroicon('document-plus', 'w-8 h-8') }}
+				{{ heroicon('document-plus', 'w-8 h-8', 'outline') }}
 			</a>
-			<a href="{{ path('app_logout') }}">
-				{{ heroicon('arrow-right-on-rectangle', 'w-8 h-8') }}
-			</a>
+			<div class="relative inline-block text-left">
+				<div>
+					<button id="dropdownButtonMobile" class="rounded-full w-10 h-10 bg-gray-200 text-gray-900 focus:outline-none inline-flex items-center">
+						<img class="rounded-full" src="{{ asset('assets/uploads/users/avatars/' ~ app.user.avatar.path ) }}" alt="{{ app.user.username }}'s avatar">
+					</button>
+				</div>
+				<div id="dropdownMenuMobile" class="origin-bottom-right absolute bottom-10 right-0 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+					<div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+						<a href="{{ path('app_user') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white" role="menuitem">{{ heroicon('user', 'w-8 h-8 pr-2 inline') }}{{ 'Profile'|trans }}</a>
+						<a href="{{ path('app_logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white" role="menuitem">{{ heroicon('arrow-right-on-rectangle', 'w-8 h-8 inline') }}{{ 'Logout'|trans }}</a>
+					</div>
+				</div>
+			</div>
 		{% else %}
 			<a href="{{ path('app_login') }}">
 				{{ heroicon('arrow-left-on-rectangle', 'w-8 h-8') }}
 			</a>
 			<a href="{{ path('app_register') }}">
-				{{ heroicon('user-plus', 'w-8 h-8') }}
+				{{ heroicon('user-plus', 'w-8 h-8', 'outline') }}
 			</a>
 		{% endif %}
 	</div>

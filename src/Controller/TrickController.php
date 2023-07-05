@@ -11,7 +11,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TrickController extends AbstractController
 {
-    public function __construct(private TrickHandler $trickHandler, private TranslatorInterface $translator) {
+    public function __construct(private TrickHandler $trickHandler, private TranslatorInterface $translator)
+    {
         $this->trickHandler = $trickHandler;
         $this->translator = $translator;
     }
@@ -28,12 +29,14 @@ class TrickController extends AbstractController
         $paginator = $this->trickHandler->findTricksByPage($page, $limit);
         $tricks = iterator_to_array($paginator->getIterator());
         $totalTricks = count($paginator);
+        $hasMoreTricks = $totalTricks > ($page * $limit);
 
         return $this->render('trick/index.html.twig', [
             'tricks' => $tricks,
             'total_tricks' => $totalTricks,
             'current_page' => $page,
             'limit' => $limit,
+            'has_more_tricks' => $hasMoreTricks,
         ]);
     }
 
@@ -85,7 +88,10 @@ class TrickController extends AbstractController
             $totalComments = count($paginator);
             $comment = new \App\Entity\Comment();
             $comment->setTrick($trick);
-            $comment->setAuthor($this->trickHandler->findRandomUser());
+            $user = $this->getUser();
+            if ($user instanceof \App\Entity\User) {
+                $comment->setAuthor($user);
+            }
             $comment->setCreatedAt(new \DateTimeImmutable());
             $form = $this->createForm(\App\Form\CommentFormType::class, $comment);
             $form->handleRequest($request);
@@ -130,10 +136,10 @@ class TrickController extends AbstractController
             $this->trickHandler->handleVideos($form, $trick);
 
             $featuredImage = $trick->getFeaturedImage();
-            $originalFeaturedImage = $originalTrick->getFeaturedImage();
+            $clonedFeaturedImage = $originalTrick->getFeaturedImage();
 
-            if (!$featuredImage instanceof \App\Entity\Image && $originalFeaturedImage instanceof \App\Entity\Image) {
-                $trick->setFeaturedImage($originalFeaturedImage);
+            if (!$featuredImage instanceof \App\Entity\Image && $clonedFeaturedImage instanceof \App\Entity\Image) {
+                $trick->setFeaturedImage($clonedFeaturedImage);
             }
 
             $this->trickHandler->mergeImages($trick, $originalTrick);

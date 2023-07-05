@@ -3,10 +3,8 @@
 namespace App\Handler;
 
 use App\Entity\Trick;
-use App\Entity\User;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
-use App\Repository\UserRepository;
 use App\Service\ImageService;
 use App\Service\TrickService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,31 +17,24 @@ class TrickHandler
         private TrickService $trickService,
         private ImageService $imageService,
         private TrickRepository $trickRepository,
-        private UserRepository $userRepository,
         private CommentRepository $commentRepository,
         private EntityManagerInterface $entityManager
     ) {
         $this->trickService = $trickService;
         $this->imageService = $imageService;
         $this->trickRepository = $trickRepository;
-        $this->userRepository = $userRepository;
         $this->commentRepository = $commentRepository;
         $this->entityManager = $entityManager;
     }
 
-    public function delete(string $image, string $directory, int $width, int $height): bool
+    public function delete(string $image, string $type): bool
     {
-        return $this->imageService->delete($image, $directory, $width, $height);
+        return $this->imageService->delete($image, $type);
     }
 
     public function findCommentsByPage(int $trickId, int $page, int $limit): Paginator
     {
         return $this->commentRepository->findCommentsByPage($trickId, $page, $limit);
-    }
-
-    public function findRandomUser(): ?User
-    {
-        return $this->userRepository->findRandomUser();
     }
 
     public function findTricksByPage(int $page, int $limit): Paginator

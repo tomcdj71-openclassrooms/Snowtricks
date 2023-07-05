@@ -17,7 +17,7 @@
 
 		<!-- Grid -->
 		<div
-			class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 lg:mb-14" id="tricks-container">
+			class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 lg:mb-14" id="tricks-container" data-total-tricks="{{ total_tricks }}" data-limit="{{ limit }}">
 			<!-- Card -->
 			{% for trick in tricks %}
 				{% include "_partials/_trick_card.html.twig" %}

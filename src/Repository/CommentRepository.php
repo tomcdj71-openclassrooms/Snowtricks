@@ -46,6 +46,7 @@ class CommentRepository extends ServiceEntityRepository
             ->setMaxResults($pageSize)
             ->setParameter('trick', $trickId)
             ->where('t.trick = :trick')
+            ->orderBy('t.createdAt', 'DESC')
             ->getQuery();
 
         return new Paginator($query);

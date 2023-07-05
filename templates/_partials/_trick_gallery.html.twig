@@ -7,7 +7,7 @@
 				<div class="grid gap-12 sm:grid-cols-1 lg:grid-cols-4 md:pb-3">
 					{% for image in trick.images %}
 						<article class="max-w-full">
-							<img src="{{ asset('assets/uploads/tricks/images/mini/' ~ image.path ) }}" class="w-full h-48 object-cover rounded-lg" alt="{{ 'Trick Image'|trans }}">
+							<img src="{{ asset('assets/uploads/tricks/images/mini/' ~ image.path ) }}" class="open-modal cursor-pointer w-full h-48 object-cover rounded-lg" alt="{{ 'Trick Image'|trans }}" data-image="{{ asset('assets/uploads/tricks/images/' ~ image.path ) }}" data-hs-overlay="#hs-subscription-with-image">
 						</article>
 					{% endfor %}
 				</div>

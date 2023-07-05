@@ -11,5 +11,5 @@ use Symfony\Component\Validator\Constraint;
 #[\Attribute]
 class UniqueSlug extends Constraint
 {
-    public string $message = 'The slug "{{ string }}" is already in use.';
+    public string $message = 'slug.unique';
 }

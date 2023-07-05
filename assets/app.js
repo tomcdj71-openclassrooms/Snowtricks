@@ -7,7 +7,9 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
-import 'flowbite';
+import 'preline';
 import './imageUploader.js';
 import './loadMore.js';
 import './transitions.js';
+import './gallery.js';
+import './navbar.js';

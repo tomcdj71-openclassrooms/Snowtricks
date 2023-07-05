@@ -1,0 +1,23 @@
+<div id="hs-subscription-with-image" class="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto space-x-2 flex">
+	<div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 opacity-0 ease-out transition-all w-full h-full bg-transparent shadow-lg rounded-xl dark:bg-gray-800 absolute inset-0">
+		<div class="relative w-5/6 h-[95vh] mx-auto">
+			<div class="absolute top-2 right-2 z-[10] transform hover:scale-150 transition-all duration-300">
+				<button type="button" class="inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md bg-gray-500 text-white hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800" data-hs-overlay="#hs-subscription-with-image">
+					<span class="sr-only">{{ 'Close'|trans }}</span>
+					{{ heroicon('x-mark', 'h-6 w-6') }}
+				</button>
+			</div>
+			<div class="w-full h-full relative">
+				<button class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white rounded-full p-2 hover:scale-150 transition-all duration-300" id="prev-image">
+					<span class="sr-only">{{ 'Previous'|trans }}</span>
+					{{ heroicon('arrow-left', 'h-6 w-6') }}
+				</button>
+				<img id="modal-image" class="w-full h-full object-contain rounded-xl" src="" alt="Image Description">
+				<button class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-500 text-white rounded-full p-2 hover:scale-150 transition-all duration-300" id="next-image">
+					<span class="sr-only">{{ 'Next'|trans }}</span>
+					{{ heroicon('arrow-right', 'h-6 w-6') }}
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

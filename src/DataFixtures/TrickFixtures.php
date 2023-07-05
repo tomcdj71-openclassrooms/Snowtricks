@@ -39,7 +39,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
             $trick->setAuthor($author);
             $trick->setGroup($this->getReference($trickData['group']));
             $trick->setCreatedAt(new \DateTimeImmutable());
-            $trick->setSlug($this->slugger->slug($trick->getTitle()));
+            $trick->setSlug($this->slugger->slug($trick->getTitle())->lower());
             $this->addReference('trick-'.$index, $trick);
 
             $manager->persist($trick);

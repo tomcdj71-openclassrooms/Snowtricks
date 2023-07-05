@@ -49,6 +49,7 @@ class TrickRepository extends ServiceEntityRepository
             ->orderBy('t.id', 'DESC')
             ->setFirstResult(($page - 1) * $pageSize)
             ->setMaxResults($pageSize)
+            ->orderBy('t.createdAt', 'DESC')
             ->getQuery();
 
         return new Paginator($query);

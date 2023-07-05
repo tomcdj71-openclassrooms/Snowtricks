@@ -34,13 +34,15 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
             $miniPath = __DIR__.'/../../public/assets/uploads/tricks/images/mini/'.$relativePath;
             $filesystem->copy($sourcePath, $originalPath);
             $this->resizeImage($sourcePath, $miniPath, 300, 300);
-            if ($trickIndex < count($tricks)) {
-                $trick = $tricks[$trickIndex];
-                ++$trickIndex;
-            } else {
-                $trickIndex = 0;
-                $trick = $tricks[$trickIndex];
-            }
+            /**
+             * Select random trick from the list of tricks.
+             * If the trick already has a featured image, select another trick.
+             * If the trick already has the same image, select another trick.
+             * Use the modulus operator to make sure that the index is always between 0 and the number of tricks in the list.
+             * This method was chosen to avoid the use of elseif statements (codacy).
+             */
+            $trick = $tricks[$trickIndex % count($tricks)];
+            ++$trickIndex;
             $image = new Image();
             $image->setPath($relativePath);
             $image->setTrick($trick);

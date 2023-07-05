@@ -34,17 +34,22 @@ class TrickService
      *
      * @throws \RuntimeException
      */
-    public function addImageToTrick(UploadedFile $image, string $folder, Trick $trick, bool $isFeatured = false): Image
+    public function addImageToTrick(UploadedFile $image, Trick $trick, bool $isFeatured = false): ?Image
     {
-        $file = $this->imageService->add($image, $folder, 300, 300);
+        // get width and height of the image
+        $imageInfo = getimagesize($image->getPathname());
+        if (false === $imageInfo) {
+            throw new \Exception('Failed to get image size.');
+        }
+        [$width, $height] = $imageInfo;
+        $file = $this->imageService->addTrickImage($image, $width, $height);
         $img = new Image();
         $img->setPath($file);
         $this->entityManager->persist($img);
         if ($isFeatured) {
             return $img;
-        } else {
-            $trick->addImage($img);
         }
+        $trick->addImage($img);
 
         return $img;
     }
@@ -102,11 +107,11 @@ class TrickService
             if (!$image instanceof UploadedFile) {
                 throw new \RuntimeException($this->translator->trans('Invalid image file.'));
             }
-            $this->addImageToTrick($image, 'tricks/images', $trick, false);
+            $this->addImageToTrick($image, $trick, false);
         }
         $featuredImage = $form->get('featuredImage')->getData();
         if ($featuredImage instanceof UploadedFile) {
-            $image = $this->addImageToTrick($featuredImage, 'tricks/images', $trick, true);
+            $image = $this->addImageToTrick($featuredImage, $trick, true);
             $trick->setFeaturedImage($image);
         }
     }

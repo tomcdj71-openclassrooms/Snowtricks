@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ImageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image
@@ -14,13 +15,16 @@ class Image
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Assert\Type('string')]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $path = null;
 
+    #[Assert\Type(Trick::class)]
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Trick $trick = null;
 
-    #[ORM\OneToOne(inversedBy: 'avatar', cascade: ['persist', 'remove'])]
+    #[Assert\Type(User::class)]
+    #[ORM\OneToOne(inversedBy: 'avatar')]
     private ?User $user = null;
 
     public function getId(): ?int

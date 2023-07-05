@@ -26,7 +26,7 @@
 				<figure class="relative flex flex-col items-center pb-4">
 					<img class="rounded-lg w-full" src="{{ asset('assets/uploads/tricks/images/' ~ trick.featuredImage.path ) }}" alt="{{ 'Illustration image of the trick'|trans ~ ' ' ~ trick.title }}">
 					{% if app.user %}
-						<div class="flex absolute top-5 right-5 inline-flex justify-center items-center gap-2 rounded-full border text-center w-55 bg-gray-800 bg-opacity-50 p-2">
+						<div class="flex absolute top-5 right-5 inline-flex justify-center items-center gap-2 rounded-full text-center w-55 bg-gray-800 bg-opacity-75 p-2 shadow ring-1 ring-black border-black">
 							<a href="{{ path('app_trick_edit', { 'id': trick.id }) }}" class="inline-flex">
 								{{ heroicon('pencil', 'h-6 w-6 text-green-600 mx-2') }}
 							</a>
@@ -46,11 +46,11 @@
 					<h2 id="gallery-heading">
 						<button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-500 border border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800" data-accordion-target="#gallery-body" aria-expanded="false" aria-controls="gallery-body">
 							<span class="flex items-center">
-								{{ heroicon('photo', 'w-6 h-6 mr-2 shrink-0') }}
-								{{ heroicon('film', 'w-6 h-6 mr-2 shrink-0') }}
+								{{ heroicon('photo', 'w-6 h-6 mr-2 shrink-0', 'outline') }}
+								{{ heroicon('film', 'w-6 h-6 mr-2 shrink-0', 'outline') }}
 								{{ 'See Medias'|trans }}
 							</span>
-							{{ heroicon('chevron-down', 'w-6 h-6 shrink-0', {'data-accordion-icon': 'true'}) }}
+							{{ heroicon('chevron-down', 'w-6 h-6 shrink-0', 'solid', {'data-accordion-icon': 'true'}) }}
 						</button>
 					</h2>
 					<div id="gallery-body" class="hidden" aria-labelledby="gallery-heading">
@@ -87,10 +87,10 @@
 							{{ form_end(form) }}
 						</form>
 					{% else %}
-						<div class="mb-6 rounded-md bg-red-50 dark:text-red-400">
+						<div class="mb-6 rounded-md bg-red-50 dark:text-red-400 pb-2">
 							<div class="p-4 mb-4 text-sm text-red-800 bg-red-50 dark:text-red-400 rounded-lg" role="alert">
 								<div class="flex items-center">
-									{{ heroicon('x-circle', 'h-6 w-6 text-red-400', {'data-accordion-icon': 'true'}) }}
+									{{ heroicon('x-circle', 'h-6 w-6 text-red-400', 'outline') }}
 									<span class="font-medium ml-2 py-2">
 										{{ 'Comment form disabled'|trans }}!</span>
 								</div>
@@ -101,7 +101,7 @@
 							</div>
 						</div>
 					{% endif %}
-					<div id="comments-container">
+					<div id="comments-container" data-limit="{{ limit }}" data-total-comments="{{ trick.comments|length }}">
 						{% for comment in comments %}
 							{% include "_partials/_comment_card.html.twig" %}
 						{% endfor %}

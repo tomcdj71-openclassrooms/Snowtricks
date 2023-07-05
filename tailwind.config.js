@@ -5,8 +5,8 @@ module.exports = {
   content: [
     "./assets/**/*.js",
     "./templates/**/*.html.twig",
-    "./node_modules/flowbite/**/*.js",
-    "./vendor/tales-from-a-dev/flowbite-bundle/templates/**/*.html.twig"
+    "./vendor/tales-from-a-dev/flowbite-bundle/templates/**/*.html.twig",
+    "./node_modules/preline/dist/*.js",
   ],
   darkMode: 'class',
   theme: {
@@ -66,7 +66,7 @@ module.exports = {
     }
   },
   plugins: [
-    require('flowbite/plugin')
+    require('preline/plugin'),
   ],
 }
 
