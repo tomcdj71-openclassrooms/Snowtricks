@@ -6678,30 +6678,32 @@
         },
         {
             "name": "symfony/ux-dropzone",
-            "version": "v2.9.1",
+            "version": "v2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/ux-dropzone.git",
-                "reference": "0810d31877a6e44db03fb4903f1f076aad699f11"
+                "reference": "3b8e5cf6c54081b0bc2c850cbcaa537acb14b7bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ux-dropzone/zipball/0810d31877a6e44db03fb4903f1f076aad699f11",
-                "reference": "0810d31877a6e44db03fb4903f1f076aad699f11",
+                "url": "https://api.github.com/repos/symfony/ux-dropzone/zipball/3b8e5cf6c54081b0bc2c850cbcaa537acb14b7bd",
+                "reference": "3b8e5cf6c54081b0bc2c850cbcaa537acb14b7bd",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.5",
+                "php": ">=8.1",
                 "symfony/config": "^5.4|^6.0",
                 "symfony/dependency-injection": "^5.4|^6.0",
                 "symfony/form": "^5.4|^6.0",
-                "symfony/http-kernel": "^5.4|^6.0"
+                "symfony/http-kernel": "^5.4|^6.0",
+                "symfony/options-resolver": "^5.4|^6.0"
             },
             "require-dev": {
                 "symfony/framework-bundle": "^5.4|^6.0",
                 "symfony/phpunit-bridge": "^5.4|^6.0",
                 "symfony/twig-bundle": "^5.4|^6.0",
-                "symfony/var-dumper": "^5.4|^6.0"
+                "symfony/var-dumper": "^5.4|^6.0",
+                "twig/twig": "^2.14.7|^3.0.4"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -6735,7 +6737,7 @@
                 "symfony-ux"
             ],
             "support": {
-                "source": "https://github.com/symfony/ux-dropzone/tree/v2.9.1"
+                "source": "https://github.com/symfony/ux-dropzone/tree/v2.10.0"
             },
             "funding": [
                 {
@@ -6751,7 +6753,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-05-30T14:40:50+00:00"
+            "time": "2023-06-19T13:59:38+00:00"
         },
         {
             "name": "symfony/validator",

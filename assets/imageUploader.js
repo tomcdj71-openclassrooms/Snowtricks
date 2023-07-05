@@ -1,45 +1,33 @@
-let links = document.querySelectorAll('[data-delete]');
-links.forEach(link => {
-    link.addEventListener('click', handleDeleteClick.bind(link));
+window.addEventListener('DOMContentLoaded', () => {
+    setupDeleteActions();
+    setupVideos();
 });
 
-function handleDeleteClick(e) {
-    e.preventDefault();
-    confirmAndDelete(this);
-}
-
-function confirmAndDelete(item) {
-    let confirmationMessage = item.dataset.confirm;
-    if (confirm(confirmationMessage)) {
-        deleteItem(item);
-    };
-}
-
-function deleteItem(item) {
-    fetch(item.getAttribute('href'), {
-        method: 'DELETE',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ '_csrf': item.dataset.token })
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                item.parentElement.remove();
-            } else {
-                alert(data.error);
-            };
-        }).catch(error => console.error('Error:', error));
-}
-
-
-window.addEventListener('DOMContentLoaded', setup);
-
-function setup() {
-    setupVideos();
-    setupDeleteButtons();
+function setupDeleteActions() {
+    document.querySelectorAll('[data-delete]').forEach(item => {
+        item.addEventListener('click', (event) => {
+            event.preventDefault();
+            const confirmationMessage = item.dataset.confirm;
+            if (!confirm(confirmationMessage)) return;
+            fetch(item.getAttribute('href'), {
+                method: 'DELETE',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ '_csrf': item.dataset.token })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        item.parentElement.remove();
+                    } else {
+                        alert(data.error);
+                    }
+                })
+                .catch(console.error);
+        });
+    });
 }
 
 function setupVideos() {
@@ -48,41 +36,20 @@ function setupVideos() {
         return;
     }
     let index = collectionHolder.dataset.index;
-    document.getElementById('add-video').addEventListener('click', addVideo.bind(null, collectionHolder, index));
-}
-
-function setupDeleteButtons() {
-    document.querySelectorAll('.delete-video').forEach(button => {
-        button.addEventListener('click', handleDeleteVideoClick);
+    document.getElementById('add-video').addEventListener('click', () => {
+        let prototype = collectionHolder.dataset.prototype;
+        let newForm = prototype.replace(/__name__/g, index);
+        let div = document.createElement('div');
+        div.innerHTML = newForm;
+        div.classList.add('video');
+        let deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.type = 'button';
+        deleteButton.classList.add('delete-video');
+        deleteButton.addEventListener('click', () => {
+            div.remove();
+        });
+        div.appendChild(deleteButton);
+        collectionHolder.appendChild(div);
     });
-}
-
-function addVideo(collectionHolder, index) {
-    let prototype = collectionHolder.dataset.prototype;
-    let newForm = prototype.replace(/__name__/g, index);
-    let div = createNewVideoDiv(newForm);
-    collectionHolder.appendChild(div);
-}
-
-function createNewVideoDiv(newForm) {
-    let div = document.createElement('div');
-    div.innerHTML = newForm;
-    div.classList.add('video');
-    addDeleteButton(div);
-    return div;
-}
-
-function addDeleteButton(div) {
-    let deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.type = 'button';
-    deleteButton.classList.add('delete-video');
-    deleteButton.addEventListener('click', function () {
-        div.remove();
-    });
-    div.appendChild(deleteButton);
-}
-
-function handleDeleteVideoClick() {
-    this.parentElement.remove();
 }
