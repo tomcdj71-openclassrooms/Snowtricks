@@ -41,8 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'minScore' => PasswordStrength::STRENGTH_MEDIUM,
         'message' => 'The password is too weak. Please use a stronger password.',
     ])]
-    #[Assert\NotBlank]
-    #[ORM\Column(type: Types::STRING, length: 80)]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $password;
 
     #[Assert\Email]
