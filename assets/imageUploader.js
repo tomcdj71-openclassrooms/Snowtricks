@@ -5,10 +5,14 @@ links.forEach(link => {
 
 function handleDeleteClick(e) {
     e.preventDefault();
-    let confirmationMessage = this.dataset.confirm;
+    confirmAndDelete(this);
+}
+
+function confirmAndDelete(item) {
+    let confirmationMessage = item.dataset.confirm;
     if (confirm(confirmationMessage)) {
-        deleteItem(this);
-    }
+        deleteItem(item);
+    };
 }
 
 function deleteItem(item) {
@@ -26,34 +30,49 @@ function deleteItem(item) {
                 item.parentElement.remove();
             } else {
                 alert(data.error);
-            }
+            };
         }).catch(error => console.error('Error:', error));
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+
+window.addEventListener('DOMContentLoaded', setup);
+
+function setup() {
+    setupVideos();
+    setupDeleteButtons();
+}
+
+function setupVideos() {
     const collectionHolder = document.getElementById('videos-container');
     if (!collectionHolder) {
         return;
     }
     let index = collectionHolder.dataset.index;
     document.getElementById('add-video').addEventListener('click', addVideo.bind(null, collectionHolder, index));
+}
+
+function setupDeleteButtons() {
     document.querySelectorAll('.delete-video').forEach(button => {
         button.addEventListener('click', handleDeleteVideoClick);
     });
-});
+}
 
 function addVideo(collectionHolder, index) {
     let prototype = collectionHolder.dataset.prototype;
     let newForm = prototype.replace(/__name__/g, index);
-    let newIndex = index + 1;
-    let div = createNewVideoDiv(newForm, newIndex);
+    let div = createNewVideoDiv(newForm);
     collectionHolder.appendChild(div);
 }
 
-function createNewVideoDiv(newForm, index) {
+function createNewVideoDiv(newForm) {
     let div = document.createElement('div');
     div.innerHTML = newForm;
     div.classList.add('video');
+    addDeleteButton(div);
+    return div;
+}
+
+function addDeleteButton(div) {
     let deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
     deleteButton.type = 'button';
@@ -62,7 +81,6 @@ function createNewVideoDiv(newForm, index) {
         div.remove();
     });
     div.appendChild(deleteButton);
-    return div;
 }
 
 function handleDeleteVideoClick() {

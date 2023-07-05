@@ -73,7 +73,7 @@ class ImageService implements ImageServiceInterface
         $path = $this->prepareImageDirectory($type);
 
         if ('tricks' === $type) {
-            $this->handleTrickType($type, $file, $path, $sourceImage, $imageInfos);
+            $this->handleTrickType($file, $path, $sourceImage, $imageInfos);
         }
 
         $this->createOriginalImage($sourceImage, $path, $file);
@@ -191,7 +191,7 @@ class ImageService implements ImageServiceInterface
      *
      * @throws \Exception
      */
-    private function handleTrickType(string $type, string $file, string $path, \GdImage $sourceImage, array $imageInfos): void
+    private function handleTrickType(string $file, string $path, \GdImage $sourceImage, array $imageInfos): void
     {
         $miniDir = $path.'/mini';
         $mini = $miniDir.'/'.$file;

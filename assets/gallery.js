@@ -12,25 +12,32 @@
             const imageSrc = this.getAttribute('data-image');
             updateModalImage(imageSrc);
             currentImageIndex = index;
-        }
+        };
     }
 
     function handleNavClick(offset) {
         return function () {
             currentImageIndex = (currentImageIndex + offset + images.length) % images.length;
             updateModalImage(images[currentImageIndex].getAttribute('data-image'));
-        }
+        };
     }
 
     function handleAccordionClick(button, accordionBody) {
+        toggleAccordion(button);
+        handleAccordionBody(accordionBody, button);
+    }
+
+    function toggleAccordion(button) {
         const isOpen = button.getAttribute('aria-expanded') === 'true';
         button.setAttribute('aria-expanded', !isOpen);
+    }
 
-        if (isOpen) {
-            accordionBody.classList.add('hidden');
-        } else {
+    function handleAccordionBody(accordionBody, button) {
+        if (button.getAttribute('aria-expanded') === 'true') {
             accordionBody.classList.remove('hidden');
-        }
+        } else {
+            accordionBody.classList.add('hidden');
+        };
     }
 
     function initGallery() {

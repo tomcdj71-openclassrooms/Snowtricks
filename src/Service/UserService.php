@@ -35,7 +35,6 @@ class UserService
         }
         $defaultAvatarPath = $projectDir.'/public/'.ImageService::IMAGE_DIRECTORY.'/'.ImageService::DEFAULT_FILE;
         $defaultAvatar = new UploadedFile($defaultAvatarPath, ImageService::DEFAULT_FILE, null, null, true);
-        $type = 'avatars';
         $width = 250;
         $height = 250;
         $avatarFileName = $this->imageService->addUserAvatar($defaultAvatar, $width, $height);
