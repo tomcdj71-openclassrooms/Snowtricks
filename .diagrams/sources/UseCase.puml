@@ -16,6 +16,7 @@
       (Ajouter un trick) as addTrick
       (Reset password) as resetPassword
       (Login) as loginUser
+      (Changer avatar) as changeAvatar
   }
 
   visitor --> registerUser
@@ -26,6 +27,7 @@
   user --> addTrick
   user --> editTrick
   user --> resetPassword
+  user --> changeAvatar
 
   displayTrick ..> displayTrickComments : includes
 @enduml

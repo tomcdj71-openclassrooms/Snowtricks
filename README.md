@@ -9,7 +9,7 @@
 ## Pre-requisites :
 - PHP 8.2
 - Composer
-- npm (I used pnpm)
+- npm/yarn (I used pnpm)
 - Symfony CLI
 ---
 
@@ -18,8 +18,8 @@
 ```sh
 git clone https://github.com/tomcdj71/Snowtricks
 cd Snowtricks
-composer install --no-dev --optimize-autoloader
-yarn install
+composer install --optimize-autoloader
+yarn install --force
 yarn build
 symfony console d:d:c
 symfony console d:m:m
@@ -29,8 +29,26 @@ symfony serve
 
 ## Features
 
+- [x] Registration
+- [x] Authentication
+- [x] Password Reset
+- [x] Add a trick
+- [x] Edit a trick
+- [x] Delete a Trick
+- [x] Show a Trick
+- [x] Comment a Trick
+- [x] Change User avatar
+- [x] Load more tricks/comments
+
 ## Usage
 
+Once you've ran `symfony serve` you can open your browser and go to [http://localhost:8000](http://localhost:8000) and start using the app
+
+## About this project
+
+This project was made with [Symfony 6.3 ](https://symfony.com/releases/6.3) and [PHP 8.2.7](https://www.php.net/ChangeLog-8.php#8.2.7). Design of the the project was made with [TailwindCSS 3.3.2](https://github.com/tailwindlabs/tailwindcss/blob/master/CHANGELOG.md#332---2023-04-25) with a powerful integration of [HeroIcons 2.0.18](https://github.com/tailwindlabs/heroicons/blob/master/CHANGELOG.md#2018---2023-05-09)
+
+A great commit process is in place in order to make better commits, using grumphp, phpmd, rector, phpstan, php-cs-fixer and other tools triggered by a commit hook.
 ## Author
 
 👤 **Thomas**
