@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/tomcdj71/Snowtricks#readme",
   "dependencies": {
-    "flowbite": "^1.7.0",
     "heroicons": "^2.0.18",
     "preline": "^1.9.0"
   },
@@ -40,7 +39,7 @@
     "@symfony/ux-dropzone": "file:vendor/symfony/ux-dropzone/assets",
     "@symfony/webpack-encore": "^4.3.0",
     "autoprefixer": "^10.4.14",
-    "core-js": "^3.31.0",
+    "core-js": "^3.31.1",
     "postcss": "^8.4.24",
     "postcss-loader": "^7.3.3",
     "regenerator-runtime": "^0.13.11",
