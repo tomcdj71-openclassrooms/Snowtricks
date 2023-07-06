@@ -1,0 +1,24 @@
+@startuml Edit Avatar
+    title Edit Avatar
+    skinparam backgroundColor #EEEEEE
+    skinparam shadowing true
+
+    actor User
+    control Server
+    database Database
+    User --> Server : Request profile page
+    activate Server  #lightblue
+    Server --> User : Display profile page with avatar form
+    deactivate Server 
+    User --> Server : Submit new avatar
+    activate Server #lightblue
+    Server -> Server : Validate form data
+    alt If form data is valid
+        Server --> Database : Update avatar
+            Database --> Server : Confirm avatar updated
+            Server --> User : Redirect to home page
+    else
+        Server --> User : Display form validation error
+    end
+    deactivate Server
+@enduml

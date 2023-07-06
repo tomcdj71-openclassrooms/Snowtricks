@@ -3,7 +3,9 @@ class User {
         + id: integer
         + username: string
         + email: string
+        + resetToken: string
         + password: string
+        + isVerified: bool
     }
     class Comment {
         + id: integer
@@ -16,6 +18,7 @@ class User {
         + title: string
         + description: datetime
         + createdAt: datetime
+        + slug: string
     }   
 
     class Group {
@@ -39,4 +42,5 @@ class User {
     Trick "1" -- "0..*" Video: HAS
     Trick "1" -- "1" Group: BELONGS_TO
     Group "1" -- "0..*" Trick: CONTAINS
+    User "1" -- "1" Image: HAS
 @enduml
