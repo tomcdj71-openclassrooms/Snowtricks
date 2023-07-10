@@ -1,2 +1,4 @@
 build
-assets/uploads
+assets/uploads/users/*
+assets/uploads/tricks/*
+!*.gitkeep
