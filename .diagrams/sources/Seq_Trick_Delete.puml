@@ -1,22 +1,15 @@
-@startuml Show Trick
-    title Show Trick
+@startuml Delete Trick
+    title Delete Trick
     skinparam backgroundColor #EEEEEE
     skinparam shadowing true
 
     actor User
     control Server
     database Database
-    User --> Server : Request trick page
+    User --> Server : Request trick deletion
     activate Server  #lightblue
-    Server --> Database : Retrieve Trick data
-    Database --> Server : Return Trick data
-    Server --> User : Display trick page
-    deactivate Server 
-
-    User --> Server : Request trick comments
-    activate Server #lightblue
-    Server --> Database : Retrieve Trick comments
-    Database --> Server : Return Trick comments
-    Server --> User : Display trick comments
+    Server --> Database : Remove Trick
+    Database --> Server : Return success
+    Server --> User : Display success, redirect to home page
     deactivate Server 
 @enduml
