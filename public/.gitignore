@@ -1,4 +1,7 @@
 build
-assets/uploads/users/*
-assets/uploads/tricks/*
+*.jpg
+*.png
+*.gif
+*.svg
+*.webp
 !*.gitkeep
