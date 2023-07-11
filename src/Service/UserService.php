@@ -42,6 +42,7 @@ class UserService
         $image->setPath($avatarFileName);
         $image->setUser($user);
         $user->setAvatar($image);
+        $this->entityManager->persist($image);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
