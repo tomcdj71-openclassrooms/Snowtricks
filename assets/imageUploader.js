@@ -51,5 +51,6 @@ function setupVideos() {
         });
         div.appendChild(deleteButton);
         collectionHolder.appendChild(div);
+        index++;
     });
 }

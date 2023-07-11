@@ -19,13 +19,13 @@
 				<hr>
 			{% endif %}
 			{% if trick.videos|length >= 1 %}
-				<h3 class="mb-8 text-xl font-bold text-gray-900 dark:text-white mt-4 pt-4">{{ 'Videos'|trans }}</h3>
+				<h3 class="mb-3 text-xl font-bold text-gray-900 dark:text-white mt-4 pt-4">{{ 'Videos'|trans }}</h3>
 				<div class="flex flex-wrap">
 					{% for video in trick.videos %}
 						<article class="max-w-xs">
 							<div class="image-wrapper px-6">
 								<div class="rounded-lg px-6">
-									<iframe src="{{ video.path|video_url }}" class="px-6" title="video player" height="250" width="350" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+									<iframe src="{{ video.path|video_url }}" class="px-6 py-2" title="video player" height="250" width="350" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 								</div>
 							</div>
 						</article>
