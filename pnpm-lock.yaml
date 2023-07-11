@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   heroicons:
     specifier: ^2.0.18
@@ -5441,7 +5445,6 @@ packages:
     resolution: {directory: vendor/symfony/ux-dropzone/assets, type: directory}
     id: file:vendor/symfony/ux-dropzone/assets
     name: '@symfony/ux-dropzone'
-    version: 1.1.0
     peerDependencies:
       '@hotwired/stimulus': ^3.0.0
     dependencies:
