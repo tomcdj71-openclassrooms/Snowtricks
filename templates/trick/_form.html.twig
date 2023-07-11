@@ -28,10 +28,10 @@
 					<h2 class="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
 						{{ 'Gallery'|trans }}
 					</h2>
-					{% set featuredImage = trick.featuredImage.path %}
 					<div id="images-container" class="pb-4">
 						{{ form_label(form.images) }}
 						{% if app.request.attributes.get('_route') == 'app_trick_edit' %}
+							{% set featuredImage = trick.featuredImage.path %}
 							<div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 md:pb-3 grid grid-cols-[1fr_500px_2fr]">
 								{% for image in trick.images %}
 									{% if image.path != featuredImage %}
