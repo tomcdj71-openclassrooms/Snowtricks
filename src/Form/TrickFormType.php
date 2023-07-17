@@ -71,8 +71,10 @@ class TrickFormType extends AbstractType
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
+                            'image/gif',
+                            'image/webp',
                         ],
-                        'mimeTypesMessage' => $this->translator->trans('Please upload a valid image (jpg or png).'),
+                        'mimeTypesMessage' => $this->translator->trans('Please upload a valid image (jpg, png, gif, webp).'),
                     ]),
                 ],
             ])

@@ -31,13 +31,18 @@
 					<div id="images-container" class="pb-4">
 						{{ form_label(form.images) }}
 						{% if app.request.attributes.get('_route') == 'app_trick_edit' %}
+							{% set featuredImage = trick.featuredImage.path %}
 							<div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4 md:pb-3 grid grid-cols-[1fr_500px_2fr]">
 								{% for image in trick.images %}
-									<article class="max-w-full">
-										<img src="{{ asset('assets/uploads/tricks/images/mini/' ~ image.path ) }}" class="w-full h-48 object-cover rounded-lg" alt="{{ 'Trick Image'|trans }}">
-										<a class="flex flex-col items-center font-medium justify-center text-red-600 hover:underline hover:text-red-600 mb-5" href="{{ path('media_delete_image', {id: image.id} ) }}" data-delete data-confirm="{{ 'Do you want to delete this image?'|trans }}" data-token="{{ csrf_token('delete' ~ image.id) }} ">{{ 'Supprimer'|trans }}</a>
-									</article>
+									{% if image.path != featuredImage %}
+										<article class="max-w-full">
+											<img src="{{ asset('assets/uploads/tricks/images/mini/' ~ image.path ) }}" class="w-full h-48 object-cover rounded-lg" alt="{{ 'Trick Image'|trans }}">
+											<a class="flex flex-col items-center font-medium justify-center text-red-600 hover:underline hover:text-red-600 mb-5" href="{{ path('media_delete_image', {id: image.id} ) }}" data-delete data-confirm="{{ 'Do you want to delete this image?'|trans }}" data-token="{{ csrf_token('delete' ~ image.id) }} ">{{ 'Supprimer'|trans }}</a>
+										</article>
+									{% endif %}
 								{% endfor %}
+								<pre>
+								</pre>
 							</div>
 						{% endif %}
 						<div class="flex items-center justify-center w-full">
@@ -54,7 +59,7 @@
 							</label>
 						</div>
 					</div>
-					<div id="videos-container" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}" class="py-4">
+					<div id="videos-container" data-prototype="{{ form_widget(form.videos.vars.prototype)|e('html_attr') }}" data-index="{{ form.videos|length }}" class="py-4">
 						{{ form_label(form.videos) }}
 						{% if app.request.attributes.get('_route') == 'app_trick_edit' %}
 							<div class="flex flex-wrap">
@@ -64,7 +69,6 @@
 											<div class="rounded-lg">
 												<iframe src="{{ video.path|video_url }}" title="video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 												<a class="flex flex-col items-center font-medium justify-center text-red-600 hover:underline hover:text-red-600 mb-5" href="{{ path('media_delete_video', {id: video.id}) }}" data-delete data-confirm="{{ 'Do you want to delete this video?'|trans }}" data-token="{{ csrf_token('delete' ~ video.id) }}">{{ 'Supprimer'|trans }}</a>
-
 											</div>
 										</div>
 									</article>

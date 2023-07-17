@@ -16,7 +16,6 @@ class Comment
     private ?int $id = null;
 
     #[Assert\NotBlank]
-    #[Assert\Type('text')]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content;
 

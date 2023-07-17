@@ -1,0 +1,7 @@
+build
+*.jpg
+*.png
+*.gif
+*.svg
+*.webp
+!*.gitkeep

@@ -107,7 +107,6 @@ Delete: Supprimer
 edit: éditer
 'Error encountered during the deletion of the video': 'Erreur rencontrée lors de la suppression de la vidéo'
 'Please upload an image as the featured image.': "Veuillez télécharger une image en tant qu'image Epinglée."
-'Please upload a valid image (jpg or png).': 'Veuillez télécharger une image valide (jpg or png).'
 'The title should be at least ': 'Le titre doit contenir au moins '
 ' characters.': ' caractères.'
 'The title should not exceed ': 'Le titre ne doit pas dépasser '
@@ -174,3 +173,6 @@ Save: Enregister
 'Check your inbox to validate your account.': 'Vérifiez votre boîte de réception pour valider votre compte.'
 Profile: Profil
 'Failed to create an image resource.': "Échec de la création d'une ressource d'image."
+'Please upload a valid image (jpg, png, gif, webp).': 'Veuillez télécharger une image valide (jpg, png, gif, webp).'
+'All Tricks': 'Toutes les figures'
+'My Profile': 'Mon Profil'
